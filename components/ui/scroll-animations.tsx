@@ -7,10 +7,11 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { SplitText } from "gsap/SplitText";
 
 /**
- * GSAP ScrollTrigger reveals for the landing page, desktop only.
- * On phones every section renders instantly: hiding content behind
- * scroll-triggered reveals proved unreliable on Android (sections appeared
- * late or not at all), and instant content is faster anyway.
+ * GSAP ScrollTrigger reveals for the landing page.
+ * Desktop gets the full treatment (slides, zooms, SplitText lag on the
+ * smoother). Phones get a lighter, Android-safe variant: native scrolling,
+ * y-only fades, `once: true`, and ignoreMobileResize so Chrome's address
+ * bar showing/hiding cannot break trigger positions mid-scroll.
  *
  * Tag elements with:
  *   .gsap-hero        entrance stagger on load (no scroll needed)
@@ -23,8 +24,48 @@ import { SplitText } from "gsap/SplitText";
 export function ScrollAnimations() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     const mm = gsap.matchMedia();
+
+    // Phones and small tablets: simple, reliable reveals on native scroll
+    mm.add(
+      "(max-width: 1023px) and (prefers-reduced-motion: no-preference)",
+      () => {
+        gsap.from(".gsap-hero", {
+          opacity: 0,
+          y: 24,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.1,
+        });
+
+        gsap.utils
+          .toArray<HTMLElement>(
+            ".gsap-fade-up, .gsap-slide-left, .gsap-slide-right"
+          )
+          .forEach((el) => {
+            gsap.from(el, {
+              opacity: 0,
+              y: 28,
+              duration: 0.55,
+              ease: "power2.out",
+              scrollTrigger: { trigger: el, start: "top 92%", once: true },
+            });
+          });
+
+        gsap.utils.toArray<HTMLElement>(".gsap-zoom").forEach((el, i) => {
+          gsap.from(el, {
+            opacity: 0,
+            scale: 0.75,
+            duration: 0.5,
+            ease: "back.out(1.4)",
+            delay: (i % 4) * 0.06,
+            scrollTrigger: { trigger: el, start: "top 94%", once: true },
+          });
+        });
+      }
+    );
 
     mm.add(
       "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",

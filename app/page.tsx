@@ -22,25 +22,13 @@ export default function LandingPage() {
 
 function AppBadges() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3">
-      <div className="flex h-12 cursor-pointer items-center gap-2 rounded-lg bg-ink px-4 text-white transition-colors hover:bg-black">
-        <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-          <path d="M18.7 12.6c0-2.5 2-3.7 2.1-3.8-1.2-1.7-3-1.9-3.6-1.9-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.5 1.3 0 1.8-.8 3.4-.8s2 .8 3.4.8c1.4 0 2.3-1.2 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.9-1.1-3-4.1zM16.2 5c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.5-.7.8-1.2 2-1.1 3.1 1.2.1 2.4-.5 3.1-1.4z" />
-        </svg>
-        <div className="text-left leading-tight">
-          <div className="text-[10px]">Download on the</div>
-          <div className="text-sm font-bold">App Store</div>
-        </div>
-      </div>
-      <div className="flex h-12 cursor-pointer items-center gap-2 rounded-lg bg-ink px-4 text-white transition-colors hover:bg-black">
-        <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-          <path d="M3.6 2.3 13.7 12 3.6 21.7c-.4-.2-.6-.6-.6-1.1V3.4c0-.5.2-.9.6-1.1zm11.5 11.1 2.6 2.5-11.4 6.4 8.8-8.9zm3.9-2.9c.6.4 1 .9 1 1.5s-.3 1.1-1 1.5l-2.4 1.4-2.9-2.9 2.9-2.9 2.4 1.4zM6.3 1.7l11.4 6.4-2.6 2.5-8.8-8.9z" />
-        </svg>
-        <div className="text-left leading-tight">
-          <div className="text-[10px]">Get it on</div>
-          <div className="text-sm font-bold">Google Play</div>
-        </div>
-      </div>
+    <div className="flex items-center justify-center">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/play-badge.png"
+        alt="Get it on play store"
+        className="h-12 w-auto cursor-pointer transition-transform hover:scale-105"
+      />
     </div>
   );
 }

@@ -55,9 +55,12 @@ export default function HelpPage() {
             rel="noopener noreferrer"
             className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
           >
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-2xl text-white">
-              💬
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/whatsapp-icon.png"
+              alt=""
+              className="h-12 w-12 shrink-0 rounded-full"
+            />
             <span>
               <span className="block font-bold text-charcoal">WhatsApp</span>
               <span className="block text-sm text-charcoal/60">
@@ -71,9 +74,12 @@ export default function HelpPage() {
             rel="noopener noreferrer"
             className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
           >
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-coral text-2xl text-white">
-              ✉️
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/gmail-icon.png"
+              alt=""
+              className="h-12 w-12 shrink-0 rounded-full"
+            />
             <span>
               <span className="block font-bold text-charcoal">Email</span>
               <span className="block text-sm text-charcoal/60">
