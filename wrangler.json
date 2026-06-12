@@ -3,5 +3,9 @@
   "name": "purelifepartner",
   "compatibility_date": "2026-06-01",
   "compatibility_flags": ["nodejs_compat"],
-  "pages_build_output_dir": ".vercel/output/static"
+  "pages_build_output_dir": ".vercel/output/static",
+  "vars": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://iucizzrqvpsuotatmvrc.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1Y2l6enJxdnBzdW90YXRtdnJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5OTg1MjksImV4cCI6MjA5NjU3NDUyOX0.G_fJ3RynRrVhdTOwwMDk8y8rM0xFF6UujZ-szz_vf4A"
+  }
 }
