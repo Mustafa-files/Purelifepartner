@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   title: "PureLifePartner | Where Pure Hearts Find Their Match",
   description:
     "A halal, respectful, and modern platform for Muslims seeking a life partner. Verified members, advanced matching, and guardian support.",
+  // Served from public/ instead of an app/icon.png metadata route, which
+  // would generate a non-edge function that Cloudflare Pages rejects.
+  icons: { icon: "/icon.png" },
 };
 
 export default function RootLayout({
