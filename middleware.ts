@@ -18,6 +18,15 @@ const PROTECTED_PREFIXES = [
 ];
 
 export async function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname;
+  const needsAuth = PROTECTED_PREFIXES.some(
+    (p) => path === p || path.startsWith(p + "/")
+  );
+
+  // Public pages skip the Supabase auth round trip entirely; it would add
+  // hundreds of ms of latency to every request for no benefit.
+  if (!needsAuth) return NextResponse.next();
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -45,12 +54,7 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const path = request.nextUrl.pathname;
-  const needsAuth = PROTECTED_PREFIXES.some(
-    (p) => path === p || path.startsWith(p + "/")
-  );
-
-  if (needsAuth && !user) {
+  if (!user) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", path);
@@ -60,8 +64,20 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
+// Only invoke the middleware function at all on protected routes; public
+// pages and static assets are served without it.
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/dashboard/:path*",
+    "/settings/:path*",
+    "/admin/:path*",
+    "/system/:path*",
+    "/payment/:path*",
+    "/register/personal/:path*",
+    "/register/religion/:path*",
+    "/register/residence/:path*",
+    "/register/family/:path*",
+    "/register/requirements/:path*",
+    "/register/contact/:path*",
   ],
 };

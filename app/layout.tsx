@@ -7,15 +7,17 @@ import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { Toaster } from "@/components/ui/toast";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
 
+// Only the weights actually used; every extra weight is another font file
+// phones must download before text settles
 const displayFont = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["700", "800"],
   variable: "--font-display",
 });
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "600", "700", "800"],
   variable: "--font-sans-app",
 });
 
@@ -38,6 +40,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* Warm up the Supabase connection before the first data query */}
+        <link
+          rel="preconnect"
+          href="https://iucizzrqvpsuotatmvrc.supabase.co"
+          crossOrigin="anonymous"
+        />
         {/* Apply the saved theme before first paint to avoid a flash */}
         <script
           dangerouslySetInnerHTML={{

@@ -16,6 +16,8 @@ export function ProfileCard({ profile }: { profile: PublicProfile }) {
           <img
             src={profile.avatar_url}
             alt={profile.user_id_handle ?? "Profile"}
+            loading="lazy"
+            decoding="async"
             className="h-52 w-full object-cover"
           />
         ) : (

@@ -19,7 +19,22 @@
   --font-sans: var(--font-sans-app), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Native smooth scrolling is replaced by GSAP ScrollSmoother */
+/* GSAP ScrollSmoother drives desktop scrolling; phones scroll natively */
+
+html,
+body {
+  /* Animation start offsets and the oversized echo heading must never
+     widen the layout viewport (Android Chrome cut-off bug) */
+  overflow-x: clip;
+}
+
+/* Native smooth scrolling for anchor jumps on touch devices, where the
+   GSAP smoother is intentionally not created */
+@media (hover: none), (max-width: 1023px) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
 
 body {
   background: var(--color-off-white);
@@ -209,4 +224,16 @@ h3 {
   right: 0;
   color: transparent;
   -webkit-text-stroke: 1.5px rgba(213, 69, 58, 0.4);
+}
+
+/* Phones: no smoother means no parallax, so the stacked ghosts would just
+   sit behind the solid line; hide them and keep the heading inside the
+   viewport */
+@media (max-width: 1023px) {
+  .plp-echo .plp-echo-ghost {
+    display: none;
+  }
+  .plp-echo p {
+    font-size: clamp(40px, 11.5vw, 96px);
+  }
 }
