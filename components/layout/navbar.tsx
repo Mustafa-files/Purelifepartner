@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { UserMenu } from "@/components/layout/user-menu";
+import { AppearanceToggle, ThemeOptions, useTheme } from "@/components/ui/appearance";
 import { createClient } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +22,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const pathname = usePathname();
+  const [theme, setTheme] = useTheme();
 
   useEffect(() => {
     const supabase = createClient();
@@ -55,6 +57,7 @@ export function Navbar() {
             <UserMenu />
           ) : (
             <>
+              <AppearanceToggle />
               <Link href="/login">
                 <Button variant="ghost" size="sm">
                   Sign In
@@ -108,6 +111,13 @@ export function Navbar() {
           ))}
           {!signedIn && (
             <>
+              <hr className="border-gray-100" />
+              <div>
+                <p className="mb-1 px-1 text-xs font-bold uppercase tracking-wide text-charcoal/40">
+                  Appearance
+                </p>
+                <ThemeOptions theme={theme} setTheme={setTheme} />
+              </div>
               <hr className="border-gray-100" />
               <Link href="/login" onClick={() => setOpen(false)}>
                 <Button variant="outline" className="w-full">
