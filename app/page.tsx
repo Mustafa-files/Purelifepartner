@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ScrollAnimations } from "@/components/ui/scroll-animations";
-import { WHATSAPP_NUMBER } from "@/lib/utils";
 
 export default function LandingPage() {
   return (
@@ -236,9 +235,9 @@ const FEATURES = [
     badge: null,
   },
   {
-    icon: "💬",
-    title: "WhatsApp Integration",
-    text: `Stay connected via WhatsApp (${WHATSAPP_NUMBER}). Our team shares verified profile details and answers your questions directly on WhatsApp.`,
+    icon: "🛡️",
+    title: "We Block Screenshots",
+    text: "Profile photos and contact details are automatically hidden the moment a screenshot is attempted or the page loses focus. Your privacy stays protected even from casual capture attempts.",
     badge: null,
   },
   {

@@ -4,6 +4,7 @@ import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
+import { ScreenshotGuard } from "@/components/ui/screenshot-guard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
 import { formatHeight } from "@/lib/utils";
@@ -105,7 +106,8 @@ export default function ProfileView({
     <div className="bg-off-white py-10">
       <div className="mx-auto max-w-3xl px-4">
         {/* Header */}
-        <div className="rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+        <ScreenshotGuard>
+          <div className="rounded-2xl bg-white p-6 shadow-sm sm:p-8">
           <div className="flex flex-wrap items-center gap-5">
             {profile.avatar_url ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -147,7 +149,8 @@ export default function ProfileView({
               {profile.describe_yourself}
             </p>
           )}
-        </div>
+          </div>
+        </ScreenshotGuard>
 
         {/* Video introduction */}
         {profile.video_url && (
@@ -202,6 +205,7 @@ export default function ProfileView({
         </div>
 
         {/* Contact details gate */}
+        <ScreenshotGuard>
         <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-8">
           <h2 className="text-lg font-bold text-charcoal">Contact Details</h2>
           {contacts ? (
@@ -224,6 +228,7 @@ export default function ProfileView({
             </>
           )}
         </div>
+        </ScreenshotGuard>
       </div>
     </div>
   );

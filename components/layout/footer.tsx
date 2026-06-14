@@ -1,4 +1,5 @@
-import Link from "next/link";
+"use client";
+
 import { LogoMark } from "@/components/ui/logo";
 import { ContactUsMenu } from "@/components/layout/contact-us-menu";
 import {
@@ -7,6 +8,13 @@ import {
   WHATSAPP_LINK,
   WHATSAPP_NUMBER,
 } from "@/lib/utils";
+
+/** Per UX decision: every footer link smooth-scrolls to the top of the
+ *  current page rather than navigating elsewhere. */
+function scrollToTop(e: React.MouseEvent) {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
 const COLUMNS = [
   {
@@ -90,12 +98,13 @@ export function Footer() {
                 )}
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link
-                      href={l.href}
+                    <a
+                      href="#"
+                      onClick={scrollToTop}
                       className="text-sm text-charcoal/60 transition-colors hover:text-coral"
                     >
                       {l.label}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>

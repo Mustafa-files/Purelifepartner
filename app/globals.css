@@ -226,14 +226,14 @@ h3 {
   -webkit-text-stroke: 1.5px rgba(213, 69, 58, 0.4);
 }
 
-/* Phones: no smoother means no parallax, so the stacked ghosts would just
-   sit behind the solid line; hide them and keep the heading inside the
-   viewport */
+/* Phones: keep the parallax echo visible but scaled down so it fits on
+   the narrower viewport. ScrollTrigger handles the parallax with scrub on
+   mobile (no ScrollSmoother). */
 @media (max-width: 1023px) {
-  .plp-echo .plp-echo-ghost {
-    display: none;
-  }
   .plp-echo p {
-    font-size: clamp(40px, 11.5vw, 96px);
+    font-size: clamp(36px, 11vw, 88px);
+  }
+  .plp-echo .plp-echo-ghost {
+    -webkit-text-stroke-width: 1px;
   }
 }

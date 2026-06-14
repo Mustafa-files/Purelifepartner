@@ -64,6 +64,58 @@ export function ScrollAnimations() {
             scrollTrigger: { trigger: el, start: "top 94%", once: true },
           });
         });
+
+        // Mobile parallax for the "Pure Hearts" echo: each ghost layer
+        // shifts at its own speed as the section scrolls past, faked with
+        // a scrub'd ScrollTrigger (no ScrollSmoother on phones).
+        const echo = document.querySelector(".plp-echo");
+        if (echo) {
+          gsap.utils
+            .toArray<HTMLElement>(".plp-echo-ghost")
+            .forEach((ghost) => {
+              const speed = parseFloat(ghost.dataset.speed ?? "1");
+              const drift = (1 - speed) * 220; // 0.7 -> 66px shift
+              gsap.fromTo(
+                ghost,
+                { y: -drift },
+                {
+                  y: drift,
+                  ease: "none",
+                  scrollTrigger: {
+                    trigger: echo,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 0.4,
+                  },
+                }
+              );
+            });
+        }
+
+        // Mobile "together forever": split into characters and let them
+        // ripple in with a stagger on first scroll into view.
+        const splitTarget = document.getElementById("split-stagger");
+        let mSplit: SplitText | null = null;
+        if (splitTarget) {
+          mSplit = new SplitText(splitTarget, { type: "chars" });
+          gsap.from(mSplit.chars, {
+            opacity: 0,
+            y: 24,
+            rotate: -8,
+            stagger: 0.04,
+            duration: 0.5,
+            ease: "back.out(1.6)",
+            scrollTrigger: {
+              trigger: splitTarget,
+              start: "top 88%",
+              once: true,
+            },
+          });
+        }
+
+        return () => {
+          mSplit?.revert();
+        };
       }
     );
 
