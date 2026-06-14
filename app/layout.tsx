@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { Toaster } from "@/components/ui/toast";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
+import { CookieConsent } from "@/components/layout/cookie-consent";
 
 // Only the weights actually used; every extra weight is another font file
 // phones must download before text settles
@@ -63,6 +64,7 @@ export default function RootLayout({
         </SmoothScroll>
         <WhatsAppButton />
         <Toaster />
+        <CookieConsent />
       </body>
     </html>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { LogoMark } from "@/components/ui/logo";
 import { ContactUsMenu } from "@/components/layout/contact-us-menu";
 import {
@@ -9,39 +10,27 @@ import {
   WHATSAPP_NUMBER,
 } from "@/lib/utils";
 
-/** Per UX decision: every footer link smooth-scrolls to the top of the
- *  current page rather than navigating elsewhere. */
+/** Generic footer links scroll to top of the current page rather than
+ *  navigating. Specific links (Success Stories, Legal pages, Cookies)
+ *  intentionally bypass this and use real <Link>s or the cookie modal. */
 function scrollToTop(e: React.MouseEvent) {
   e.preventDefault();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-const COLUMNS = [
-  {
-    title: "About",
-    links: [
-      { label: "Our Story", href: "/#about" },
-      { label: "How It Works", href: "/#how-it-works" },
-      { label: "Success Stories", href: "/success-stories" },
-      { label: "Pricing", href: "/#pricing" },
-    ],
-  },
+const SCROLL_COLUMNS = [
   {
     title: "Quick Links",
     links: [
-      { label: "Create Profile", href: "/register" },
-      { label: "Browse Profiles", href: "/search" },
-      { label: "Sign In", href: "/login" },
-      { label: "Agent Registration", href: "/register/agent" },
+      { label: "Create Profile" },
+      { label: "Browse Profiles" },
+      { label: "Sign In" },
+      { label: "Agent Registration" },
     ],
   },
   {
     title: "Support",
-    links: [
-      { label: "Payment Help", href: "/payment" },
-      { label: "Privacy Policy", href: "/privacy-policy" },
-      { label: "Terms & Conditions", href: "/terms" },
-    ],
+    links: [{ label: "Payment Help" }],
   },
 ];
 
@@ -49,8 +38,8 @@ export function Footer() {
   return (
     <footer className="border-t border-gray-100 bg-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-6">
+          <div className="col-span-2 lg:col-span-2">
             <div className="flex items-center gap-2.5">
               <LogoMark className="h-9" />
               <span className="text-xl font-extrabold text-coral">
@@ -85,63 +74,111 @@ export function Footer() {
             </div>
           </div>
 
-          {COLUMNS.map((col) => (
-            <div key={col.title}>
-              <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-charcoal/70">
-                {col.title}
-              </h3>
-              <ul className="space-y-2.5">
-                {col.title === "Support" && (
-                  <li>
-                    <ContactUsMenu />
-                  </li>
-                )}
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <a
-                      href="#"
-                      onClick={scrollToTop}
-                      className="text-sm text-charcoal/60 transition-colors hover:text-coral"
-                    >
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* About column: just Success Stories, navigates */}
+          <FooterColumn title="About">
+            <li>
+              <Link
+                href="/success-stories"
+                className="text-sm text-charcoal/60 transition-colors hover:text-coral"
+              >
+                Success Stories
+              </Link>
+            </li>
+          </FooterColumn>
+
+          {SCROLL_COLUMNS.map((col) => (
+            <FooterColumn key={col.title} title={col.title}>
+              {col.title === "Support" && (
+                <li>
+                  <ContactUsMenu />
+                </li>
+              )}
+              {col.links.map((l) => (
+                <li key={l.label}>
+                  <a
+                    href="#"
+                    onClick={scrollToTop}
+                    className="text-sm text-charcoal/60 transition-colors hover:text-coral"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </FooterColumn>
           ))}
 
-          <div>
-            <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-gray-300">
-              Contact
-            </h3>
-            <ul className="space-y-2.5 text-sm text-charcoal/60">
-              <li>
-                WhatsApp:{" "}
-                <a
-                  href={WHATSAPP_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-coral hover:text-coral-muted"
-                >
-                  {WHATSAPP_NUMBER}
-                </a>
-              </li>
-              <li>
-                Email:{" "}
-                <a
-                  href={GMAIL_COMPOSE_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-coral hover:text-coral-muted"
-                >
-                  {CONTACT_EMAIL}
-                </a>
-              </li>
-              <li>Available worldwide</li>
-              <li>6 continents served</li>
-            </ul>
-          </div>
+          {/* Legal: real pages + Cookies modal */}
+          <FooterColumn title="Legal">
+            <li>
+              <Link
+                href="/privacy-policy"
+                className="text-sm text-charcoal/60 transition-colors hover:text-coral"
+              >
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/terms"
+                className="text-sm text-charcoal/60 transition-colors hover:text-coral"
+              >
+                Terms &amp; Conditions
+              </Link>
+            </li>
+            <li>
+              <a
+                href="#"
+                data-open-cookie-faq
+                className="text-sm text-charcoal/60 transition-colors hover:text-coral"
+              >
+                Cookies
+              </a>
+            </li>
+          </FooterColumn>
+
+          {/* Privacy & Cookies: FAQ toggle */}
+          <FooterColumn title="Privacy & Cookies">
+            <li>
+              <a
+                href="#"
+                data-open-cookie-faq
+                className="text-sm text-charcoal/60 transition-colors hover:text-coral"
+              >
+                Cookie FAQ
+              </a>
+            </li>
+            <li className="text-xs text-charcoal/40">
+              How we use cookies on this site.
+            </li>
+          </FooterColumn>
+
+          {/* Contact column */}
+          <FooterColumn title="Contact" titleClass="text-charcoal/70">
+            <li className="text-sm text-charcoal/60">
+              WhatsApp:{" "}
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-coral hover:text-coral-muted"
+              >
+                {WHATSAPP_NUMBER}
+              </a>
+            </li>
+            <li className="text-sm text-charcoal/60">
+              Email:{" "}
+              <a
+                href={GMAIL_COMPOSE_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-coral hover:text-coral-muted"
+              >
+                {CONTACT_EMAIL}
+              </a>
+            </li>
+            <li className="text-sm text-charcoal/60">Available worldwide</li>
+            <li className="text-sm text-charcoal/60">6 continents served</li>
+          </FooterColumn>
         </div>
       </div>
 
@@ -152,6 +189,27 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({
+  title,
+  titleClass = "text-charcoal/70",
+  children,
+}: {
+  title: string;
+  titleClass?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <h3
+        className={`mb-4 text-sm font-bold uppercase tracking-wider ${titleClass}`}
+      >
+        {title}
+      </h3>
+      <ul className="space-y-2.5">{children}</ul>
+    </div>
   );
 }
 
