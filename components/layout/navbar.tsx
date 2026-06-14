@@ -40,17 +40,21 @@ export function Navbar() {
           <Logo />
         </Link>
 
-        <div className="hidden items-center gap-7 lg:flex">
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.label}
-              href={l.href}
-              className="rounded-full px-3.5 py-2 text-sm font-semibold text-charcoal/75 transition-colors hover:bg-coral/10 hover:text-charcoal"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </div>
+        {/* Primary nav links are for visitors only; signed-in members get
+            their account menu instead of marketing navigation. */}
+        {!signedIn && (
+          <div className="hidden items-center gap-7 lg:flex">
+            {NAV_LINKS.map((l) => (
+              <Link
+                key={l.label}
+                href={l.href}
+                className="rounded-full px-3.5 py-2 text-sm font-semibold text-charcoal/75 transition-colors hover:bg-coral/10 hover:text-charcoal"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
+        )}
 
         <div className="hidden items-center gap-2 lg:flex">
           {signedIn ? (
@@ -71,16 +75,22 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-3 lg:hidden">
-          {signedIn && <UserMenu />}
-          <button
-            className="flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-1.5"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-          >
-            <span className={cn("h-0.5 w-6 bg-charcoal transition-transform", open && "translate-y-2 rotate-45")} />
-            <span className={cn("h-0.5 w-6 bg-charcoal transition-opacity", open && "opacity-0")} />
-            <span className={cn("h-0.5 w-6 bg-charcoal transition-transform", open && "-translate-y-2 -rotate-45")} />
-          </button>
+          {signedIn ? (
+            // Signed-in members see only the account menu (which contains
+            // Profile, Settings, Sign Out, Appearance, etc.); the hamburger
+            // would just open an empty drawer.
+            <UserMenu />
+          ) : (
+            <button
+              className="flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-1.5"
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              <span className={cn("h-0.5 w-6 bg-charcoal transition-transform", open && "translate-y-2 rotate-45")} />
+              <span className={cn("h-0.5 w-6 bg-charcoal transition-opacity", open && "opacity-0")} />
+              <span className={cn("h-0.5 w-6 bg-charcoal transition-transform", open && "-translate-y-2 -rotate-45")} />
+            </button>
+          )}
         </div>
       </nav>
 
