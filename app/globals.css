@@ -1,21 +1,46 @@
 @import "tailwindcss";
 
+/* ============================================================
+   PureLifePartner palette — soft, warm & elegant
+   --------------------------------------------------------------
+   Primary / Background : Soft Pink      #FFC5D3
+   Accent / Buttons     : Deep Crimson   #E63946
+   Text / Dark Elements : Dark Charcoal  #2B2325
+   Highlights / Icons   : Golden Yellow  #E5A93C
+   ============================================================ */
 :root {
   --color-white: #ffffff;
-  --color-off-white: #fbf8f8; /* warm cream page background */
-  --color-coral: #d5453a; /* clay red primary */
-  --color-coral-muted: #b93d32; /* darker red for hovers */
   --color-black: #000000;
-  --color-charcoal: #1a1516; /* warm ink text */
+
+  /* Brand palette */
+  --color-soft-pink: #ffc5d3; /* primary brand pink */
+  --color-crimson: #e63946; /* accent / buttons */
+  --color-crimson-muted: #c92d3a; /* darker crimson for hovers */
+  --color-gold: #e5a93c; /* highlights / icons */
+
+  /* Page surface: a gentle tint of the soft pink so white cards still
+     pop while the whole app reads warm and pink. The full-strength
+     #FFC5D3 is reserved for washes, sections and the bg-soft-pink utility. */
+  --color-off-white: #fff1f4;
+  --color-charcoal: #2b2325; /* dark charcoal text */
+
+  /* Back-compat aliases: existing components still use the "coral"
+     tokens for the primary action colour — point them at crimson. */
+  --color-coral: var(--color-crimson);
+  --color-coral-muted: var(--color-crimson-muted);
 }
 
 @theme inline {
   --color-coral: var(--color-coral);
   --color-coral-muted: var(--color-coral-muted);
+  --color-crimson: var(--color-crimson);
+  --color-crimson-muted: var(--color-crimson-muted);
+  --color-soft-pink: var(--color-soft-pink);
+  --color-gold: var(--color-gold);
   --color-charcoal: var(--color-charcoal);
   --color-off-white: var(--color-off-white);
   /* "ink" stays dark in BOTH themes (toasts, badges, dark panels) */
-  --color-ink: #1a1516;
+  --color-ink: #2b2325;
   --font-sans: var(--font-sans-app), ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -43,8 +68,8 @@ body {
 }
 
 ::selection {
-  background: #f5c8c2;
-  color: #1a1516;
+  background: var(--color-soft-pink);
+  color: var(--color-charcoal);
 }
 
 /* Display face for headings; body copy stays on the sans */
@@ -55,17 +80,23 @@ h3 {
   letter-spacing: -0.02em;
 }
 
-/* Soft radial accent wash for hero / CTA backdrops */
+/* Soft radial accent wash for hero / CTA backdrops.
+   Layers the soft pink, a touch of crimson and a golden glow. */
 .wash {
   background-image: radial-gradient(
       60% 50% at 78% 8%,
-      rgba(213, 69, 58, 0.12) 0%,
-      rgba(213, 69, 58, 0) 60%
+      rgba(255, 197, 211, 0.55) 0%,
+      rgba(255, 197, 211, 0) 60%
     ),
     radial-gradient(
-      50% 45% at 12% 22%,
-      rgba(197, 54, 43, 0.07) 0%,
-      rgba(197, 54, 43, 0) 60%
+      55% 50% at 18% 14%,
+      rgba(229, 169, 60, 0.16) 0%,
+      rgba(229, 169, 60, 0) 60%
+    ),
+    radial-gradient(
+      50% 45% at 50% 95%,
+      rgba(230, 57, 70, 0.08) 0%,
+      rgba(230, 57, 70, 0) 60%
     );
 }
 
@@ -80,62 +111,63 @@ h3 {
 /* Tinted, airy shadows in place of plain gray ones */
 .shadow-sm {
   box-shadow:
-    0 24px 70px -50px rgba(26, 21, 22, 0.45),
-    0 0 0 1px rgba(213, 69, 58, 0.05);
+    0 24px 70px -50px rgba(43, 35, 37, 0.4),
+    0 0 0 1px rgba(230, 57, 70, 0.06);
 }
 .shadow-md,
 .hover\:shadow-md:hover {
   box-shadow:
-    0 30px 80px -48px rgba(26, 21, 22, 0.5),
-    0 0 0 1px rgba(213, 69, 58, 0.07);
+    0 30px 80px -48px rgba(43, 35, 37, 0.45),
+    0 0 0 1px rgba(230, 57, 70, 0.08);
 }
 
 /* ---------- Dark mode ----------
-   Warm near-black surfaces to match the ink/cream palette. */
+   Deep charcoal surfaces derived from #2B2325, with pink/gold accents
+   carried through unchanged for warmth. */
 .dark {
   color-scheme: dark;
-  --color-charcoal: #ece6e5; /* light warm text */
-  --color-off-white: #171112; /* deep warm page background */
+  --color-charcoal: #f2e9ea; /* light warm text */
+  --color-off-white: #1c1719; /* deep charcoal page background */
 }
 
 .dark body {
-  background: #171112;
+  background: #1c1719;
 }
 
 .dark .bg-white {
-  background-color: #211a1b;
+  background-color: #2b2325;
 }
 .dark .bg-white\/85 {
-  background-color: rgba(33, 26, 27, 0.85);
+  background-color: rgba(43, 35, 37, 0.85);
 }
 .dark .from-white {
-  --tw-gradient-from: #171112;
+  --tw-gradient-from: #1c1719;
 }
 
 .dark .border-gray-300 {
-  border-color: #463a3b;
+  border-color: #4a3d3f;
 }
 .dark .border-gray-200 {
-  border-color: #3a3132;
+  border-color: #3d3234;
 }
 .dark .border-gray-100,
 .dark .border-gray-50 {
-  border-color: #2e2728;
+  border-color: #322a2c;
 }
 .dark .text-gray-500 {
-  color: #a89a99;
+  color: #ab9d9e;
 }
 .dark .text-gray-400 {
-  color: #998b8a;
+  color: #9c8e8f;
 }
 .dark .bg-gray-200 {
-  background-color: #3a3132;
+  background-color: #3d3234;
 }
 .dark .bg-gray-100 {
-  background-color: #2e2728;
+  background-color: #322a2c;
 }
 .dark .hover\:bg-black:hover {
-  background-color: #0d0a0b;
+  background-color: #110d0e;
 }
 .dark .shadow-sm,
 .dark .shadow-md,
@@ -188,11 +220,11 @@ h3 {
 
 .plp-skeleton {
   animation: plp-pulse 1.6s ease-in-out infinite;
-  background: #f1e9e8;
+  background: #fbdde3;
 }
 
 .dark .plp-skeleton {
-  background: #2e2728;
+  background: #322a2c;
 }
 
 /* ---------- Parallax echo heading (ScrollSmoother) ----------
@@ -223,7 +255,7 @@ h3 {
   left: 0;
   right: 0;
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(213, 69, 58, 0.4);
+  -webkit-text-stroke: 1.5px rgba(230, 57, 70, 0.4);
 }
 
 /* Phones: keep the parallax echo visible but scaled down so it fits on
