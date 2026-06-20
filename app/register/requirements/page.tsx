@@ -129,16 +129,17 @@ export default function RegisterRequirements() {
     }
     await supabase
       .from("profiles")
-      .update({ registration_step: 6 })
+      .update({ registration_step: 5 })
       .eq("id", userData.user.id);
     return true;
   }
 
   return (
     <RegistrationShell
-      step={6}
+      step={5}
       title="Your Requirements (Partner Preferences)"
       onSave={save}
+      completionPath="/matches"
     >
       {() => {
         if (!loaded) return <div className="plp-skeleton h-64 rounded-xl" />;

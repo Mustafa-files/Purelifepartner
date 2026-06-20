@@ -10,6 +10,7 @@ import { PhoneInput } from "@/components/ui/phone-input";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { GoogleButton, OrDivider } from "@/components/ui/google-button";
 import { toast } from "@/components/ui/toast";
+import { notifyNewRegistration } from "@/lib/notify";
 import { GENDERS } from "@/lib/constants";
 import {
   AGE_ERROR,
@@ -123,7 +124,7 @@ export default function RegisterStep1() {
         },
         emailRedirectTo:
           typeof window !== "undefined"
-            ? `${window.location.origin}/login`
+            ? `${window.location.origin}/auth/confirm`
             : undefined,
       },
     });
@@ -133,6 +134,9 @@ export default function RegisterStep1() {
       setSubmitting(false);
       return;
     }
+
+    // Alert the admin on WhatsApp about the new registration (best effort).
+    notifyNewRegistration({ name: handle.trim(), email: email.trim() });
 
     // If email confirmation is disabled a session exists right away;
     // otherwise the user must confirm via the email we just sent.
@@ -154,12 +158,13 @@ export default function RegisterStep1() {
             Confirm your email
           </h1>
           <p className="mt-3 text-charcoal/70">
-            We sent a confirmation link with your login details to{" "}
-            <span className="font-bold">{email}</span>. Click the link, then
-            sign in to continue your registration.
+            We sent a confirmation link to{" "}
+            <span className="font-bold">{email}</span>. Click the link to verify
+            your email and continue your registration. You must confirm your
+            email before you can sign in.
           </p>
           <Link href="/login" className="mt-6 inline-block">
-            <Button>Go to Sign In</Button>
+            <Button variant="outline">Go to Sign In</Button>
           </Link>
         </div>
       </div>

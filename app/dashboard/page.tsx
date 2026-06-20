@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { AvatarCropper } from "@/components/ui/avatar-cropper";
 import { Button } from "@/components/ui/button";
+import { accountTypeLabel } from "@/components/ui/role-badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
 import { REGISTRATION_STEPS } from "@/lib/constants";
@@ -18,9 +19,13 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const avatarRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLInputElement>(null);
+  const photosRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState<"avatar" | "video" | null>(null);
   const [cropFile, setCropFile] = useState<File | null>(null);
   const [deletingVideo, setDeletingVideo] = useState(false);
+  const [photoBusy, setPhotoBusy] = useState(false);
+
+  const MAX_PHOTOS = 5;
 
   useEffect(() => {
     const supabase = createClient();
@@ -131,6 +136,76 @@ export default function Dashboard() {
     setUploading(null);
   }
 
+  async function addPhotos(files: FileList) {
+    if (!profile) return;
+    const current = profile.photos ?? [];
+    const remaining = MAX_PHOTOS - current.length;
+    if (remaining <= 0) {
+      toast(`You can upload up to ${MAX_PHOTOS} photos.`, "error");
+      return;
+    }
+    const picked = Array.from(files).slice(0, remaining);
+    setPhotoBusy(true);
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getUser();
+    if (!userData.user) {
+      setPhotoBusy(false);
+      return;
+    }
+
+    const uploaded: string[] = [];
+    for (const file of picked) {
+      if (!file.type.startsWith("image/")) continue;
+      const path = `${userData.user.id}/gallery-${Date.now()}-${file.name}`;
+      const { error } = await supabase.storage
+        .from("avatars")
+        .upload(path, file);
+      if (error) {
+        toast("Upload failed: " + error.message, "error");
+        continue;
+      }
+      uploaded.push(
+        supabase.storage.from("avatars").getPublicUrl(path).data.publicUrl
+      );
+    }
+
+    if (uploaded.length > 0) {
+      const next = [...current, ...uploaded].slice(0, MAX_PHOTOS);
+      await supabase
+        .from("profiles")
+        .update({ photos: next })
+        .eq("id", userData.user.id);
+      setProfile({ ...profile, photos: next });
+      toast(`${uploaded.length} photo(s) added.`);
+    }
+    setPhotoBusy(false);
+  }
+
+  async function removePhoto(url: string) {
+    if (!profile) return;
+    setPhotoBusy(true);
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getUser();
+    if (!userData.user) {
+      setPhotoBusy(false);
+      return;
+    }
+    // Best effort: also drop the file from storage.
+    const marker = "/avatars/";
+    if (url.includes(marker)) {
+      const path = decodeURIComponent(url.slice(url.indexOf(marker) + marker.length));
+      await supabase.storage.from("avatars").remove([path]);
+    }
+    const next = (profile.photos ?? []).filter((p) => p !== url);
+    await supabase
+      .from("profiles")
+      .update({ photos: next })
+      .eq("id", userData.user.id);
+    setProfile({ ...profile, photos: next });
+    setPhotoBusy(false);
+    toast("Photo removed.");
+  }
+
   if (loading || !profile) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-12">
@@ -141,8 +216,9 @@ export default function Dashboard() {
   }
 
   const step = profile.registration_step ?? 1;
-  const incomplete = step < 7;
-  const nextStep = REGISTRATION_STEPS[Math.min(step, 6)];
+  const totalSteps = REGISTRATION_STEPS.length;
+  const incomplete = step < totalSteps;
+  const nextStep = REGISTRATION_STEPS[Math.min(step, totalSteps - 1)];
 
   return (
     <div className="bg-off-white py-10">
@@ -199,16 +275,28 @@ export default function Dashboard() {
                 Profile No. {profile.internal_id} · Registered{" "}
                 {formatDate(profile.registration_date)}
               </p>
-              <span
-                className={cn(
-                  "mt-2 inline-block rounded-full px-3 py-1 text-xs font-bold",
-                  profile.status === "Verified"
-                    ? "bg-green-100 text-green-700"
-                    : "bg-amber-100 text-amber-700"
-                )}
-              >
-                {profile.status}
-              </span>
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                <span
+                  className={cn(
+                    "inline-block rounded-full px-3 py-1 text-xs font-bold",
+                    profile.status === "Verified"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-amber-100 text-amber-700"
+                  )}
+                >
+                  {profile.status}
+                </span>
+                <span
+                  className={cn(
+                    "inline-block rounded-full px-3 py-1 text-xs font-bold",
+                    profile.role === "admin"
+                      ? "bg-amber-100 text-amber-700"
+                      : "bg-gray-100 text-gray-600"
+                  )}
+                >
+                  Account Type: {accountTypeLabel(profile.role)}
+                </span>
+              </div>
             </div>
 
             {profile.status !== "Verified" && (
@@ -224,7 +312,7 @@ export default function Dashboard() {
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border-2 border-dashed border-coral/40 bg-coral/5 p-6">
             <div>
               <h2 className="font-bold text-charcoal">
-                Your profile is incomplete ({step}/7 steps done)
+                Your profile is incomplete ({step}/{totalSteps} steps done)
               </h2>
               <p className="mt-1 text-sm text-charcoal/60">
                 Complete profiles get far more responses. Next:{" "}
@@ -329,6 +417,73 @@ export default function Dashboard() {
               <p className="mt-2 text-xs font-semibold text-green-600">
                 ✓ Video intro live on your profile
               </p>
+            )}
+          </div>
+        </div>
+
+        {/* Photo gallery */}
+        <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-bold text-charcoal">Your Photos</h2>
+              <p className="text-sm text-charcoal/60">
+                Upload up to {MAX_PHOTOS} photos. They appear on your profile for
+                other members.
+              </p>
+            </div>
+            <span className="text-sm font-semibold text-charcoal/50">
+              {(profile.photos ?? []).length}/{MAX_PHOTOS}
+            </span>
+          </div>
+
+          <input
+            ref={photosRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={(e) => {
+              if (e.target.files?.length) addPhotos(e.target.files);
+              e.target.value = "";
+            }}
+          />
+
+          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
+            {(profile.photos ?? []).map((url) => (
+              <div
+                key={url}
+                className="group relative aspect-square overflow-hidden rounded-xl bg-off-white"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={url}
+                  alt="Profile photo"
+                  className="h-full w-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => removePhoto(url)}
+                  disabled={photoBusy}
+                  className="absolute right-1.5 top-1.5 cursor-pointer rounded-full bg-black/55 px-2 py-0.5 text-xs font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 disabled:opacity-50"
+                  title="Remove photo"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+
+            {(profile.photos ?? []).length < MAX_PHOTOS && (
+              <button
+                type="button"
+                onClick={() => photosRef.current?.click()}
+                disabled={photoBusy}
+                className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-coral/40 bg-coral/5 text-coral transition-colors hover:bg-coral/10 disabled:opacity-50"
+              >
+                <span className="text-3xl leading-none">＋</span>
+                <span className="mt-1 text-xs font-bold">
+                  {photoBusy ? "Uploading..." : "Add Photo"}
+                </span>
+              </button>
             )}
           </div>
         </div>

@@ -208,10 +208,10 @@ export const COUNTRY_CODES = [
 ];
 
 export const CURRENCIES = [
-  { code: "PKR", label: "Pakistani Rupee", symbol: "Rs", amount: 5000, country: "Pakistan" },
-  { code: "GBP", label: "British Pound", symbol: "£", amount: 50, country: "United Kingdom" },
-  { code: "EUR", label: "Euro", symbol: "€", amount: 60, country: "Germany" },
-  { code: "USD", label: "US Dollar", symbol: "$", amount: 65, country: "United States" },
+  { code: "PKR", label: "Pakistani Rupee", symbol: "Rs", amount: 20000, country: "Pakistan" },
+  { code: "GBP", label: "British Pound", symbol: "£", amount: 100, country: "United Kingdom" },
+  { code: "EUR", label: "Euro", symbol: "€", amount: 100, country: "Germany" },
+  { code: "USD", label: "US Dollar", symbol: "$", amount: 100, country: "United States" },
 ];
 
 export const PROFILE_STATUSES = [
@@ -227,7 +227,5 @@ export const REGISTRATION_STEPS = [
   { path: "/register/personal", label: "Personal Info" },
   { path: "/register/religion", label: "Religion & Caste" },
   { path: "/register/residence", label: "Residence" },
-  { path: "/register/family", label: "Family Details" },
   { path: "/register/requirements", label: "Partner Requirements" },
-  { path: "/register/contact", label: "Contact Details" },
 ];

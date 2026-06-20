@@ -9,12 +9,11 @@ const PROTECTED_PREFIXES = [
   "/admin",
   "/system",
   "/payment",
+  "/matches",
   "/register/personal",
   "/register/religion",
   "/register/residence",
-  "/register/family",
   "/register/requirements",
-  "/register/contact",
 ];
 
 export async function middleware(request: NextRequest) {
@@ -73,11 +72,10 @@ export const config = {
     "/admin/:path*",
     "/system/:path*",
     "/payment/:path*",
+    "/matches/:path*",
     "/register/personal/:path*",
     "/register/religion/:path*",
     "/register/residence/:path*",
-    "/register/family/:path*",
     "/register/requirements/:path*",
-    "/register/contact/:path*",
   ],
 };

@@ -6,15 +6,16 @@ export function ProfileCard({ profile }: { profile: PublicProfile }) {
   const location = [profile.city?.[0], profile.residence_country?.[0]]
     .filter(Boolean)
     .join(", ");
+  const cover = profile.avatar_url ?? profile.photos?.[0] ?? null;
 
   return (
     <div className="flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-md">
       {/* Photo */}
       <Link href={`/profile/${profile.id}`} className="relative block">
-        {profile.avatar_url ? (
+        {cover ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={profile.avatar_url}
+            src={cover}
             alt={profile.user_id_handle ?? "Profile"}
             loading="lazy"
             decoding="async"

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ScrollAnimations } from "@/components/ui/scroll-animations";
+import { HeroImage } from "@/components/ui/hero-image";
 
 export default function LandingPage() {
   return (
@@ -21,64 +22,16 @@ export default function LandingPage() {
 
 function AppBadges() {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex flex-wrap items-center justify-center gap-3">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/play-badge.png"
-        alt="Get it on play store"
+        alt="Get it on Google Play"
         className="h-12 w-auto cursor-pointer transition-transform hover:scale-105"
       />
-    </div>
-  );
-}
-
-function PhoneMockup() {
-  return (
-    <div className="relative mx-auto w-64 sm:w-72">
-      <div className="rounded-[2.5rem] border-[10px] border-ink bg-white p-3 shadow-2xl">
-        <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-gray-200" />
-        <div className="rounded-2xl bg-off-white p-3">
-          <div className="mb-3 flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-coral text-sm font-bold text-white">
-              A
-            </div>
-            <div>
-              <div className="text-xs font-bold text-charcoal">Ayesha_K</div>
-              <div className="text-[10px] text-gray-500">London, UK · 26</div>
-            </div>
-            <span className="ml-auto rounded-full bg-green-100 px-2 py-0.5 text-[9px] font-bold text-green-700">
-              Verified
-            </span>
-          </div>
-          <div className="mb-3 flex h-36 items-center justify-center rounded-xl bg-gradient-to-br from-coral/20 to-coral/40 text-4xl">
-            🌸
-          </div>
-          <div className="space-y-1.5">
-            <div className="h-2 w-3/4 rounded bg-gray-200" />
-            <div className="h-2 w-1/2 rounded bg-gray-200" />
-          </div>
-          <div className="mt-3 flex gap-2">
-            <div className="flex-1 rounded-full bg-coral py-1.5 text-center text-[10px] font-bold text-white">
-              View Profile
-            </div>
-            <div className="flex-1 rounded-full border border-coral py-1.5 text-center text-[10px] font-bold text-coral">
-              Save
-            </div>
-          </div>
-        </div>
-        <div className="mt-3 flex justify-around text-lg">
-          <span>🏠</span>
-          <span>🔍</span>
-          <span className="opacity-40">💬</span>
-          <span className="opacity-40">👤</span>
-        </div>
-      </div>
-      <div className="absolute -right-4 -top-4 rounded-2xl bg-white px-3 py-2 shadow-lg">
-        <span className="text-xs font-bold text-charcoal">💍 500+ matches</span>
-      </div>
-      <div className="absolute -bottom-3 -left-6 rounded-2xl bg-white px-3 py-2 shadow-lg">
-        <span className="text-xs font-bold text-charcoal">🕌 Halal & Safe</span>
-      </div>
+      <span className="text-sm font-semibold text-charcoal/70">
+        iOS Version Coming Soon
+      </span>
     </div>
   );
 }
@@ -92,8 +45,8 @@ function Hero() {
             Where Pure Hearts <span className="text-coral">Find Their Match</span>
           </h1>
           <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70 lg:mx-0">
-            A halal, respectful, and modern platform for Muslims seeking a life
-            partner
+            PureLifePartner helps you meet genuine, verified individuals seeking
+            real commitment, with privacy, respect, and values at the core.
           </p>
           <div className="gsap-hero mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
             <Link href="/register">
@@ -111,7 +64,7 @@ function Hero() {
         </div>
         {/* data-speed instead of an entrance tween: both writing to y would fight */}
         <div className="hidden lg:block" data-speed="0.9">
-          <PhoneMockup />
+          <HeroImage className="mx-auto w-full max-w-xl rounded-3xl" />
         </div>
       </div>
     </section>

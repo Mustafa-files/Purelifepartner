@@ -40,17 +40,17 @@ Note: `next-on-pages` shells out to the Vercel CLI, which is officially unreliab
 | `/` | Landing page (hero, how it works, features, testimonials, stats, CTA) |
 | `/register` | Step 1: login details (gender, DOB with 16-35 validation, email, WhatsApp, unique User ID, password) |
 | `/register/personal` | Step 2: name (office only), marital status, height ft/in and cm auto-convert, education, profession |
-| `/register/religion` | Step 3: religion, sect, caste, sub caste, describe yourself, document verification upload, job and income |
+| `/register/religion` | Step 3: religion, sect, caste, sub caste, describe yourself, document verification upload, consolidated Family Details box |
 | `/register/residence` | Step 4: nationality, country, dynamic cities, residence type, size, story |
-| `/register/family` | Step 5: parents, brothers and sisters with per-sibling descriptions |
-| `/register/requirements` | Step 6: partner preferences (age sliders 16-35, region, country, city cascades, All-X options) |
-| `/register/contact` | Step 7: father, mother and candidate contact numbers |
+| `/register/requirements` | Step 5 (final): partner preferences (age sliders 16-35, region, country, city cascades, All-X options). On save, redirects to `/matches` |
 | `/register/agent` | Agent application with bank details |
-| `/login` | Email and password sign in plus password reset |
-| `/dashboard` | Member dashboard: status, avatar and video upload, profile completion |
+| `/auth/confirm` | Email confirmation handler with clean expired/already-used messages and resend |
+| `/login` | Email and password sign in (blocked until email confirmed) plus password reset |
+| `/dashboard` | Member dashboard: account type, status, avatar, photo gallery (up to 5) and video upload, profile completion |
+| `/matches` | Auto-matched profiles based on the member's saved requirements (no contact details) |
 | `/search` | Public profile search with the full filter panel |
-| `/profile/[id]` | Profile view with the gated "View Contact Details" flow |
-| `/payment` | Multi-currency verification payment (PKR, GBP, EUR, USD) |
+| `/profile/[id]` | Profile view with photo gallery and the gated "View Contact Details" flow |
+| `/payment` | Multi-currency verification payment (PKR 20,000, GBP 100, EUR 100, USD 100) |
 | `/admin` | Admin: users, agents, payments, dropdown values, WhatsApp log, notes, bank accounts |
 | `/system` | System users: edit any profile, office notes |
 | `/success-stories` | Success stories |
@@ -73,10 +73,24 @@ New signups default to the `user` role. Promote your account in the Supabase SQL
 update public.profiles set role = 'admin' where email = 'you@example.com';
 ```
 
+## WhatsApp notifications
+
+Outbound WhatsApp is sent by the `whatsapp-notify` Supabase Edge Function (`supabase/functions/whatsapp-notify`). It is called on new registration (alerts the admin at `+447748528207`) and when a member's matches are found, and it always records the message in `whatsapp_logs` (visible in the admin WhatsApp Log).
+
+To make real sending live, set the Meta WhatsApp Cloud API secrets, then the function sends; until then it logs only:
+
+```powershell
+supabase secrets set WHATSAPP_TOKEN=... WHATSAPP_PHONE_NUMBER_ID=... --project-ref iucizzrqvpsuotatmvrc
+```
+
+## Email confirmation
+
+Sign up sends a confirmation link that lands on `/auth/confirm`, which verifies the token (handles `token_hash`/`code`/hash flows) and shows a clean message for expired or already-used links. Sign in is blocked until the email is confirmed. Ensure "Confirm email" is enabled in Supabase Auth > Providers > Email.
+
 ## Remaining integrations (TODO)
 
 1. **Stripe**: `/payment` currently records bank transfers for manual admin confirmation. Add a Checkout Session API route plus webhook, then flip `payments.status` and `profiles.status` from the webhook handler (see TODO comment in `app/payment/page.tsx`).
-2. **WhatsApp inbound webhook**: outbound messages are logged to `whatsapp_logs` when admins confirm payments. For inbound replies, register a WhatsApp Business API webhook pointing at a Supabase Edge Function that inserts rows with `direction = 'inbound'` (see TODO in `app/admin/page.tsx`).
+2. **WhatsApp inbound webhook**: for inbound replies, register a WhatsApp Business API webhook pointing at a Supabase Edge Function that inserts rows with `direction = 'inbound'` (see TODO in `app/admin/page.tsx`).
 3. **AI document verification**: uploads land in the private `documents` bucket and set `doc_verification_status = 'pending_review'` for manual agent review. Wire an Edge Function to OCR and match Name and DOB, and delete documents after verification.
 4. **Auth user deletion**: deleting a profile in `/admin` removes the profile row; removing the `auth.users` login requires a service-role Edge Function.
 5. **Email confirmation**: if "Confirm email" is enabled in Supabase Auth settings, users confirm before continuing to Step 2 (the UI handles both modes).

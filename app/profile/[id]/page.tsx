@@ -152,6 +152,27 @@ export default function ProfileView({
           </div>
         </ScreenshotGuard>
 
+        {/* Photo gallery */}
+        {profile.photos && profile.photos.length > 0 && (
+          <ScreenshotGuard>
+            <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+              <h2 className="mb-4 text-lg font-bold text-charcoal">Photos</h2>
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                {profile.photos.map((url) => (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    key={url}
+                    src={url}
+                    alt="Member photo"
+                    loading="lazy"
+                    className="aspect-square w-full rounded-xl object-cover"
+                  />
+                ))}
+              </div>
+            </div>
+          </ScreenshotGuard>
+        )}
+
         {/* Video introduction */}
         {profile.video_url && (
           <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-8">

@@ -129,8 +129,7 @@ function ProfileEditor({
     name_private: profile.name_private ?? "",
     agent_registration_no: profile.agent_registration_no ?? "",
     describe_yourself: profile.describe_yourself ?? "",
-    job_details: profile.job_details ?? "",
-    income_details: profile.income_details ?? "",
+    family_details: profile.family_details ?? "",
   });
   const [notes, setNotes] = useState<OfficeNote[]>([]);
   const [newNote, setNewNote] = useState("");
@@ -160,8 +159,7 @@ function ProfileEditor({
         name_private: form.name_private.trim() || null,
         agent_registration_no: form.agent_registration_no.trim() || null,
         describe_yourself: form.describe_yourself.trim() || null,
-        job_details: form.job_details.trim() || null,
-        income_details: form.income_details.trim() || null,
+        family_details: form.family_details.trim() || null,
         ...(form.status === "Verified" && profile.status !== "Verified"
           ? { verified_at: new Date().toISOString() }
           : {}),
@@ -238,26 +236,16 @@ function ProfileEditor({
               }
             />
           </FieldLabel>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <FieldLabel label="Job Details">
-              <Textarea
-                rows={2}
-                value={form.job_details}
-                onChange={(e) =>
-                  setForm({ ...form, job_details: e.target.value })
-                }
-              />
-            </FieldLabel>
-            <FieldLabel label="Income Details">
-              <Textarea
-                rows={2}
-                value={form.income_details}
-                onChange={(e) =>
-                  setForm({ ...form, income_details: e.target.value })
-                }
-              />
-            </FieldLabel>
-          </div>
+          <FieldLabel label="Family Details">
+            <Textarea
+              rows={3}
+              value={form.family_details}
+              onChange={(e) =>
+                setForm({ ...form, family_details: e.target.value })
+              }
+              placeholder="Details about family and siblings"
+            />
+          </FieldLabel>
         </div>
 
         <Button className="mt-5" onClick={save} loading={saving}>

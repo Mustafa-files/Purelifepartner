@@ -14,6 +14,7 @@ interface ShellProps {
   title: string;
   children: (profile: Profile) => React.ReactNode;
   onSave: () => Promise<boolean>; // returns true when save succeeded
+  completionPath?: string; // where to go after the final step (default: dashboard)
 }
 
 /**
@@ -21,7 +22,13 @@ interface ShellProps {
  * renders a progress bar, and provides Back / Save & Continue navigation.
  * Each step writes its fields to Supabase on save (form auto-save per step).
  */
-export function RegistrationShell({ step, title, children, onSave }: ShellProps) {
+export function RegistrationShell({
+  step,
+  title,
+  children,
+  onSave,
+  completionPath = "/dashboard",
+}: ShellProps) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -56,7 +63,7 @@ export function RegistrationShell({ step, title, children, onSave }: ShellProps)
     if (!ok) return;
     toast("Progress saved.");
     const next = REGISTRATION_STEPS[step]; // step is 1-based, so this is the next one
-    router.push(next ? next.path : "/dashboard");
+    router.push(next ? next.path : completionPath);
   }
 
   function handleBack() {

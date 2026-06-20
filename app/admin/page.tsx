@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { FieldLabel, Input, Select, Textarea } from "@/components/ui/fields";
+import { RoleBadge } from "@/components/ui/role-badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
 import { CURRENCIES, PROFILE_STATUSES } from "@/lib/constants";
@@ -207,17 +208,20 @@ function UsersTab() {
                   </select>
                 </td>
                 <td className="py-2.5 pr-3">
-                  <select
-                    value={u.role}
-                    onChange={(e) =>
-                      update(u.id, { role: e.target.value as Profile["role"] })
-                    }
-                    className="cursor-pointer rounded-lg border border-gray-200 px-2 py-1 text-xs"
-                  >
-                    {["user", "agent", "system", "admin"].map((r) => (
-                      <option key={r}>{r}</option>
-                    ))}
-                  </select>
+                  <div className="flex flex-col items-start gap-1.5">
+                    <RoleBadge role={u.role} />
+                    <select
+                      value={u.role}
+                      onChange={(e) =>
+                        update(u.id, { role: e.target.value as Profile["role"] })
+                      }
+                      className="cursor-pointer rounded-lg border border-gray-200 px-2 py-1 text-xs"
+                    >
+                      {["user", "agent", "system", "admin"].map((r) => (
+                        <option key={r}>{r}</option>
+                      ))}
+                    </select>
+                  </div>
                 </td>
                 <td className="py-2.5 pr-3">
                   <select

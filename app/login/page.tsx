@@ -15,6 +15,7 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [needsConfirm, setNeedsConfirm] = useState(false);
 
   async function signIn() {
     if (!email || !password) {
@@ -22,6 +23,7 @@ function LoginForm() {
       return;
     }
     setLoading(true);
+    setNeedsConfirm(false);
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword({
       email: email.trim(),
@@ -29,11 +31,35 @@ function LoginForm() {
     });
     setLoading(false);
     if (error) {
+      // Supabase blocks sign in until the email is confirmed.
+      if (/email not confirmed|not confirmed|email_not_confirmed/i.test(error.message)) {
+        setNeedsConfirm(true);
+        toast(
+          "Please confirm your email first. Check your inbox for the link.",
+          "error"
+        );
+        return;
+      }
       toast(error.message, "error");
       return;
     }
     router.push(params.get("next") ?? "/dashboard");
     router.refresh();
+  }
+
+  async function resendConfirmation() {
+    if (!email) {
+      toast("Enter your email first.", "error");
+      return;
+    }
+    const supabase = createClient();
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: email.trim(),
+      options: { emailRedirectTo: `${window.location.origin}/auth/confirm` },
+    });
+    if (error) toast(error.message, "error");
+    else toast("A new confirmation link is on its way. Check your inbox.");
   }
 
   async function resetPassword() {
@@ -87,6 +113,19 @@ function LoginForm() {
               />
             </FieldLabel>
           </div>
+
+          {needsConfirm && (
+            <div className="mt-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
+              Your email is not confirmed yet. Please click the link in the
+              confirmation email we sent you.{" "}
+              <button
+                onClick={resendConfirmation}
+                className="cursor-pointer font-bold underline"
+              >
+                Resend confirmation link
+              </button>
+            </div>
+          )}
 
           <Button className="mt-8 w-full" onClick={signIn} loading={loading}>
             Sign In
