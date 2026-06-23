@@ -38,13 +38,25 @@ function ConfirmInner() {
     const errorCode =
       params.get("error_code") || hash.get("error_code") || params.get("error");
 
+    // Any failure must leave the user signed out: a half-completed or stale
+    // session should never be enough to slip past the login screen.
+    async function fail(next: Exclude<Status, "verifying" | "success">, msg: string) {
+      try {
+        await supabase.auth.signOut();
+      } catch {
+        // Best effort; we still show the failure and bounce to login below.
+      }
+      setStatus(next);
+      setMessage(msg);
+    }
+
     async function run() {
       if (errorDescription || errorCode) {
         const expired =
           /expired|otp_expired|invalid|already/i.test(errorDescription ?? "") ||
           /expired|otp_expired|access_denied/i.test(errorCode ?? "");
-        setStatus(expired ? "expired" : "error");
-        setMessage(
+        await fail(
+          expired ? "expired" : "error",
           errorDescription?.replace(/\+/g, " ") ||
             "We could not confirm this link."
         );
@@ -74,21 +86,21 @@ function ConfirmInner() {
           });
           if (error) throw error;
         } else {
-          // No token at all: the user may already be confirmed.
-          const { data } = await supabase.auth.getUser();
-          if (!data.user) {
-            setStatus("error");
-            setMessage("This confirmation link is missing its token.");
-            return;
-          }
+          // No token in the link: this is not a valid confirmation. We do not
+          // treat an already-present session as success here, because that is
+          // exactly the case where a failed link was letting users through.
+          await fail(
+            "error",
+            "This confirmation link is missing its token. Please sign in or request a new link."
+          );
+          return;
         }
 
         setStatus("success");
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
         const expired = /expired|invalid|already|used/i.test(msg);
-        setStatus(expired ? "expired" : "error");
-        setMessage(msg);
+        await fail(expired ? "expired" : "error", msg);
       }
     }
 
@@ -100,6 +112,17 @@ function ConfirmInner() {
   useEffect(() => {
     if (status !== "success") return;
     const t = setTimeout(() => router.replace("/register/personal"), 1800);
+    return () => clearTimeout(t);
+  }, [status, router]);
+
+  // When authentication fails, do not strand the user on this page: revert
+  // them back to the login screen so they cannot proceed as if logged in.
+  useEffect(() => {
+    if (status !== "expired" && status !== "error") return;
+    const t = setTimeout(
+      () => router.replace("/login?error=auth_failed"),
+      4000
+    );
     return () => clearTimeout(t);
   }, [status, router]);
 
@@ -142,8 +165,9 @@ function ConfirmInner() {
               </h1>
               <p className="mt-3 text-charcoal/70">
                 Your confirmation link is no longer valid or has already been
-                used. If your email is already confirmed you can simply sign in.
-                Otherwise, request a fresh link below.
+                used. You have not been signed in. If your email is already
+                confirmed you can simply sign in; otherwise request a fresh link
+                below. Taking you back to the sign in page...
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Link href="/login">
@@ -158,10 +182,11 @@ function ConfirmInner() {
             <>
               <div className="text-5xl">😕</div>
               <h1 className="mt-4 text-2xl font-bold text-charcoal">
-                We could not confirm your email
+                Authentication failed
               </h1>
               <p className="mt-3 text-charcoal/70">
-                {message || "Something went wrong with this link."}
+                {message || "Something went wrong with this link."} You have not
+                been signed in. Taking you back to the sign in page...
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Link href="/login">

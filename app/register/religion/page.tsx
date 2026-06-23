@@ -30,6 +30,8 @@ export default function RegisterReligion() {
     sub_caste: "",
     sub_caste_other: "",
     describe_yourself: "",
+    job_details: "",
+    income_details: "",
     family_details: "",
   });
   const [hydrated, setHydrated] = useState(false);
@@ -47,6 +49,8 @@ export default function RegisterReligion() {
       caste: p.caste ?? "",
       sub_caste: p.sub_caste ?? "",
       describe_yourself: p.describe_yourself ?? "",
+      job_details: p.job_details ?? "",
+      income_details: p.income_details ?? "",
       family_details: p.family_details ?? "",
     }));
     setDocUploaded(p.doc_verification_status === "pending_review");
@@ -119,6 +123,8 @@ export default function RegisterReligion() {
         caste,
         sub_caste: subCaste || null,
         describe_yourself: form.describe_yourself.trim() || null,
+        job_details: form.job_details.trim() || null,
+        income_details: form.income_details.trim() || null,
         family_details: form.family_details.trim() || null,
         registration_step: 3,
       })
@@ -277,10 +283,39 @@ export default function RegisterReligion() {
             </div>
 
             <h2 className="border-t border-gray-100 pt-6 text-lg font-bold text-charcoal">
+              Job / Business / Income
+            </h2>
+
+            <FieldLabel label="Job / Business">
+              <Textarea
+                rows={3}
+                value={form.job_details}
+                onChange={(e) =>
+                  setForm({ ...form, job_details: e.target.value })
+                }
+                placeholder="Describe your job or business"
+              />
+            </FieldLabel>
+
+            <FieldLabel label="Income">
+              <Input
+                value={form.income_details}
+                onChange={(e) =>
+                  setForm({ ...form, income_details: e.target.value })
+                }
+                placeholder="Your income"
+              />
+            </FieldLabel>
+
+            <h2 className="border-t border-gray-100 pt-6 text-lg font-bold text-charcoal">
               Family Details
             </h2>
 
-            <FieldLabel label="Family Details" required>
+            <FieldLabel
+              label="Family Details"
+              required
+              hint="(Please Provide Details about Your family and Siblings)"
+            >
               <Textarea
                 rows={4}
                 value={form.family_details}

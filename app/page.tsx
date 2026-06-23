@@ -44,6 +44,11 @@ function Hero() {
           <h1 className="gsap-hero text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl lg:text-6xl">
             Where Pure Hearts <span className="text-coral">Find Their Match</span>
           </h1>
+          {/* Mobile hero image: the side column below is desktop-only, so render
+              the same image here under the headline for small screens. */}
+          <div className="gsap-hero mt-8 lg:hidden">
+            <HeroImage className="mx-auto w-full max-w-md rounded-3xl" />
+          </div>
           <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70 lg:mx-0">
             PureLifePartner helps you meet genuine, verified individuals seeking
             real commitment, with privacy, respect, and values at the core.

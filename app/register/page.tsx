@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { FieldLabel, Input, RadioGroup } from "@/components/ui/fields";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { ProgressBar } from "@/components/ui/progress-bar";
-import { GoogleButton, OrDivider } from "@/components/ui/google-button";
 import { toast } from "@/components/ui/toast";
 import { notifyNewRegistration } from "@/lib/notify";
 import { GENDERS } from "@/lib/constants";
@@ -185,11 +184,6 @@ export default function RegisterStep1() {
               Sign in here
             </Link>
           </p>
-
-          <div className="mb-6 space-y-4">
-            <GoogleButton next="/dashboard" />
-            <OrDivider />
-          </div>
 
           <div className="space-y-5">
             <FieldLabel label="Gender" required error={errors.gender}>

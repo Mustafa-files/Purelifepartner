@@ -35,6 +35,8 @@ export interface Profile {
   caste: string | null;
   sub_caste: string | null;
   describe_yourself: string | null;
+  job_details: string | null;
+  income_details: string | null;
   family_details: string | null;
   nationality: string[] | null;
   residence_country: string[] | null;
@@ -98,6 +100,7 @@ export type PublicProfile = Pick<
   | "residence_country"
   | "city"
   | "status"
+  | "role"
   | "avatar_url"
   | "photos"
   | "video_url"

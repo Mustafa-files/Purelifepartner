@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RoleBadge } from "@/components/ui/role-badge";
 import { formatHeight } from "@/lib/utils";
 import type { PublicProfile } from "@/types";
 
@@ -50,6 +51,7 @@ export function ProfileCard({ profile }: { profile: PublicProfile }) {
             </span>
           )}
         </div>
+        {profile.role && <RoleBadge role={profile.role} className="mt-1" />}
         {location && (
           <span className="mt-0.5 text-sm text-charcoal/60">📍 {location}</span>
         )}

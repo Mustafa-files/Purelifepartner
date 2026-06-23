@@ -1,12 +1,11 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { FieldLabel, Input } from "@/components/ui/fields";
-import { GoogleButton, OrDivider } from "@/components/ui/google-button";
 import { toast } from "@/components/ui/toast";
 
 function LoginForm() {
@@ -16,6 +15,17 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [needsConfirm, setNeedsConfirm] = useState(false);
+
+  // When a confirmation/auth link fails, the confirm page bounces the user
+  // here so they cannot proceed as if signed in. Tell them clearly why.
+  useEffect(() => {
+    if (params.get("error") === "auth_failed") {
+      toast(
+        "Authentication failed. You have not been signed in. Please sign in or create a new account.",
+        "error"
+      );
+    }
+  }, [params]);
 
   async function signIn() {
     if (!email || !password) {
@@ -89,11 +99,6 @@ function LoginForm() {
               Create a free profile
             </Link>
           </p>
-
-          <div className="mb-6 space-y-4">
-            <GoogleButton next={params.get("next") ?? "/dashboard"} />
-            <OrDivider />
-          </div>
 
           <div className="space-y-5">
             <FieldLabel label="Email" required>

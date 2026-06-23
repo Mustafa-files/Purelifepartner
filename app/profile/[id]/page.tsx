@@ -4,6 +4,7 @@ import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
+import { RoleBadge } from "@/components/ui/role-badge";
 import { ScreenshotGuard } from "@/components/ui/screenshot-guard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
@@ -136,6 +137,7 @@ export default function ProfileView({
                   </span>
                 )}
               </div>
+              {profile.role && <RoleBadge role={profile.role} className="mt-1" />}
               <p className="mt-1 text-charcoal/60">
                 Profile No. {profile.internal_id}
                 {profile.age != null && ` · ${profile.age} years`}
