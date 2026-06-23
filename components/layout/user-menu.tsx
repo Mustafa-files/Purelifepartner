@@ -21,6 +21,7 @@ export function UserMenu() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [appearanceOpen, setAppearanceOpen] = useState(false);
   const [theme, setTheme] = useTheme();
   const [confirmingSignOut, setConfirmingSignOut] = useState(false);
@@ -39,6 +40,12 @@ export function UserMenu() {
         .eq("id", data.user.id)
         .single();
       setProfile(prof as Profile);
+
+      // Authorize the admin shortcut with the same security-definer RPC the
+      // admin page uses, so the link shows exactly when /admin is reachable -
+      // independent of whether the profiles select above succeeds (RLS/keys).
+      const { data: role } = await supabase.rpc("get_my_role");
+      setIsAdmin(role === "admin");
     });
   }, []);
 
@@ -171,6 +178,19 @@ export function UserMenu() {
                     {item.label}
                   </Link>
                 ))}
+
+                {/* Admins get a shortcut to the (otherwise unlinked) admin
+                    panel; the page itself re-checks the role server-side. */}
+                {isAdmin && (
+                  <Link
+                    href="/admin"
+                    onClick={close}
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-coral transition-colors hover:bg-coral/10"
+                  >
+                    <span className="text-base">🛡️</span>
+                    Admin Panel
+                  </Link>
+                )}
 
                 {/* Appearance: expands to Light / Dark */}
                 <button
