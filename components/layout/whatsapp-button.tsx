@@ -11,9 +11,9 @@ export function WhatsAppButton() {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/whatsapp-icon.png"
+        src="/plp-logo-circle.png"
         alt=""
-        className="h-full w-full rounded-full"
+        className="h-full w-full rounded-full object-cover"
       />
     </a>
   );

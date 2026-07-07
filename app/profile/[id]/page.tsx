@@ -138,11 +138,13 @@ export default function ProfileView({
                 )}
               </div>
               {profile.role && <RoleBadge role={profile.role} className="mt-1" />}
-              <p className="mt-1 text-charcoal/60">
-                Profile No. {profile.internal_id}
-                {profile.age != null && ` · ${profile.age} years`}
-                {location && ` · ${location}`}
-              </p>
+              {(profile.age != null || location) && (
+                <p className="mt-1 text-charcoal/60">
+                  {profile.age != null && `${profile.age} years`}
+                  {profile.age != null && location && " · "}
+                  {location}
+                </p>
+              )}
             </div>
           </div>
 

@@ -8,8 +8,21 @@ import { FieldLabel, Input, Select } from "@/components/ui/fields";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
-import { cn, validateEmail, validatePassword } from "@/lib/utils";
+import {
+  AGE_ERROR,
+  calcAge,
+  cn,
+  parseFlexibleDate,
+  toISODate,
+  validateEmail,
+  validatePassword,
+} from "@/lib/utils";
 import type { NotificationPrefs, Profile } from "@/types";
+
+function formatDobInput(iso: string): string {
+  const [y, m, d] = iso.split("-");
+  return `${d}/${m}/${y}`;
+}
 
 const VISIBILITY_OPTIONS = ["Everyone", "Verified members only"];
 const toDb = (v: string) => (v === "Verified members only" ? "verified" : "everyone");
@@ -85,6 +98,10 @@ function AccountSection({ profile }: { profile: Profile }) {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [phone, setPhone] = useState(profile.whatsapp_no ?? "+92 ");
+  const [dobText, setDobText] = useState(
+    profile.dob ? formatDobInput(profile.dob) : ""
+  );
+  const [dobError, setDobError] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const supabase = createClient();
 
@@ -127,6 +144,28 @@ function AccountSection({ profile }: { profile: Profile }) {
     setBusy(null);
     if (error) toast(error.message, "error");
     else toast("Phone number updated.");
+  }
+
+  async function updateDob() {
+    const date = parseFlexibleDate(dobText);
+    if (!date) {
+      setDobError("Enter a valid date (DD/MM/YYYY, MM/DD/YYYY or YYYY/MM/DD).");
+      return;
+    }
+    const age = calcAge(date);
+    if (age < 16 || age > 35) {
+      setDobError(AGE_ERROR);
+      return;
+    }
+    setDobError(null);
+    setBusy("dob");
+    const { error } = await supabase
+      .from("profiles")
+      .update({ dob: toISODate(date), age })
+      .eq("id", profile.id);
+    setBusy(null);
+    if (error) toast(error.message, "error");
+    else toast("Date of birth updated.");
   }
 
   return (
@@ -184,6 +223,28 @@ function AccountSection({ profile }: { profile: Profile }) {
           loading={busy === "phone"}
         >
           Save Phone
+        </Button>
+      </div>
+
+      <div className="border-t border-gray-100 pt-5">
+        <FieldLabel
+          label="Date of Birth"
+          hint="DD/MM/YYYY, MM/DD/YYYY or YYYY/MM/DD"
+          error={dobError}
+        >
+          <Input
+            value={dobText}
+            onChange={(e) => setDobText(e.target.value)}
+            placeholder="25/06/2000"
+          />
+        </FieldLabel>
+        <Button
+          size="sm"
+          className="mt-3"
+          onClick={updateDob}
+          loading={busy === "dob"}
+        >
+          Save Date of Birth
         </Button>
       </div>
     </Section>

@@ -272,8 +272,7 @@ export default function Dashboard() {
                 {profile.user_id_handle ?? "Member"}
               </h1>
               <p className="text-sm text-charcoal/60">
-                Profile No. {profile.internal_id} · Registered{" "}
-                {formatDate(profile.registration_date)}
+                Registered {formatDate(profile.registration_date)}
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <span
