@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { FieldLabel, Input } from "@/components/ui/fields";
 import { toast } from "@/components/ui/toast";
+import { memberEmailFor } from "@/lib/bulk-profiles";
 import { safeNextPath } from "@/lib/safe-next";
 
 function LoginForm() {
@@ -29,30 +30,31 @@ function LoginForm() {
     }
   }, [params]);
 
+  const isEmail = email.includes("@");
+
   async function signIn() {
-    if (!email || !password) {
-      toast("Enter your email and password.", "error");
+    const identifier = email.trim();
+    if (!identifier || !password) {
+      toast("Enter your email or User ID and password.", "error");
       return;
     }
     setLoading(true);
     setNeedsConfirm(false);
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
-      password,
-    });
+    const error = isEmail
+      ? await signInWithEmail(identifier, password)
+      : await signInWithUserId(identifier, password);
     setLoading(false);
     if (error) {
       // Supabase blocks sign in until the email is confirmed.
-      if (/email not confirmed|not confirmed|email_not_confirmed/i.test(error.message)) {
-        setNeedsConfirm(true);
+      if (/email not confirmed|not confirmed|email_not_confirmed/i.test(error)) {
+        setNeedsConfirm(isEmail);
         toast(
           "Please confirm your email first. Check your inbox for the link.",
           "error"
         );
         return;
       }
-      toast(error.message, "error");
+      toast(error, "error");
       return;
     }
     router.push(safeNextPath(params.get("next")) ?? "/dashboard");
@@ -60,7 +62,7 @@ function LoginForm() {
   }
 
   async function resendConfirmation() {
-    if (!email) {
+    if (!isEmail) {
       toast("Enter your email first.", "error");
       return;
     }
@@ -75,8 +77,11 @@ function LoginForm() {
   }
 
   async function resetPassword() {
-    if (!email) {
-      toast("Enter your email first, then click reset.", "error");
+    if (!isEmail) {
+      toast(
+        "Enter your email first, then click reset. Signed up with a User ID only? Contact us on WhatsApp to reset your password.",
+        "error"
+      );
       return;
     }
     const supabase = createClient();
@@ -103,9 +108,12 @@ function LoginForm() {
           </p>
 
           <div className="space-y-5">
-            <FieldLabel label="Email" required>
+            <FieldLabel label="Email or User ID" required>
               <Input
-                type="email"
+                type="text"
+                autoComplete="username"
+                autoCapitalize="none"
+                spellCheck={false}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && signIn()}
@@ -114,6 +122,7 @@ function LoginForm() {
             <FieldLabel label="Password" required>
               <Input
                 type="password"
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && signIn()}
@@ -138,7 +147,6 @@ function LoginForm() {
             Sign In
           </Button>
 
-
           <button
             onClick={resetPassword}
             className="mt-4 block w-full cursor-pointer text-center text-sm font-semibold text-charcoal/60 hover:text-coral"
@@ -149,6 +157,49 @@ function LoginForm() {
       </div>
     </div>
   );
+}
+
+/** Returns an error message, or null when signed in. */
+async function signInWithEmail(email: string, password: string): Promise<string | null> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  return error ? error.message : null;
+}
+
+async function signInWithUserId(userId: string, password: string): Promise<string | null> {
+  if (!/^[A-Za-z0-9_]{3,30}$/.test(userId)) {
+    return "Enter a valid email address or User ID.";
+  }
+  const supabase = createClient();
+
+  // Accounts created by staff sign in with a placeholder email derived from
+  // the User ID, so try that directly first.
+  const direct = await supabase.auth.signInWithPassword({
+    email: memberEmailFor(userId),
+    password,
+  });
+  if (!direct.error) return null;
+
+  // Otherwise the account has a real email; the server looks it up so it is
+  // never exposed to the browser.
+  const { data, error } = await supabase.functions.invoke("handle-login", {
+    body: { user_id: userId, password },
+  });
+  if (error || !data?.access_token) {
+    const context = (error as { context?: Response } | null)?.context;
+    try {
+      const body = context ? await context.json() : null;
+      if (body?.error) return body.error;
+    } catch {
+      // Fall through to the generic message.
+    }
+    return "Incorrect User ID or password.";
+  }
+  const { error: sessionError } = await supabase.auth.setSession({
+    access_token: data.access_token,
+    refresh_token: data.refresh_token,
+  });
+  return sessionError ? sessionError.message : null;
 }
 
 export default function LoginPage() {

@@ -1,8 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
+import { isPlaceholderEmail } from "@/lib/bulk-profiles";
 import { Button } from "@/components/ui/button";
 import { FieldLabel, Input, Select, Textarea } from "@/components/ui/fields";
 import { RoleBadge } from "@/components/ui/role-badge";
@@ -112,6 +114,8 @@ function UsersTab() {
   const [agents, setAgents] = useState<Profile[]>([]);
   const [statusFilter, setStatusFilter] = useState("");
   const [loading, setLoading] = useState(true);
+  const [resetting, setResetting] = useState<string | null>(null);
+  const [newLogin, setNewLogin] = useState<{ userId: string; password: string } | null>(null);
   const supabase = createClient();
 
   const load = useCallback(async () => {
@@ -142,6 +146,27 @@ function UsersTab() {
     }
   }
 
+  async function resetPassword(u: Profile) {
+    if (!confirm(`Reset the password for ${u.user_id_handle ?? u.email}? Their old password stops working.`)) return;
+    setResetting(u.id);
+    const { data, error } = await supabase.functions.invoke("staff-accounts", {
+      body: { action: "reset_password", profile_id: u.id },
+    });
+    setResetting(null);
+    if (error || !data?.password) {
+      let message = "Could not reset the password.";
+      try {
+        const body = await (error as { context?: Response })?.context?.json();
+        if (body?.error) message = body.error;
+      } catch {
+        // Keep the generic message.
+      }
+      toast(message, "error");
+      return;
+    }
+    setNewLogin({ userId: data.user_id_handle ?? u.user_id_handle ?? "", password: data.password });
+  }
+
   async function remove(id: string, handle: string | null) {
     if (!confirm(`Delete profile ${handle ?? id}? This cannot be undone.`)) return;
     // TODO: also delete the auth.users row via a service-role edge function;
@@ -165,7 +190,13 @@ function UsersTab() {
           className="max-w-xs"
         />
         <span className="text-sm text-charcoal/50">{users.length} users</span>
+        <Link href="/staff/bulk-profiles" className="ml-auto">
+          <Button size="sm">👥 Bulk Create Profiles</Button>
+        </Link>
       </div>
+      {newLogin && (
+        <NewPasswordDialog login={newLogin} onClose={() => setNewLogin(null)} />
+      )}
       {loading ? (
         <Skeleton className="h-48 w-full" />
       ) : (
@@ -188,7 +219,15 @@ function UsersTab() {
                 <td className="py-2.5 pr-3 font-bold">{u.internal_id}</td>
                 <td className="py-2.5 pr-3">{u.user_id_handle}</td>
                 <td className="py-2.5 pr-3">{u.name_private}</td>
-                <td className="py-2.5 pr-3">{u.email}</td>
+                <td className="py-2.5 pr-3">
+                  {isPlaceholderEmail(u.email) ? (
+                    <span className="rounded-full bg-gold/20 px-2.5 py-0.5 text-xs font-bold text-charcoal">
+                      No email, User ID login
+                    </span>
+                  ) : (
+                    u.email
+                  )}
+                </td>
                 <td className="py-2.5 pr-3">
                   <select
                     value={u.status}
@@ -239,7 +278,16 @@ function UsersTab() {
                     ))}
                   </select>
                 </td>
-                <td className="py-2.5">
+                <td className="space-x-3 whitespace-nowrap py-2.5">
+                  {u.role !== "admin" && (
+                    <button
+                      onClick={() => resetPassword(u)}
+                      disabled={resetting === u.id}
+                      className="cursor-pointer text-xs font-bold text-coral hover:underline disabled:opacity-50"
+                    >
+                      {resetting === u.id ? "Resetting..." : "Reset password"}
+                    </button>
+                  )}
                   <button
                     onClick={() => remove(u.id, u.user_id_handle)}
                     className="cursor-pointer text-xs font-bold text-red-500 hover:underline"
@@ -253,6 +301,62 @@ function UsersTab() {
         </table>
       )}
     </Panel>
+  );
+}
+
+function NewPasswordDialog({
+  login,
+  onClose,
+}: {
+  login: { userId: string; password: string };
+  onClose: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  const message = `PureLifePartner login\nUser ID: ${login.userId}\nNew password: ${login.password}\nSign in: https://purelifepartner.com/login`;
+
+  return (
+    <div
+      className="fixed inset-0 z-[70] flex items-center justify-center bg-black/40 p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-coral/10 text-2xl">🔑</div>
+        <h3 className="mt-3 text-lg font-bold text-charcoal">Password reset</h3>
+        <p className="mt-1 text-sm text-charcoal/60">
+          Share this with the member. It is shown only once.
+        </p>
+        <div className="mt-4 space-y-2 rounded-xl bg-off-white p-4 text-sm">
+          <div className="flex justify-between gap-3">
+            <span className="text-charcoal/50">User ID</span>
+            <span className="font-mono font-bold text-coral">{login.userId}</span>
+          </div>
+          <div className="flex justify-between gap-3">
+            <span className="text-charcoal/50">Password</span>
+            <span className="font-mono font-bold text-charcoal">{login.password}</span>
+          </div>
+        </div>
+        <div className="mt-5 flex gap-2">
+          <Button
+            className="flex-1"
+            size="sm"
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(message);
+                setCopied(true);
+              } catch {
+                toast("Could not copy. Select the text instead.", "error");
+              }
+            }}
+          >
+            {copied ? "Copied ✓" : "Copy for WhatsApp"}
+          </Button>
+          <Button className="flex-1" size="sm" variant="outline" onClick={onClose}>
+            Done
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -8,6 +8,7 @@ import { FieldLabel, Input, Select } from "@/components/ui/fields";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
+import { isPlaceholderEmail } from "@/lib/bulk-profiles";
 import {
   AGE_ERROR,
   calcAge,
@@ -94,7 +95,8 @@ function Section({
 }
 
 function AccountSection({ profile }: { profile: Profile }) {
-  const [email, setEmail] = useState(profile.email ?? "");
+  const noEmail = isPlaceholderEmail(profile.email);
+  const [email, setEmail] = useState(noEmail ? "" : profile.email ?? "");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [phone, setPhone] = useState(profile.whatsapp_no ?? "+92 ");
@@ -113,7 +115,9 @@ function AccountSection({ profile }: { profile: Profile }) {
     if (error) toast(error.message, "error");
     else
       toast(
-        "Confirmation links sent. Check both your old and new inbox to finish the change.",
+        noEmail
+          ? "Confirmation link sent. Check your inbox to finish adding your email."
+          : "Confirmation links sent. Check both your old and new inbox to finish the change.",
         "info"
       );
   }
@@ -176,9 +180,17 @@ function AccountSection({ profile }: { profile: Profile }) {
     >
       <div className="flex items-end gap-3">
         <div className="flex-1">
-          <FieldLabel label="Email">
+          <FieldLabel
+            label="Email"
+            hint={
+              noEmail
+                ? `You sign in with your User ID (${profile.user_id_handle}). Add an email to reset your password yourself.`
+                : undefined
+            }
+          >
             <Input
               type="email"
+              placeholder={noEmail ? "Add an email address" : undefined}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />

@@ -84,6 +84,14 @@ To make real sending live, set the Meta WhatsApp Cloud API secrets, then the fun
 supabase secrets set WHATSAPP_TOKEN=... WHATSAPP_PHONE_NUMBER_ID=... --project-ref iucizzrqvpsuotatmvrc
 ```
 
+## Bulk profile creation (no email)
+
+`/staff/bulk-profiles` (admins and agents) creates member accounts from an Excel/CSV upload for people without an email. The page validates every row first, then calls the `staff-accounts` Edge Function, which creates each login with a confirmed placeholder email `<user id>@members.purelifepartner.com` (no email is sent) and fills the profile. Profiles created by an agent get `agent_id` set to that agent. Generated logins download as an Excel file.
+
+- Members sign in on `/login` with their User ID and password. The browser tries the placeholder email first; accounts with a real email fall back to the `handle-login` Edge Function, so emails never reach the browser.
+- Placeholder accounts cannot use "Forgot password"; admins use **Reset password** in Admin > Users.
+- Deploy: `supabase functions deploy staff-accounts` and `supabase functions deploy handle-login --no-verify-jwt`.
+
 ## Email confirmation
 
 Sign up sends a confirmation link that lands on `/auth/confirm`, which verifies the token (handles `token_hash`/`code`/hash flows) and shows a clean message for expired or already-used links. Sign in is blocked until the email is confirmed. Ensure "Confirm email" is enabled in Supabase Auth > Providers > Email.

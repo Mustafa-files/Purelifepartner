@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { ThemeOptions, useTheme } from "@/components/ui/appearance";
+import { isPlaceholderEmail } from "@/lib/bulk-profiles";
 import { cn } from "@/lib/utils";
 import type { Profile } from "@/types";
 
@@ -22,6 +23,7 @@ export function UserMenu() {
   const [mounted, setMounted] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isAgent, setIsAgent] = useState(false);
   const [appearanceOpen, setAppearanceOpen] = useState(false);
   const [theme, setTheme] = useTheme();
   const [confirmingSignOut, setConfirmingSignOut] = useState(false);
@@ -46,6 +48,7 @@ export function UserMenu() {
       // independent of whether the profiles select above succeeds (RLS/keys).
       const { data: role } = await supabase.rpc("get_my_role");
       setIsAdmin(role === "admin");
+      setIsAgent(role === "agent");
     });
   }, []);
 
@@ -161,7 +164,9 @@ export function UserMenu() {
                     {displayName}
                   </div>
                   <div className="truncate text-xs text-charcoal/50">
-                    {profile?.email}
+                    {isPlaceholderEmail(profile?.email)
+                      ? `User ID: ${profile?.user_id_handle}`
+                      : profile?.email}
                   </div>
                 </div>
               </div>
@@ -189,6 +194,16 @@ export function UserMenu() {
                   >
                     <span className="text-base">🛡️</span>
                     Admin Panel
+                  </Link>
+                )}
+                {(isAdmin || isAgent) && (
+                  <Link
+                    href="/staff/bulk-profiles"
+                    onClick={close}
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-coral transition-colors hover:bg-coral/10"
+                  >
+                    <span className="text-base">👥</span>
+                    Bulk Create Profiles
                   </Link>
                 )}
 
