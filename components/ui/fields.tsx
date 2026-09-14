@@ -73,7 +73,9 @@ export const PasswordInput = forwardRef<
         title={visible ? "Hide password" : "Show password"}
         className="absolute inset-y-0 right-0 flex w-12 cursor-pointer items-center justify-center rounded-r-xl text-gray-400 transition-colors hover:text-coral focus-visible:text-coral focus-visible:outline-none"
       >
-        {visible ? <EyeOffIcon /> : <EyeIcon />}
+        {/* The icon shows the current state: crossed-out eye while hidden,
+            open eye while visible. The label describes the click action. */}
+        {visible ? <EyeIcon /> : <EyeOffIcon />}
       </button>
     </div>
   );
