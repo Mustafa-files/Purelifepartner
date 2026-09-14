@@ -276,37 +276,13 @@ function saveWorkbook(xlsx: XLSX, wb: import("xlsx").WorkBook, filename: string)
   saveBlob([data], XLSX_MIME, filename);
 }
 
-const EXAMPLE_ROW: Record<string, string | number> = {
-    Gender: "Female",
-    "Date of Birth": "14/03/2001",
-    "WhatsApp Number": "+92 300 1234567",
-    "Full Name": "Ayesha Khan",
-    "User ID": "",
-    Password: "",
-    "Marital Status": "Never Married",
-    "Height (ft)": 5,
-    "Height (in)": 4,
-    Qualification: "Graduation",
-    Profession: "Teacher",
-    Religion: "Islam",
-    Sect: "Sunni",
-    "Practice Nazar Nayaz Khatam": "Yes",
-    Caste: "Rajput",
-    "Sub Caste": "Bhatti",
-    "Describe Yourself": "Kind, family oriented and fond of reading.",
-    Nationality: "Pakistan",
-    "Residence Country": "Pakistan",
-    "Residence Type": "Own",
-    City: "Lahore",
-};
+const HEADER_ROW = COLUMNS.map((c) => c.header);
 
 export async function downloadTemplate() {
   const xlsx = await loadXlsx();
   const wb = xlsx.utils.book_new();
 
-  const profiles = xlsx.utils.json_to_sheet([EXAMPLE_ROW], {
-    header: COLUMNS.map((c) => c.header),
-  });
+  const profiles = xlsx.utils.aoa_to_sheet([HEADER_ROW]);
   profiles["!cols"] = COLUMNS.map((c) => ({ wch: Math.max(14, c.header.length + 2) }));
   xlsx.utils.book_append_sheet(wb, profiles, "Profiles");
 
@@ -314,7 +290,8 @@ export async function downloadTemplate() {
     ["Column", "Section", "Required", "How to fill it"],
     ...COLUMNS.map((c) => [c.header, c.group, c.required ? "Yes" : "No", c.hint]),
     [],
-    ["Replace the example row with your own. One row per person."],
+    ["Fill in one row per person on the Profiles sheet, starting at row 2."],
+    ["Dates as DD/MM/YYYY, for example 14/03/2001."],
     ["Allowed values for dropdown style columns are on the Allowed Values sheet."],
     ["Profiles missing Personal, Religion or Residence details are created as incomplete."],
   ]);
@@ -333,12 +310,10 @@ export async function downloadTemplate() {
   saveWorkbook(xlsx, wb, "PureLifePartner-bulk-profiles-template.xlsx");
 }
 
-/** CSV version of the template (header plus the example row). */
+/** CSV version of the template (header row only). */
 export async function downloadCsvTemplate() {
   const xlsx = await loadXlsx();
-  const sheet = xlsx.utils.json_to_sheet([EXAMPLE_ROW], {
-    header: COLUMNS.map((c) => c.header),
-  });
+  const sheet = xlsx.utils.aoa_to_sheet([HEADER_ROW]);
   // The byte order mark makes Excel open the file as UTF-8, so non-Latin
   // names (Urdu, Arabic, Russian) display correctly.
   saveBlob(["﻿", xlsx.utils.sheet_to_csv(sheet)], "text/csv;charset=utf-8", "PureLifePartner-bulk-profiles-template.csv");
