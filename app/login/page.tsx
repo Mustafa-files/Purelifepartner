@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
-import { FieldLabel, Input } from "@/components/ui/fields";
+import { FieldLabel, Input, PasswordInput } from "@/components/ui/fields";
 import { toast } from "@/components/ui/toast";
 import { memberEmailFor } from "@/lib/bulk-profiles";
 import { safeNextPath } from "@/lib/safe-next";
@@ -120,8 +120,7 @@ function LoginForm() {
               />
             </FieldLabel>
             <FieldLabel label="Password" required>
-              <Input
-                type="password"
+              <PasswordInput
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

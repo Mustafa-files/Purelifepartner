@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
-import { FieldLabel, Input, Select } from "@/components/ui/fields";
+import { FieldLabel, Input, PasswordInput, Select } from "@/components/ui/fields";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
@@ -206,15 +206,15 @@ function AccountSection({ profile }: { profile: Profile }) {
           label="New Password"
           hint="Min 8 chars with uppercase, lowercase and a number"
         >
-          <Input
-            type="password"
+          <PasswordInput
+            autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </FieldLabel>
         <FieldLabel label="Repeat New Password">
-          <Input
-            type="password"
+          <PasswordInput
+            autoComplete="new-password"
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
           />

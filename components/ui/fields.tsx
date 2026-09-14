@@ -6,6 +6,7 @@ import {
   SelectHTMLAttributes,
   TextareaHTMLAttributes,
   forwardRef,
+  useState,
 } from "react";
 
 const baseField =
@@ -49,6 +50,54 @@ export const Input = forwardRef<
 >(function Input({ className, ...props }, ref) {
   return <input ref={ref} className={cn(baseField, className)} {...props} />;
 });
+
+/** Password input with an eye button that shows or hides the characters. */
+export const PasswordInput = forwardRef<
+  HTMLInputElement,
+  Omit<InputHTMLAttributes<HTMLInputElement>, "type">
+>(function PasswordInput({ className, ...props }, ref) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div className="relative">
+      <input
+        ref={ref}
+        type={visible ? "text" : "password"}
+        className={cn(baseField, "pr-12", className)}
+        {...props}
+      />
+      <button
+        type="button"
+        onClick={() => setVisible((v) => !v)}
+        aria-label={visible ? "Hide password" : "Show password"}
+        aria-pressed={visible}
+        title={visible ? "Hide password" : "Show password"}
+        className="absolute inset-y-0 right-0 flex w-12 cursor-pointer items-center justify-center rounded-r-xl text-gray-400 transition-colors hover:text-coral focus-visible:text-coral focus-visible:outline-none"
+      >
+        {visible ? <EyeOffIcon /> : <EyeIcon />}
+      </button>
+    </div>
+  );
+});
+
+function EyeIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
+
+function EyeOffIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M10.6 5.1A10.7 10.7 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2" />
+      <path d="M6.6 6.6C3.8 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6" />
+      <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
+      <path d="m2 2 20 20" />
+    </svg>
+  );
+}
 
 export const Textarea = forwardRef<
   HTMLTextAreaElement,

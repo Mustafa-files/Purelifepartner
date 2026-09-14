@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
-import { FieldLabel, Input } from "@/components/ui/fields";
+import { FieldLabel, Input, PasswordInput } from "@/components/ui/fields";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { toast } from "@/components/ui/toast";
 import { validateEmail, validatePassword } from "@/lib/utils";
@@ -116,8 +116,8 @@ export default function AgentRegistration() {
                 />
               </FieldLabel>
               <FieldLabel label="Password" required>
-                <Input
-                  type="password"
+                <PasswordInput
+                  autoComplete="new-password"
                   value={form.password}
                   onChange={(e) =>
                     setForm({ ...form, password: e.target.value })

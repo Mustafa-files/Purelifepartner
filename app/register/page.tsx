@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
-import { FieldLabel, Input, RadioGroup } from "@/components/ui/fields";
+import { FieldLabel, Input, PasswordInput, RadioGroup } from "@/components/ui/fields";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { toast } from "@/components/ui/toast";
@@ -261,15 +261,15 @@ export default function RegisterStep1() {
                 hint="Min 8 chars with uppercase, lowercase and a number"
                 error={errors.password}
               >
-                <Input
-                  type="password"
+                <PasswordInput
+                  autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </FieldLabel>
               <FieldLabel label="Repeat Password" required error={errors.password2}>
-                <Input
-                  type="password"
+                <PasswordInput
+                  autoComplete="new-password"
                   value={password2}
                   onChange={(e) => setPassword2(e.target.value)}
                 />
