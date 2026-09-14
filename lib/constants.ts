@@ -110,7 +110,7 @@ export const REGIONS = [
 export const COUNTRIES_BY_REGION: Record<string, string[]> = {
   Africa: ["Algeria", "Egypt", "Kenya", "Libya", "Morocco", "Nigeria", "Somalia", "South Africa", "Sudan", "Tanzania", "Tunisia"],
   Asia: ["Afghanistan", "Bahrain", "Bangladesh", "China", "India", "Indonesia", "Iran", "Iraq", "Japan", "Jordan", "Kuwait", "Lebanon", "Malaysia", "Maldives", "Oman", "Pakistan", "Philippines", "Qatar", "Saudi Arabia", "Singapore", "Sri Lanka", "Syria", "Thailand", "Turkey", "United Arab Emirates", "Uzbekistan", "Yemen"],
-  Europe: ["Austria", "Belgium", "Bosnia and Herzegovina", "Denmark", "Finland", "France", "Germany", "Greece", "Ireland", "Italy", "Netherlands", "Norway", "Poland", "Portugal", "Spain", "Sweden", "Switzerland", "United Kingdom"],
+  Europe: ["Austria", "Belgium", "Bosnia and Herzegovina", "Denmark", "Finland", "France", "Germany", "Greece", "Ireland", "Italy", "Netherlands", "Norway", "Poland", "Portugal", "Russia", "Spain", "Sweden", "Switzerland", "United Kingdom"],
   "North America": ["Canada", "Mexico", "United States"],
   Oceania: ["Australia", "Fiji", "New Zealand"],
   "South America": ["Argentina", "Brazil", "Chile", "Colombia", "Peru", "Venezuela"],
@@ -150,6 +150,7 @@ export const CITIES_BY_COUNTRY: Record<string, string[]> = {
   Bahrain: ["Manama", "Muharraq"],
   Oman: ["Muscat", "Salalah"],
   "New Zealand": ["Auckland", "Christchurch", "Wellington"],
+  Russia: ["Kazan", "Makhachkala", "Moscow", "Novosibirsk", "Saint Petersburg", "Ufa", "Yekaterinburg"],
 };
 
 export function citiesForCountries(countries: string[]): string[] {
@@ -191,6 +192,7 @@ export const COUNTRY_CODES = [
   { code: "+45", country: "Denmark" },
   { code: "+353", country: "Ireland" },
   { code: "+90", country: "Turkey" },
+  { code: "+7", country: "Russia" },
   { code: "+966", country: "Saudi Arabia" },
   { code: "+971", country: "UAE" },
   { code: "+974", country: "Qatar" },

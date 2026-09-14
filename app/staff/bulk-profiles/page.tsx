@@ -9,6 +9,7 @@ import { toast } from "@/components/ui/toast";
 import {
   COLUMNS,
   completedStep,
+  downloadCsvTemplate,
   downloadLogins,
   downloadTemplate,
   readSpreadsheet,
@@ -254,10 +255,13 @@ export default function BulkProfilesPage() {
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <Button variant="outline" onClick={() => downloadTemplate()}>
-              ⬇ Download Excel template
+              ⬇ Excel template (.xlsx)
+            </Button>
+            <Button variant="ghost" onClick={() => downloadCsvTemplate()}>
+              ⬇ CSV template
             </Button>
             <span className="text-sm text-charcoal/50">
-              Includes instructions and the list of allowed values.
+              The Excel file also includes instructions and the allowed values.
             </span>
           </div>
         </Card>

@@ -42,8 +42,7 @@ export interface Column {
   options?: Options;
 }
 
-const uniq = (xs: string[]) =>
-  Array.from(new Set(xs.filter((x) => x !== "Others" && x !== "Other")));
+const uniq = (xs: string[]) => Array.from(new Set(xs));
 const ALL_SECTS = uniq(Object.values(SECTS_BY_RELIGION).flat());
 const ALL_SUB_CASTES = uniq(Object.values(SUB_CASTES_BY_CASTE).flat());
 
@@ -252,15 +251,32 @@ export function completedStep(data: ParsedRow["data"]): number {
 type XLSX = typeof import("xlsx");
 const loadXlsx = (): Promise<XLSX> => import("xlsx");
 
-function download(xlsx: XLSX, wb: import("xlsx").WorkBook, filename: string) {
-  xlsx.writeFile(wb, filename, { compression: true });
+const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+/**
+ * Saves a file with an explicit type and extension. SheetJS's writeFile uses
+ * a generic octet-stream blob, which some browsers and embedded webviews save
+ * without the .xlsx extension.
+ */
+function saveBlob(parts: BlobPart[], type: string, filename: string) {
+  const url = URL.createObjectURL(new Blob(parts, { type }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.rel = "noopener";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  // Revoking straight away can cancel the download in some browsers.
+  setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }
 
-export async function downloadTemplate() {
-  const xlsx = await loadXlsx();
-  const wb = xlsx.utils.book_new();
+function saveWorkbook(xlsx: XLSX, wb: import("xlsx").WorkBook, filename: string) {
+  const data = xlsx.write(wb, { bookType: "xlsx", type: "array", compression: true });
+  saveBlob([data], XLSX_MIME, filename);
+}
 
-  const example: Record<string, string | number> = {
+const EXAMPLE_ROW: Record<string, string | number> = {
     Gender: "Female",
     "Date of Birth": "14/03/2001",
     "WhatsApp Number": "+92 300 1234567",
@@ -282,8 +298,13 @@ export async function downloadTemplate() {
     "Residence Country": "Pakistan",
     "Residence Type": "Own",
     City: "Lahore",
-  };
-  const profiles = xlsx.utils.json_to_sheet([example], {
+};
+
+export async function downloadTemplate() {
+  const xlsx = await loadXlsx();
+  const wb = xlsx.utils.book_new();
+
+  const profiles = xlsx.utils.json_to_sheet([EXAMPLE_ROW], {
     header: COLUMNS.map((c) => c.header),
   });
   profiles["!cols"] = COLUMNS.map((c) => ({ wch: Math.max(14, c.header.length + 2) }));
@@ -309,7 +330,18 @@ export async function downloadTemplate() {
   allowed["!cols"] = listCols.map(() => ({ wch: 24 }));
   xlsx.utils.book_append_sheet(wb, allowed, "Allowed Values");
 
-  download(xlsx, wb, "PureLifePartner bulk profiles template.xlsx");
+  saveWorkbook(xlsx, wb, "PureLifePartner-bulk-profiles-template.xlsx");
+}
+
+/** CSV version of the template (header plus the example row). */
+export async function downloadCsvTemplate() {
+  const xlsx = await loadXlsx();
+  const sheet = xlsx.utils.json_to_sheet([EXAMPLE_ROW], {
+    header: COLUMNS.map((c) => c.header),
+  });
+  // The byte order mark makes Excel open the file as UTF-8, so non-Latin
+  // names (Urdu, Arabic, Russian) display correctly.
+  saveBlob(["﻿", xlsx.utils.sheet_to_csv(sheet)], "text/csv;charset=utf-8", "PureLifePartner-bulk-profiles-template.csv");
 }
 
 export async function readSpreadsheet(file: File): Promise<Record<string, unknown>[]> {
@@ -317,7 +349,11 @@ export async function readSpreadsheet(file: File): Promise<Record<string, unknow
   // raw: CSV text stays as typed, so "05/11/1995" is read by our DD/MM/YYYY
   // parser instead of SheetJS guessing a US month-first date. Real Excel date
   // cells are unaffected and still arrive as Date objects.
-  const wb = xlsx.read(await file.arrayBuffer(), { cellDates: true, raw: true });
+  // CSVs are decoded as UTF-8 first; reading their raw bytes would garble
+  // non-Latin names such as Cyrillic.
+  const wb = /\.csv$/i.test(file.name)
+    ? xlsx.read((await file.text()).replace(/^﻿/, ""), { type: "string", cellDates: true, raw: true })
+    : xlsx.read(await file.arrayBuffer(), { cellDates: true, raw: true });
   const sheetName = wb.SheetNames.includes("Profiles") ? "Profiles" : wb.SheetNames[0];
   return xlsx.utils.sheet_to_json<Record<string, unknown>>(wb.Sheets[sheetName], {
     defval: "",
@@ -349,5 +385,5 @@ export async function downloadLogins(logins: CreatedLogin[]) {
   sheet["!cols"] = [{ wch: 6 }, { wch: 24 }, { wch: 20 }, { wch: 16 }, { wch: 14 }, { wch: 34 }];
   xlsx.utils.book_append_sheet(wb, sheet, "Logins");
   const stamp = new Date().toISOString().slice(0, 16).replace(/[T:]/g, "-");
-  download(xlsx, wb, `PureLifePartner logins ${stamp}.xlsx`);
+  saveWorkbook(xlsx, wb, `PureLifePartner-logins-${stamp}.xlsx`);
 }
