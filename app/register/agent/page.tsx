@@ -44,6 +44,7 @@ export default function AgentRegistration() {
           whatsapp_no: form.contact.trim(),
           user_id_handle: `agent_${Date.now().toString(36)}`,
         },
+        emailRedirectTo: `${window.location.origin}/auth/confirm`,
       },
     });
 

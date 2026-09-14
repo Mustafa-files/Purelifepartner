@@ -6,8 +6,11 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
+import { safeNextPath } from "@/lib/safe-next";
 
 type Status = "verifying" | "success" | "expired" | "error";
+
+const SIGN_IN_AFTER_CONFIRM = "/login?confirmed=1&next=/register/personal";
 
 /**
  * Handles the email confirmation link Supabase sends after sign up.
@@ -32,6 +35,10 @@ function ConfirmInner() {
     const params = url.searchParams;
     // Errors can come back in the query string or the URL hash fragment.
     const hash = new URLSearchParams(url.hash.replace(/^#/, ""));
+
+    // Magic link sign ins set mode=signin on the redirect (see /login).
+    const isMagicLink = params.get("mode") === "signin";
+    const nextPath = safeNextPath(params.get("next")) ?? "/dashboard";
 
     const errorDescription =
       params.get("error_description") || hash.get("error_description");
@@ -96,6 +103,17 @@ function ConfirmInner() {
           return;
         }
 
+        if (isMagicLink) {
+          // A magic link is a sign in: keep the session and go straight on.
+          toast("Signed in. Welcome back!");
+          router.replace(nextPath);
+          router.refresh();
+          return;
+        }
+
+        // The sign up link proves the email address; the user still signs in
+        // with their password on the login page, so drop the link session.
+        await supabase.auth.signOut();
         setStatus("success");
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
@@ -108,10 +126,11 @@ function ConfirmInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Once verified, send the user on to continue their registration.
+  // Once verified, send the user to sign in; after signing in they continue
+  // their registration.
   useEffect(() => {
     if (status !== "success") return;
-    const t = setTimeout(() => router.replace("/register/personal"), 1800);
+    const t = setTimeout(() => router.replace(SIGN_IN_AFTER_CONFIRM), 1800);
     return () => clearTimeout(t);
   }, [status, router]);
 
@@ -149,10 +168,10 @@ function ConfirmInner() {
                 Email confirmed
               </h1>
               <p className="mt-3 text-charcoal/70">
-                Your email is verified. Taking you to the next step...
+                Your email is verified. Taking you to the sign in page...
               </p>
-              <Link href="/register/personal" className="mt-6 inline-block">
-                <Button>Continue Registration</Button>
+              <Link href={SIGN_IN_AFTER_CONFIRM} className="mt-6 inline-block">
+                <Button>Sign In</Button>
               </Link>
             </>
           )}

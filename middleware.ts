@@ -18,6 +18,20 @@ const PROTECTED_PREFIXES = [
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
+
+  // If the requested emailRedirectTo is not on Supabase's allowed Redirect
+  // URLs list, Supabase falls back to the bare Site URL. Forward any
+  // confirmation params that land on "/" to the real confirm page.
+  if (path === "/") {
+    const q = request.nextUrl.searchParams;
+    if (q.has("code") || q.has("token_hash") || q.has("error_description")) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/auth/confirm";
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
+  }
+
   const needsAuth = PROTECTED_PREFIXES.some(
     (p) => path === p || path.startsWith(p + "/")
   );
@@ -67,6 +81,7 @@ export async function middleware(request: NextRequest) {
 // pages and static assets are served without it.
 export const config = {
   matcher: [
+    "/",
     "/dashboard/:path*",
     "/settings/:path*",
     "/admin/:path*",

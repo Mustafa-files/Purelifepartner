@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { FieldLabel, Input } from "@/components/ui/fields";
 import { toast } from "@/components/ui/toast";
+import { safeNextPath } from "@/lib/safe-next";
 
 function LoginForm() {
   const router = useRouter();
@@ -15,6 +16,8 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [needsConfirm, setNeedsConfirm] = useState(false);
+  const [sendingLink, setSendingLink] = useState(false);
+  const [linkSent, setLinkSent] = useState(false);
 
   // When a confirmation/auth link fails, the confirm page bounces the user
   // here so they cannot proceed as if signed in. Tell them clearly why.
@@ -24,6 +27,8 @@ function LoginForm() {
         "Authentication failed. You have not been signed in. Please sign in or create a new account.",
         "error"
       );
+    } else if (params.get("confirmed") === "1") {
+      toast("Email confirmed. Please sign in to continue.");
     }
   }, [params]);
 
@@ -53,8 +58,42 @@ function LoginForm() {
       toast(error.message, "error");
       return;
     }
-    router.push(params.get("next") ?? "/dashboard");
+    router.push(safeNextPath(params.get("next")) ?? "/dashboard");
     router.refresh();
+  }
+
+  async function sendMagicLink() {
+    if (!email) {
+      toast("Enter your email first.", "error");
+      return;
+    }
+    setSendingLink(true);
+    const supabase = createClient();
+    const redirect = new URL("/auth/confirm", window.location.origin);
+    redirect.searchParams.set("mode", "signin");
+    const next = safeNextPath(params.get("next"));
+    if (next) redirect.searchParams.set("next", next);
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email.trim(),
+      options: {
+        // Accounts are created through /register, which collects the
+        // profile details; the magic link only signs existing users in.
+        shouldCreateUser: false,
+        emailRedirectTo: redirect.toString(),
+      },
+    });
+    setSendingLink(false);
+    if (error) {
+      if (/signups not allowed|user not found/i.test(error.message)) {
+        toast("No account found for this email. Please create a free profile first.", "error");
+      } else {
+        toast(error.message, "error");
+      }
+      return;
+    }
+    setLinkSent(true);
+    toast("Sign in link sent. Check your inbox.");
   }
 
   async function resendConfirmation() {
@@ -135,6 +174,28 @@ function LoginForm() {
           <Button className="mt-8 w-full" onClick={signIn} loading={loading}>
             Sign In
           </Button>
+
+          <div className="my-5 flex items-center gap-3 text-xs font-semibold uppercase text-charcoal/40">
+            <span className="h-px flex-1 bg-charcoal/10" />
+            or
+            <span className="h-px flex-1 bg-charcoal/10" />
+          </div>
+
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={sendMagicLink}
+            loading={sendingLink}
+          >
+            Email me a sign in link
+          </Button>
+
+          {linkSent && (
+            <p className="mt-3 rounded-xl bg-green-50 p-3 text-center text-sm text-green-800">
+              Check {email.trim()} and click the link to sign in. No password
+              needed.
+            </p>
+          )}
 
           <button
             onClick={resetPassword}
