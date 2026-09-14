@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import type { Profile } from "@/types";
 
 const MENU_LINKS = [
+  { icon: "🔍", label: "Browse Profiles", href: "/search" },
+  { icon: "💞", label: "My Matches", href: "/matches" },
   { icon: "👤", label: "My Profile", href: "/dashboard" },
   { icon: "⚙️", label: "Account Settings", href: "/settings#account" },
   { icon: "🔒", label: "Privacy Settings", href: "/settings#privacy" },

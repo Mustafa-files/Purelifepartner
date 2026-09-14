@@ -57,7 +57,7 @@ function LoginForm() {
       toast(error, "error");
       return;
     }
-    router.push(safeNextPath(params.get("next")) ?? "/dashboard");
+    router.push(safeNextPath(params.get("next")) ?? "/search");
     router.refresh();
   }
 

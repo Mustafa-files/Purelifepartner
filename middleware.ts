@@ -30,7 +30,13 @@ export async function middleware(request: NextRequest) {
       url.pathname = "/auth/confirm";
       return NextResponse.redirect(url);
     }
-    return NextResponse.next();
+    // Signed-in members skip the marketing landing page and go straight to
+    // browsing profiles. Visitors without an auth cookie never pay for the
+    // Supabase round trip.
+    const hasAuthCookie = request.cookies
+      .getAll()
+      .some((c) => c.name.startsWith("sb-") && c.name.includes("-auth-token"));
+    if (!hasAuthCookie) return NextResponse.next();
   }
 
   const needsAuth = PROTECTED_PREFIXES.some(
@@ -39,7 +45,7 @@ export async function middleware(request: NextRequest) {
 
   // Public pages skip the Supabase auth round trip entirely; it would add
   // hundreds of ms of latency to every request for no benefit.
-  if (!needsAuth) return NextResponse.next();
+  if (!needsAuth && path !== "/") return NextResponse.next();
 
   let response = NextResponse.next({ request });
 
@@ -67,6 +73,13 @@ export async function middleware(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if (path === "/") {
+    if (!user) return response;
+    const url = request.nextUrl.clone();
+    url.pathname = "/search";
+    return NextResponse.redirect(url);
+  }
 
   if (!user) {
     const url = request.nextUrl.clone();
