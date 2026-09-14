@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-import { safeNextPath } from "@/lib/safe-next";
-
 type Status = "verifying" | "success" | "expired" | "error";
 
 const SIGN_IN_AFTER_CONFIRM = "/login?confirmed=1&next=/register/personal";
@@ -35,11 +33,6 @@ function ConfirmInner() {
     const params = url.searchParams;
     // Errors can come back in the query string or the URL hash fragment.
     const hash = new URLSearchParams(url.hash.replace(/^#/, ""));
-
-    // Magic link sign ins set mode=signin on the redirect (see /login).
-    const isMagicLink = params.get("mode") === "signin";
-    const nextPath = safeNextPath(params.get("next")) ?? "/dashboard";
-
     const errorDescription =
       params.get("error_description") || hash.get("error_description");
     const errorCode =
@@ -117,14 +110,6 @@ function ConfirmInner() {
             "error",
             "This confirmation link is missing its token. Please sign in or request a new link."
           );
-          return;
-        }
-
-        if (isMagicLink) {
-          // A magic link is a sign in: keep the session and go straight on.
-          toast("Signed in. Welcome back!");
-          router.replace(nextPath);
-          router.refresh();
           return;
         }
 
