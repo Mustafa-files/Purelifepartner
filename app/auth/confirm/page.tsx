@@ -84,8 +84,25 @@ function ConfirmInner() {
           });
           if (error) throw error;
         } else if (code) {
-          const { error } = await supabase.auth.exchangeCodeForSession(code);
-          if (error) throw error;
+          // When this browser holds the PKCE verifier, the Supabase client
+          // exchanges ?code= by itself on load; a second exchange would fail
+          // and sign the user out. Reuse that fresh session if it exists.
+          const {
+            data: { session },
+          } = await supabase.auth.getSession();
+          const lastSignIn = Date.parse(session?.user.last_sign_in_at ?? "");
+          const justSignedIn = Date.now() - lastSignIn < 5 * 60 * 1000;
+          if (!session || !justSignedIn) {
+            const { error } = await supabase.auth.exchangeCodeForSession(code);
+            if (error) {
+              if (/code verifier/i.test(error.message)) {
+                throw new Error(
+                  "Please open the link in the same browser you requested it from, or request a new link."
+                );
+              }
+              throw error;
+            }
+          }
         } else if (accessToken && refreshToken) {
           const { error } = await supabase.auth.setSession({
             access_token: accessToken,
