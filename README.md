@@ -13,25 +13,26 @@ npm run start    # serve the production build
 
 Supabase credentials live in `.env.local` (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`).
 
-## Deploying to Cloudflare Pages
+## Deploying to Cloudflare Workers
 
-The app is configured for dynamic Cloudflare Pages deployment via `@cloudflare/next-on-pages` and `wrangler.json`. The dynamic `/profile/[id]` route runs on the Edge runtime (set in `app/profile/[id]/layout.tsx`), which Pages requires.
+The site runs as the `purelifepartner` Cloudflare Worker using `@opennextjs/cloudflare` (OpenNext). Config lives in `wrangler.json` and `open-next.config.ts`. Pushing to `main` on GitHub builds and deploys automatically.
 
-In the Cloudflare Pages dashboard (Workers & Pages > Create > Pages > connect the repo):
+Worker > Settings > Build must be:
 
-- Build command: `npx @cloudflare/next-on-pages`
-- Build output directory: `.vercel/output/static`
-- Environment variables: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- The `nodejs_compat` compatibility flag is set in `wrangler.json`; if configuring manually in the dashboard, add it under Settings > Functions > Compatibility flags.
+- Build command: `npx opennextjs-cloudflare build`
+- Deploy command: `npx wrangler deploy`
+- Root directory: `/`
+
+`NEXT_PUBLIC_*` values are read at build time from the committed `.env.production`.
 
 CLI alternative once `wrangler login` is done:
 
 ```powershell
-npm run pages:build     # builds via next-on-pages (run on Linux/CI; unreliable on Windows)
-npm run pages:deploy    # uploads .vercel/output/static per wrangler.json
+npm run cf:preview   # build and run the Worker locally
+npm run cf:deploy    # build and deploy
 ```
 
-Note: `next-on-pages` shells out to the Vercel CLI, which is officially unreliable on Windows. Run the Pages build in Cloudflare CI, WSL, or any Linux environment; local Windows `npm run dev`/`build`/`start` are unaffected.
+Note: OpenNext builds are most reliable on Linux (Cloudflare CI or WSL).
 
 ## Pages
 
