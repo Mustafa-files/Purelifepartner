@@ -208,6 +208,16 @@ export function UserMenu() {
                     Bulk Create Profiles
                   </Link>
                 )}
+                {(isAdmin || isAgent) && (
+                  <Link
+                    href="/system"
+                    onClick={close}
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-coral transition-colors hover:bg-coral/10"
+                  >
+                    <span className="text-base">🔎</span>
+                    Find Profile by ID
+                  </Link>
+                )}
 
                 {/* Appearance: expands to Light / Dark */}
                 <button

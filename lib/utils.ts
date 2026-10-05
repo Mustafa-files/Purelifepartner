@@ -2,6 +2,20 @@ export function cn(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
 }
 
+/**
+ * Public profile reference shown to members instead of a name, e.g. "PLP-100104".
+ * Names stay hidden until contact details are unlocked after payment.
+ */
+export function profileCode(internalId: number | null | undefined): string {
+  return internalId != null ? `PLP-${internalId}` : "PLP";
+}
+
+/** True when a staff search term matches a profile number ("PLP-100104", "plp100104", "100104"). */
+export function matchesProfileCode(internalId: number, query: string): boolean {
+  const digits = query.trim().toLowerCase().replace(/^plp[-\s]?/, "");
+  return digits !== "" && /^\d+$/.test(digits) && internalId.toString().includes(digits);
+}
+
 export const WHATSAPP_NUMBER = "+447748528207";
 export const WHATSAPP_LINK = "https://wa.me/447748528207";
 export const CONTACT_EMAIL = "Youasktv@gmail.com";

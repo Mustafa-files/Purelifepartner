@@ -10,7 +10,7 @@ import { accountTypeLabel } from "@/components/ui/role-badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
 import { REGISTRATION_STEPS } from "@/lib/constants";
-import { cn, formatDate, formatHeight } from "@/lib/utils";
+import { cn, formatDate, formatHeight, profileCode } from "@/lib/utils";
 import type { Profile } from "@/types";
 
 export default function Dashboard() {
@@ -272,7 +272,11 @@ export default function Dashboard() {
                 {profile.user_id_handle ?? "Member"}
               </h1>
               <p className="text-sm text-charcoal/60">
-                Registered {formatDate(profile.registration_date)}
+                Profile ID{" "}
+                <span className="font-mono font-bold text-charcoal">
+                  {profileCode(profile.internal_id)}
+                </span>{" "}
+                · Registered {formatDate(profile.registration_date)}
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <span

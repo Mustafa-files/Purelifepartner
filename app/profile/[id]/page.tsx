@@ -8,7 +8,7 @@ import { RoleBadge } from "@/components/ui/role-badge";
 import { ScreenshotGuard } from "@/components/ui/screenshot-guard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
-import { formatHeight } from "@/lib/utils";
+import { formatHeight, profileCode } from "@/lib/utils";
 import type { ContactDetails, PublicProfile } from "@/types";
 
 export default function ProfileView({
@@ -114,7 +114,7 @@ export default function ProfileView({
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={profile.avatar_url}
-                alt={profile.user_id_handle ?? "Profile"}
+                alt={`Profile ${profileCode(profile.internal_id)}`}
                 className="h-24 w-24 rounded-full object-cover"
               />
             ) : (
@@ -124,8 +124,8 @@ export default function ProfileView({
             )}
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-2xl font-bold text-charcoal">
-                  {profile.user_id_handle ?? `Member ${profile.internal_id}`}
+                <h1 className="font-mono text-2xl font-bold text-charcoal">
+                  {profileCode(profile.internal_id)}
                 </h1>
                 {profile.status === "Verified" ? (
                   <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
@@ -138,6 +138,12 @@ export default function ProfileView({
                 )}
               </div>
               {profile.role && <RoleBadge role={profile.role} className="mt-1" />}
+              {/* The view only returns the User ID to staff and the owner */}
+              {profile.user_id_handle && (
+                <p className="mt-1 text-sm text-charcoal/50">
+                  User ID: {profile.user_id_handle}
+                </p>
+              )}
               {(profile.age != null || location) && (
                 <p className="mt-1 text-charcoal/60">
                   {profile.age != null && `${profile.age} years`}
@@ -235,6 +241,7 @@ export default function ProfileView({
           <h2 className="text-lg font-bold text-charcoal">Contact Details</h2>
           {contacts ? (
             <dl className="mt-4 space-y-2 text-sm">
+              <ContactRow label="Name" value={contacts.full_name} />
               <ContactRow label="Candidate" value={contacts.candidate_contact} />
               <ContactRow label="Father" value={contacts.father_contact} />
               <ContactRow label="Mother" value={contacts.mother_contact} />
@@ -243,8 +250,8 @@ export default function ProfileView({
           ) : (
             <>
               <p className="mt-2 text-sm text-charcoal/60">
-                🔒 Phone numbers are visible only when both you and this member
-                are verified. Unverified? You will be guided to the payment
+                🔒 The member&apos;s name and phone numbers are visible only when
+                both you and this member are verified. Unverified? You will be guided to the payment
                 page.
               </p>
               <Button className="mt-4" onClick={viewContacts} loading={revealing}>

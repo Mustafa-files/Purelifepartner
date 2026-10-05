@@ -198,6 +198,7 @@ export interface BankAccount {
 }
 
 export interface ContactDetails {
+  full_name: string | null;
   father_contact: string | null;
   mother_contact: string | null;
   candidate_contact: string | null;

@@ -11,7 +11,7 @@ import { RoleBadge } from "@/components/ui/role-badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
 import { CURRENCIES, PROFILE_STATUSES } from "@/lib/constants";
-import { cn, formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime, matchesProfileCode, profileCode } from "@/lib/utils";
 import type {
   AgentProfile,
   BankAccount,
@@ -113,6 +113,7 @@ function UsersTab() {
   const [users, setUsers] = useState<Profile[]>([]);
   const [agents, setAgents] = useState<Profile[]>([]);
   const [statusFilter, setStatusFilter] = useState("");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [resetting, setResetting] = useState<string | null>(null);
   const [newLogin, setNewLogin] = useState<{ userId: string; password: string } | null>(null);
@@ -179,9 +180,26 @@ function UsersTab() {
     }
   }
 
+  const term = search.trim().toLowerCase();
+  const shown = term
+    ? users.filter(
+        (u) =>
+          matchesProfileCode(u.internal_id, term) ||
+          u.user_id_handle?.toLowerCase().includes(term) ||
+          u.name_private?.toLowerCase().includes(term) ||
+          u.email?.toLowerCase().includes(term)
+      )
+    : users;
+
   return (
     <Panel>
       <div className="mb-4 flex flex-wrap items-center gap-3">
+        <Input
+          placeholder="Search by Profile ID (PLP-100104), User ID, name, email..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="max-w-sm"
+        />
         <Select
           options={PROFILE_STATUSES}
           placeholder="All statuses"
@@ -189,7 +207,9 @@ function UsersTab() {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="max-w-xs"
         />
-        <span className="text-sm text-charcoal/50">{users.length} users</span>
+        <span className="text-sm text-charcoal/50">
+          {shown.length} of {users.length} users
+        </span>
         <Link href="/staff/bulk-profiles" className="ml-auto">
           <Button size="sm">👥 Bulk Create Profiles</Button>
         </Link>
@@ -203,7 +223,7 @@ function UsersTab() {
         <table className="w-full min-w-[900px] text-left text-sm">
           <thead>
             <tr className="border-b border-gray-100 text-xs uppercase tracking-wide text-charcoal/50">
-              <th className="py-2 pr-3">No.</th>
+              <th className="py-2 pr-3">Profile ID</th>
               <th className="py-2 pr-3">User ID</th>
               <th className="py-2 pr-3">Name (private)</th>
               <th className="py-2 pr-3">Email</th>
@@ -214,9 +234,11 @@ function UsersTab() {
             </tr>
           </thead>
           <tbody>
-            {users.map((u) => (
+            {shown.map((u) => (
               <tr key={u.id} className="border-b border-gray-50">
-                <td className="py-2.5 pr-3 font-bold">{u.internal_id}</td>
+                <td className="py-2.5 pr-3 font-mono font-bold whitespace-nowrap">
+                  {profileCode(u.internal_id)}
+                </td>
                 <td className="py-2.5 pr-3">{u.user_id_handle}</td>
                 <td className="py-2.5 pr-3">{u.name_private}</td>
                 <td className="py-2.5 pr-3">
@@ -747,7 +769,7 @@ function NotesTab() {
           <option value="">Choose a member...</option>
           {profiles.map((p) => (
             <option key={p.id} value={p.id}>
-              {p.internal_id} · {p.user_id_handle ?? p.email}
+              {profileCode(p.internal_id)} · {p.user_id_handle ?? p.email}
             </option>
           ))}
         </select>

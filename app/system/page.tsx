@@ -8,7 +8,7 @@ import { FieldLabel, Input, Select, Textarea } from "@/components/ui/fields";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
 import { PROFILE_STATUSES } from "@/lib/constants";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime, matchesProfileCode, profileCode } from "@/lib/utils";
 import type { OfficeNote, Profile } from "@/types";
 
 export default function SystemDashboard() {
@@ -35,8 +35,8 @@ export default function SystemDashboard() {
         return;
       }
       const { data: role } = await supabase.rpc("get_my_role");
-      if (role !== "system" && role !== "admin") {
-        toast("System user access required.", "error");
+      if (role !== "system" && role !== "admin" && role !== "agent") {
+        toast("Staff access required.", "error");
         router.replace("/dashboard");
         return;
       }
@@ -55,13 +55,13 @@ export default function SystemDashboard() {
   }
 
   const filtered = profiles.filter((p) => {
-    const q = query.toLowerCase();
+    const q = query.trim().toLowerCase();
     return (
       !q ||
+      matchesProfileCode(p.internal_id, q) ||
       p.user_id_handle?.toLowerCase().includes(q) ||
       p.email?.toLowerCase().includes(q) ||
-      p.name_private?.toLowerCase().includes(q) ||
-      p.internal_id.toString().includes(q)
+      p.name_private?.toLowerCase().includes(q)
     );
   });
 
@@ -77,7 +77,7 @@ export default function SystemDashboard() {
           {/* Profile list */}
           <div className="rounded-2xl bg-white p-5 shadow-sm">
             <Input
-              placeholder="Search by ID, name, email..."
+              placeholder="Search by Profile ID (PLP-100104), name, email..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -92,7 +92,7 @@ export default function SystemDashboard() {
                       : "hover:bg-off-white"
                   }`}
                 >
-                  <span className="font-bold">{p.internal_id}</span> ·{" "}
+                  <span className="font-mono font-bold">{profileCode(p.internal_id)}</span> ·{" "}
                   {p.user_id_handle ?? p.email}
                 </button>
               ))}
@@ -196,7 +196,7 @@ function ProfileEditor({
           {profile.user_id_handle ?? profile.email}
         </h2>
         <p className="mb-5 text-sm text-charcoal/50">
-          Profile No. {profile.internal_id} · {profile.email} ·{" "}
+          Profile ID {profileCode(profile.internal_id)} · {profile.email} ·{" "}
           {profile.whatsapp_no}
         </p>
 

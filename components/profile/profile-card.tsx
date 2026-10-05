@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { RoleBadge } from "@/components/ui/role-badge";
-import { formatHeight } from "@/lib/utils";
+import { formatHeight, profileCode } from "@/lib/utils";
 import type { PublicProfile } from "@/types";
 
 export function ProfileCard({ profile }: { profile: PublicProfile }) {
@@ -17,7 +17,7 @@ export function ProfileCard({ profile }: { profile: PublicProfile }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={cover}
-            alt={profile.user_id_handle ?? "Profile"}
+            alt={`Profile ${profileCode(profile.internal_id)}`}
             loading="lazy"
             decoding="async"
             className="h-52 w-full object-cover"
@@ -42,8 +42,8 @@ export function ProfileCard({ profile }: { profile: PublicProfile }) {
       {/* Essential information */}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-baseline justify-between gap-2">
-          <span className="text-lg font-bold text-charcoal">
-            {profile.user_id_handle ?? `Member ${profile.internal_id}`}
+          <span className="font-mono text-lg font-bold text-charcoal">
+            {profileCode(profile.internal_id)}
           </span>
           {profile.age != null && (
             <span className="shrink-0 text-sm font-semibold text-charcoal/60">
