@@ -7,6 +7,7 @@ import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { Toaster } from "@/components/ui/toast";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { CookieConsent } from "@/components/layout/cookie-consent";
+import { PageTransition } from "@/components/ui/page-transition";
 
 // Quicksand for headings and body. Only the weights actually used; every
 // extra weight is another font file phones must download.
@@ -64,6 +65,7 @@ export default function RootLayout({
         <WhatsAppButton />
         <Toaster />
         <CookieConsent />
+        <PageTransition />
       </body>
     </html>
   );
