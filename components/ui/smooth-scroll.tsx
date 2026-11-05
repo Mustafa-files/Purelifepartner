@@ -6,6 +6,27 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
+/** Space left above a section so it lands below the fixed navbar */
+const NAV_OFFSET = 96;
+
+/**
+ * Glide to a section on the current page ("#about"), or to the top when
+ * hash is null. Uses the desktop smoother when it exists, native smooth
+ * scrolling otherwise.
+ */
+export function scrollToSection(hash: string | null) {
+  const el = hash ? document.querySelector(hash) : null;
+  if (hash && !el) return;
+  const smoother = ScrollSmoother.get();
+  if (smoother) {
+    if (el) smoother.scrollTo(el, true, `top ${NAV_OFFSET}px`);
+    else smoother.scrollTo(0, true);
+    return;
+  }
+  const top = el ? el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET : 0;
+  window.scrollTo({ top, behavior: "smooth" });
+}
+
 /**
  * Site-wide GSAP ScrollSmoother, desktop only. Phones and tablets keep
  * fast native scrolling: smoothing/normalizing touch input causes janky,
@@ -55,13 +76,11 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       if (smoother) {
         smoother.effects("[data-speed], [data-lag]");
         ScrollTrigger.refresh();
-        if (el) smoother.scrollTo(el, false, "top 96px");
-        else smoother.scrollTo(0, false);
-      } else if (el) {
-        // Native scrolling (mobile): align under the fixed navbar
-        el.scrollIntoView();
-        window.scrollBy(0, -96);
+        smoother.scrollTo(0, false);
       }
+      // Arriving from another page with a section in the link: start at the
+      // top, then glide down to it
+      if (el) scrollToSection(window.location.hash);
     });
     return () => cancelAnimationFrame(raf);
   }, [pathname]);
@@ -69,15 +88,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   // Same-page anchor jumps (e.g. /#how-it-works clicked while on /).
   useEffect(() => {
     function onHashChange() {
-      const el = window.location.hash
-        ? document.querySelector(window.location.hash)
-        : null;
-      if (!el) return;
-      const smoother = smootherRef.current;
-      if (smoother) smoother.scrollTo(el, true, "top 96px");
-      else {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
+      if (window.location.hash) scrollToSection(window.location.hash);
     }
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);

@@ -88,7 +88,8 @@ export default function ProfileView({
   if (!profile) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
-        <div className="text-5xl">🫥</div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/illustrations/sister-waving.svg" alt="" className="mx-auto w-40" />
         <h1 className="mt-4 text-2xl font-bold text-charcoal">
           Profile not found
         </h1>
@@ -104,71 +105,115 @@ export default function ProfileView({
     ...(profile.residence_country ?? []),
   ].join(", ");
 
+  const sections: { title: string; rows: [string, string | null | undefined][] }[] = [
+    {
+      title: "Basic information",
+      rows: [
+        ["Gender", profile.gender],
+        ["Age", profile.age?.toString()],
+        ["Height", formatHeight(profile.height_ft, profile.height_in, profile.height_cm)],
+        ["Marital status", profile.marital_status],
+      ],
+    },
+    {
+      title: "Religion and caste",
+      rows: [
+        ["Religion", profile.religion],
+        ["Sect", profile.sect],
+        ["Caste", profile.caste],
+        ["Sub caste", profile.sub_caste],
+      ],
+    },
+    {
+      title: "Education and work",
+      rows: [
+        ["Qualification", profile.qualification],
+        ["Profession", profile.profession?.join(", ")],
+      ],
+    },
+    {
+      title: "Location",
+      rows: [
+        ["Nationality", profile.nationality?.join(", ")],
+        ["Country", profile.residence_country?.join(", ")],
+        ["City", profile.city?.join(", ")],
+      ],
+    },
+  ];
+
   return (
-    <div className="bg-off-white py-10">
-      <div className="mx-auto max-w-3xl px-4">
+    <div className="bg-off-white py-10 sm:py-14">
+      <div className="mx-auto max-w-4xl px-4">
         {/* Header */}
         <ScreenshotGuard>
-          <div className="rounded-2xl bg-white p-6 shadow-sm sm:p-8">
-          <div className="flex flex-wrap items-center gap-5">
-            {profile.avatar_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={profile.avatar_url}
-                alt={`Profile ${profileCode(profile.internal_id)}`}
-                className="h-24 w-24 rounded-full object-cover"
-              />
-            ) : (
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-coral/15 text-4xl">
-                {profile.gender === "Female" ? "🌸" : "🌙"}
-              </div>
-            )}
-            <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="font-mono text-2xl font-bold text-charcoal">
+          <div className="rounded-2xl bg-white p-6 shadow-sm sm:p-10">
+            <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
+              {profile.avatar_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={profile.avatar_url}
+                  alt={`Profile ${profileCode(profile.internal_id)}`}
+                  className="h-32 w-32 shrink-0 rounded-full object-cover ring-4 ring-soft-pink"
+                />
+              ) : (
+                // No photo: the site illustration that matches the member
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={
+                    profile.gender === "Female"
+                      ? "/illustrations/sister-waving.svg"
+                      : "/illustrations/brother-greeting.svg"
+                  }
+                  alt=""
+                  className="h-32 w-32 shrink-0 rounded-full bg-soft-pink object-cover object-top ring-4 ring-soft-pink"
+                />
+              )}
+              <div className="min-w-0 flex-1">
+                <h1 className="text-3xl font-bold tracking-tight text-charcoal sm:text-4xl">
                   {profileCode(profile.internal_id)}
                 </h1>
-                {profile.status === "Verified" ? (
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
-                    ✓ Verified
-                  </span>
-                ) : (
-                  <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">
-                    Verification pending
-                  </span>
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+                  {profile.status === "Verified" ? (
+                    <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
+                      ✓ Verified
+                    </span>
+                  ) : (
+                    <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">
+                      Verification pending
+                    </span>
+                  )}
+                  {profile.role && <RoleBadge role={profile.role} />}
+                </div>
+                {/* The view only returns the User ID to staff and the owner */}
+                {profile.user_id_handle && (
+                  <p className="mt-2 text-sm text-charcoal/50">
+                    User ID: {profile.user_id_handle}
+                  </p>
                 )}
+                {(profile.age != null || location) && (
+                  <p className="mt-2 text-lg text-charcoal/70">
+                    {profile.age != null && `${profile.age} years`}
+                    {profile.age != null && location && " · "}
+                    {location}
+                  </p>
+                )}
+                <ShareProfile profile={profile} />
               </div>
-              {profile.role && <RoleBadge role={profile.role} className="mt-1" />}
-              {/* The view only returns the User ID to staff and the owner */}
-              {profile.user_id_handle && (
-                <p className="mt-1 text-sm text-charcoal/50">
-                  User ID: {profile.user_id_handle}
-                </p>
-              )}
-              {(profile.age != null || location) && (
-                <p className="mt-1 text-charcoal/60">
-                  {profile.age != null && `${profile.age} years`}
-                  {profile.age != null && location && " · "}
-                  {location}
-                </p>
-              )}
-              <ShareProfile profile={profile} />
             </div>
-          </div>
 
-          {profile.describe_yourself && (
-            <p className="mt-6 leading-relaxed text-charcoal/80">
-              {profile.describe_yourself}
-            </p>
-          )}
+            {profile.describe_yourself && (
+              <p className="mt-8 border-t border-charcoal/10 pt-6 text-lg leading-relaxed text-charcoal/80">
+                {profile.describe_yourself}
+              </p>
+            )}
           </div>
         </ScreenshotGuard>
 
         {/* Photo gallery */}
         {profile.photos && profile.photos.length > 0 && (
           <ScreenshotGuard>
-            <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-8">
-              <h2 className="mb-4 text-lg font-bold text-charcoal">Photos</h2>
+            <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-10">
+              <SectionTitle>Photos</SectionTitle>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
                 {profile.photos.map((url) => (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -187,10 +232,8 @@ export default function ProfileView({
 
         {/* Video introduction */}
         {profile.video_url && (
-          <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-8">
-            <h2 className="mb-4 text-lg font-bold text-charcoal">
-              Video Introduction
-            </h2>
+          <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-10">
+            <SectionTitle>Video introduction</SectionTitle>
             <video
               src={profile.video_url}
               controls
@@ -200,75 +243,69 @@ export default function ProfileView({
           </div>
         )}
 
-        {/* Details grid */}
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          <DetailCard
-            title="Basic Information"
-            rows={[
-              ["Gender", profile.gender],
-              ["Age", profile.age?.toString()],
-              ["Height", formatHeight(profile.height_ft, profile.height_in, profile.height_cm)],
-              ["Marital Status", profile.marital_status],
-            ]}
-          />
-          <DetailCard
-            title="Religion & Caste"
-            rows={[
-              ["Religion", profile.religion],
-              ["Sect", profile.sect],
-              ["Caste", profile.caste],
-              ["Sub Caste", profile.sub_caste],
-            ]}
-          />
-          <DetailCard
-            title="Education & Work"
-            rows={[
-              ["Qualification", profile.qualification],
-              ["Profession", profile.profession?.join(", ")],
-            ]}
-          />
-          <DetailCard
-            title="Location"
-            rows={[
-              ["Nationality", profile.nationality?.join(", ")],
-              ["Country", profile.residence_country?.join(", ")],
-              ["City", profile.city?.join(", ")],
-            ]}
-          />
+        {/* Details: one card, four sections with thin rules */}
+        <div className="mt-6 grid gap-x-12 gap-y-10 rounded-2xl bg-white p-6 shadow-sm sm:grid-cols-2 sm:p-10">
+          {sections.map((sec) => (
+            <DetailSection key={sec.title} title={sec.title} rows={sec.rows} />
+          ))}
         </div>
 
         {/* Contact details gate */}
         <ScreenshotGuard>
-        <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="text-lg font-bold text-charcoal">Contact Details</h2>
-          {contacts ? (
-            <dl className="mt-4 space-y-2 text-sm">
-              <ContactRow label="Name" value={contacts.full_name} />
-              <ContactRow label="Candidate" value={contacts.candidate_contact} />
-              <ContactRow label="Father" value={contacts.father_contact} />
-              <ContactRow label="Mother" value={contacts.mother_contact} />
-              <ContactRow label="WhatsApp" value={contacts.whatsapp_no} />
-            </dl>
-          ) : (
-            <>
-              <p className="mt-2 text-sm text-charcoal/60">
-                🔒 The member&apos;s name and phone numbers are visible only when
-                both you and this member are verified. Unverified? You will be guided to the payment
-                page.
-              </p>
-              <Button className="mt-4" onClick={viewContacts} loading={revealing}>
-                View Contact Details
-              </Button>
-            </>
-          )}
-        </div>
+          <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-10">
+            {contacts ? (
+              <>
+                <SectionTitle>Contact details</SectionTitle>
+                <dl className="divide-y divide-charcoal/10">
+                  <ContactRow label="Name" value={contacts.full_name} />
+                  <ContactRow label="Candidate" value={contacts.candidate_contact} />
+                  <ContactRow label="Father" value={contacts.father_contact} />
+                  <ContactRow label="Mother" value={contacts.mother_contact} />
+                  <ContactRow label="WhatsApp" value={contacts.whatsapp_no} />
+                </dl>
+              </>
+            ) : (
+              <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-coral/10 text-coral">
+                  <LockIcon />
+                </span>
+                <div className="flex-1">
+                  <h2 className="text-xl font-bold text-charcoal">Contact details</h2>
+                  <p className="mt-1 text-charcoal/60">
+                    Name and numbers unlock when you and this member are both
+                    verified.
+                  </p>
+                </div>
+                <Button onClick={viewContacts} loading={revealing}>
+                  View contact details
+                </Button>
+              </div>
+            )}
+          </div>
         </ScreenshotGuard>
       </div>
     </div>
   );
 }
 
-function DetailCard({
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-coral">
+      {children}
+    </h2>
+  );
+}
+
+function LockIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden="true">
+      <rect x="5" y="11" width="14" height="10" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </svg>
+  );
+}
+
+function DetailSection({
   title,
   rows,
 }: {
@@ -276,27 +313,25 @@ function DetailCard({
   rows: [string, string | null | undefined][];
 }) {
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-sm">
-      <h2 className="mb-4 text-lg font-bold text-charcoal">{title}</h2>
-      <dl className="space-y-2 text-sm">
+    <section>
+      <SectionTitle>{title}</SectionTitle>
+      <dl className="divide-y divide-charcoal/10 border-y border-charcoal/10">
         {rows.map(([label, value]) => (
-          <div key={label} className="flex justify-between gap-3">
-            <dt className="text-charcoal/50">{label}</dt>
-            <dd className="text-right font-semibold text-charcoal">
-              {value || "N/A"}
-            </dd>
+          <div key={label} className="flex justify-between gap-3 py-3">
+            <dt className="text-charcoal/55">{label}</dt>
+            <dd className="text-right font-semibold text-charcoal">{value || "N/A"}</dd>
           </div>
         ))}
       </dl>
-    </div>
+    </section>
   );
 }
 
 function ContactRow({ label, value }: { label: string; value: string | null }) {
   if (!value) return null;
   return (
-    <div className="flex justify-between gap-3">
-      <dt className="text-charcoal/50">{label}</dt>
+    <div className="flex justify-between gap-3 py-3">
+      <dt className="text-charcoal/55">{label}</dt>
       <dd className="font-bold text-charcoal">{value}</dd>
     </div>
   );

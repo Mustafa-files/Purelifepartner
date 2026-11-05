@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 460" role="img" aria-label="Smiling bearded man in a kufi with his hand on his heart">
+  <path d="M22 460 L22 262 A168 168 0 0 1 358 262 L358 460 Z" fill="#ffc5d3"/>
+  <g transform="translate(10 0)" stroke="#1a1416" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M92 460 C92 330 112 262 180 244 C248 262 268 330 268 460 Z" fill="#fff"/>
+    <path d="M112 304 C120 272 140 256 162 250 L170 460 L98 460 C98 384 104 334 112 304 Z" fill="#1a1416"/>
+    <path d="M248 304 C240 272 220 256 198 250 L190 460 L262 460 C262 384 256 334 248 304 Z" fill="#1a1416"/>
+    <path d="M180 252 L180 330" fill="none" stroke-width="3.5"/>
+    <circle cx="180" cy="282" r="3" fill="#1a1416"/>
+    <circle cx="180" cy="306" r="3" fill="#1a1416"/>
+    <path d="M164 236 L164 254 C172 260 188 260 196 254 L196 236 Z" fill="#fff"/>
+    <ellipse cx="128" cy="146" rx="10" ry="15" fill="#fff"/>
+    <ellipse cx="232" cy="146" rx="10" ry="15" fill="#fff"/>
+    <ellipse cx="180" cy="140" rx="52" ry="62" fill="#fff"/>
+    <path d="M128 122 C128 66 232 66 232 122 C204 110 156 110 128 122 Z" fill="#fff"/>
+    <path d="M140 104 L220 104" fill="none" stroke-width="3" stroke-dasharray="2 9"/>
+    <path d="M150 88 L210 88" fill="none" stroke-width="3" stroke-dasharray="2 9"/>
+    <path d="M128 142 C126 210 154 250 180 254 C206 250 234 210 232 142 C224 172 206 180 180 180 C154 180 136 172 128 142 Z" fill="#1a1416"/>
+    <path d="M154 180 C162 162 176 162 180 170 C184 162 198 162 206 180 C196 176 188 176 180 180 C172 176 164 176 154 180 Z" fill="#1a1416"/>
+    <path d="M164 192 Q180 210 196 192" fill="none" stroke="#fff" stroke-width="5"/>
+    <path d="M146 212 L150 220 M214 212 L210 220 M180 232 L180 240 M160 228 L163 236 M200 228 L197 236" stroke="#fff1f4" stroke-width="2.5" opacity="0.5"/>
+    <path d="M152 136 Q161 128 170 136" fill="none" stroke-width="4"/>
+    <path d="M190 136 Q199 128 208 136" fill="none" stroke-width="4"/>
+    <path d="M148 120 Q160 112 172 118 M188 118 Q200 112 212 120" fill="none" stroke-width="5"/>
+    <path d="M180 140 Q176 154 184 156" fill="none" stroke-width="3"/>
+    <path d="M102 330 C96 360 104 384 126 384 C150 384 176 352 196 326 L178 306 C162 326 142 350 130 352 C122 352 122 338 126 322 Z" fill="#fff"/>
+    <path d="M174 312 L192 330" fill="none" stroke-width="3"/>
+    <g transform="rotate(-38 204 306)">
+      <rect x="184" y="292" width="44" height="28" rx="14" fill="#fff"/>
+      <path d="M196 293 L196 306 M207 292 L207 306 M218 293 L218 306" fill="none" stroke-width="2.5"/>
+    </g>
+  </g>
+  <path d="M276 262 C276 252 264 249 261 258 C258 249 246 252 246 262 C246 272 261 280 261 285 C261 280 276 272 276 262 Z" fill="#e63946" stroke="#1a1416" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M300 70 L304 81 L315 85 L304 89 L300 100 L296 89 L285 85 L296 81 Z" fill="#e5a93c"/>
+  <path d="M330 130 L333 137 L340 140 L333 143 L330 150 L327 143 L320 140 L327 137 Z" fill="#e5a93c"/>
+</svg>

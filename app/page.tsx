@@ -2,6 +2,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ScrollAnimations } from "@/components/ui/scroll-animations";
 import { HeroImage } from "@/components/ui/hero-image";
+import { FeatureShowcase } from "@/components/home/feature-showcase";
+import { Testimonials } from "@/components/home/testimonials";
+import { CountUp } from "@/components/home/count-up";
 
 export default function LandingPage() {
   return (
@@ -9,12 +12,15 @@ export default function LandingPage() {
       <ScrollAnimations />
       <Hero />
       <StatsBar />
+      <WhereHeartsMeet />
       <ParallaxBand />
       <HowItWorks />
-      <Features />
+      <FeatureShowcase />
+      <ForFamilies />
       <StaggerBand />
       <Testimonials />
       <BigStats />
+      <FAQ />
       <DownloadCTA />
     </>
   );
@@ -50,8 +56,7 @@ function Hero() {
             <HeroImage className="mx-auto w-full max-w-md rounded-3xl" />
           </div>
           <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70 lg:mx-0">
-            PureLifePartner helps you meet genuine, verified individuals seeking
-            real commitment, with privacy, respect, and values at the core.
+            Verified Muslim profiles, private by default, made for nikah.
           </p>
           <div className="gsap-hero mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
             <Link href="/register">
@@ -71,6 +76,51 @@ function Hero() {
         <div className="hidden lg:block" data-speed="0.9">
           <HeroImage className="mx-auto w-full max-w-xl rounded-3xl" />
         </div>
+      </div>
+    </section>
+  );
+}
+
+/** Welcome band: the waving sister on the left, the greeting brother on the right. */
+function WhereHeartsMeet() {
+  return (
+    <section className="overflow-hidden bg-white py-16 sm:py-20">
+      <div className="mx-auto grid max-w-7xl items-center gap-6 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/illustrations/sister-waving.svg"
+          alt="Smiling sister in a burqa waving"
+          className="gsap-fade-up hidden w-full max-w-[300px] justify-self-start lg:block"
+        />
+
+        <div className="text-center">
+          <div className="mb-6 flex items-end justify-center gap-2 lg:hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/illustrations/sister-waving.svg" alt="" className="w-36 sm:w-44" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/illustrations/brother-greeting.svg" alt="" className="w-36 sm:w-44" />
+          </div>
+          <h2 className="gsap-fade-up text-3xl font-extrabold text-charcoal sm:text-5xl">
+            Where pure hearts meet
+          </h2>
+          <p className="gsap-fade-up mx-auto mt-5 max-w-xl text-lg leading-relaxed text-charcoal/70 sm:text-xl">
+            A halal space for Muslims and their families to find a partner for
+            nikah.
+          </p>
+          <p className="gsap-fade-up mt-6 font-bold text-charcoal">
+            Could you be next?{" "}
+            <Link href="/register" className="text-coral underline-offset-4 hover:underline">
+              Create your free profile
+            </Link>
+          </p>
+        </div>
+
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/illustrations/brother-greeting.svg"
+          alt="Smiling bearded brother in a kufi with his hand on his heart"
+          className="gsap-fade-up hidden w-full max-w-[300px] justify-self-end lg:block"
+        />
       </div>
     </section>
   );
@@ -97,7 +147,7 @@ function ParallaxBand() {
 
 function StaggerBand() {
   return (
-    <section className="bg-white pb-12 pt-28">
+    <section className="bg-white py-10 sm:py-14">
       <h3
         id="split-stagger"
         className="whitespace-nowrap text-center font-extrabold tracking-wide text-coral"
@@ -110,224 +160,59 @@ function StaggerBand() {
 }
 
 function StatsBar() {
-  const stats = [
-    { icon: "👥", label: "10,000+ Profiles" },
-    { icon: "🌍", label: "6 Continents" },
-    { icon: "✅", label: "Verified Members" },
-    { icon: "🕌", label: "Halal & Safe" },
-  ];
+  const stats = ["10,000+ profiles", "6 continents", "Verified members", "Halal and safe"];
   return (
     <section className="border-y border-gray-100 bg-off-white">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-12 gap-y-4 px-4 py-6 sm:px-6">
-        {stats.map((s) => (
-          <div key={s.label} className="flex items-center gap-2">
-            <span className="text-xl">{s.icon}</span>
-            <span className="text-sm font-bold text-charcoal">{s.label}</span>
-          </div>
+      <ul className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-4 gap-y-2 px-4 py-6 text-sm font-bold text-charcoal sm:px-6">
+        {stats.map((label, i) => (
+          <li key={label} className="flex items-center gap-4">
+            {i > 0 && <span aria-hidden="true" className="h-1 w-1 rounded-full bg-coral" />}
+            {label}
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
 
 function HowItWorks() {
-  const cards = [
-    {
-      icon: "🕌",
-      title: "Create Your Profile",
-      text: "Sign up free, fill in your personal details, preferences, and upload your photo.",
-    },
-    {
-      icon: "🔍",
-      title: "Search & Connect",
-      text: "Use our powerful filters to find compatible matches by region, country, caste, sect, and more.",
-    },
-    {
-      icon: "💍",
-      title: "Get Verified & Meet",
-      text: "Complete payment verification to unlock contact details and take the next step.",
-    },
+  const steps = [
+    { title: "Create a profile", text: "Free, in about five minutes." },
+    { title: "Search with filters", text: "Find what matters to your family." },
+    { title: "Get verified", text: "Unlock contact details and take the next step." },
   ];
   return (
-    <section id="how-it-works" className="bg-off-white py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <h2 className="gsap-fade-up text-center text-3xl font-bold text-charcoal sm:text-4xl">
-          Your Journey to Nikah
-        </h2>
-        <p className="gsap-fade-up mx-auto mt-3 max-w-2xl text-center text-charcoal/60">
-          Three simple steps stand between you and your future spouse
-        </p>
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          {cards.map((c, i) => (
-            <div
-              key={c.title}
-              className="gsap-fade-up rounded-2xl border-t-4 border-coral bg-white p-8 shadow-sm transition-shadow hover:shadow-md"
-            >
-              <div className="mb-4 flex items-center gap-3">
-                <span className="text-4xl">{c.icon}</span>
-                <span className="text-sm font-extrabold text-coral">
-                  STEP {i + 1}
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-charcoal">{c.title}</h3>
-              <p className="mt-3 leading-relaxed text-charcoal/70">{c.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const FEATURES = [
-  {
-    icon: "🎯",
-    title: "Advanced Matching Filters",
-    text: "Search by region, country, city, caste, sub-caste, sect, profession, and qualification. Every filter is designed to help you find a truly compatible match, not just a nearby one.",
-    badge: null,
-  },
-  {
-    icon: "🔒",
-    title: "Privacy First",
-    text: "Contact details are only visible to verified members. Your real name is never shown publicly, and your photos stay hidden from unverified visitors.",
-    badge: null,
-  },
-  {
-    icon: "🛡️",
-    title: "We Block Screenshots",
-    text: "Profile photos and contact details are automatically hidden the moment a screenshot is attempted or the page loses focus. Your privacy stays protected even from casual capture attempts.",
-    badge: null,
-  },
-  {
-    icon: "👨‍👧",
-    title: "Wali/Guardian Support",
-    text: "Include a guardian in your search journey. Father and mother contact details are part of every profile, keeping the process transparent and family-centred.",
-    badge: null,
-  },
-  {
-    icon: "🤖",
-    title: "AI-Powered Matching",
-    text: "Smart profile suggestions based on your preferences. The more you tell us about your ideal partner, the better our recommendations become.",
-    badge: "Coming Soon",
-  },
-  {
-    icon: "💳",
-    title: "Multi-Currency Payments",
-    text: "Pay in PKR, GBP, EUR, or USD. Local bank accounts in Pakistan, the UK, Germany, and the USA make verification simple wherever you live.",
-    badge: null,
-  },
-];
-
-function Features() {
-  return (
-    <section id="about" className="bg-white py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <h2 className="gsap-fade-up text-center text-3xl font-bold text-charcoal sm:text-4xl">
-          Built for a Serious Search
-        </h2>
-        <p className="gsap-fade-up mx-auto mt-3 max-w-2xl text-center text-charcoal/60">
-          Every feature exists for one purpose: helping you reach Nikah the
-          halal way
-        </p>
-        <div className="mt-16 space-y-16">
-          {FEATURES.map((f, i) => (
-            <div
-              key={f.title}
-              className={`flex flex-col items-center gap-10 lg:flex-row ${
-                i % 2 === 1 ? "lg:flex-row-reverse" : ""
-              }`}
-            >
-              <div
-                className={`${i % 2 === 1 ? "gsap-slide-right" : "gsap-slide-left"} flex h-52 w-full max-w-md items-center justify-center rounded-3xl bg-gradient-to-br from-off-white to-coral/10 text-7xl lg:h-64`}
-                data-speed={i % 2 === 1 ? "1.06" : "0.94"}
-              >
-                {f.icon}
-              </div>
-              <div
-                className={`${i % 2 === 1 ? "gsap-slide-left" : "gsap-slide-right"} max-w-xl text-center lg:text-left`}
-              >
-                <div className="flex items-center justify-center gap-3 lg:justify-start">
-                  <h3 className="text-2xl font-bold text-charcoal">{f.title}</h3>
-                  {f.badge && (
-                    <span className="rounded-full bg-coral px-3 py-1 text-xs font-bold text-white">
-                      {f.badge}
-                    </span>
-                  )}
-                </div>
-                <p className="mt-4 leading-relaxed text-charcoal/70">{f.text}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const TESTIMONIALS = [
-  {
-    quote:
-      "We matched within two months. The verification process made both families feel safe, and the team was there at every step. May Allah bless this platform.",
-    name: "Fatima & Ahmed",
-    initials: "FA",
-  },
-  {
-    quote:
-      "As a father, I appreciated being part of my daughter's search. The guardian support and transparent profiles are exactly what our community needed.",
-    name: "Muhammad S.",
-    initials: "MS",
-  },
-  {
-    quote:
-      "I had tried other apps but they never felt right. PureLifePartner felt respectful from day one. Alhamdulillah, we had our Nikah last spring.",
-    name: "Zainab & Omar",
-    initials: "ZO",
-  },
-];
-
-function Stars() {
-  return (
-    <div className="flex gap-1 text-coral">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
-          <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z" />
-        </svg>
-      ))}
-    </div>
-  );
-}
-
-function Testimonials() {
-  return (
-    <section className="bg-white py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <h2 className="gsap-fade-up text-center text-3xl font-bold text-charcoal sm:text-4xl">
-          Alhamdulillah They Found Each Other
-        </h2>
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          {TESTIMONIALS.map((t) => (
-            <div
-              key={t.name}
-              className="gsap-fade-up flex flex-col rounded-2xl bg-off-white p-8"
-            >
-              <Stars />
-              <p className="mt-4 flex-1 leading-relaxed text-charcoal/80">
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-coral font-bold text-white">
-                  {t.initials}
-                </div>
-                <span className="font-bold text-charcoal">{t.name}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Link href="/success-stories">
-            <Button variant="outline">Read More Stories</Button>
+    <section id="how-it-works" className="bg-off-white py-20 sm:py-28">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
+        <div className="gsap-fade-up">
+          <h2 className="text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl">
+            Three steps <br className="hidden lg:block" />
+            to nikah
+          </h2>
+          <Link
+            href="/register"
+            className="mt-6 inline-block font-bold text-coral underline-offset-4 hover:underline"
+          >
+            Create your free profile →
           </Link>
         </div>
+
+        <ol className="border-b border-charcoal/20">
+          {steps.map((s, i) => (
+            <li
+              key={s.title}
+              className="gsap-fade-up flex items-baseline gap-6 border-t border-charcoal/20 py-7 sm:gap-10"
+            >
+              <span className="w-14 shrink-0 font-[family-name:var(--font-display)] text-4xl font-extrabold text-coral sm:w-20 sm:text-6xl">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="text-xl font-bold text-charcoal sm:text-2xl">{s.title}</h3>
+                <p className="mt-1 text-charcoal/60">{s.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
@@ -341,16 +226,100 @@ function BigStats() {
     { value: "4", label: "Currencies Supported" },
   ];
   return (
-    <section id="pricing" className="bg-coral py-16">
+    <section className="plp-pattern-light bg-coral py-16">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 text-center text-white sm:px-6 lg:grid-cols-4">
         {stats.map((s) => (
           <div key={s.label} className="gsap-zoom">
-            <div className="text-4xl font-extrabold sm:text-5xl">{s.value}</div>
+            <div className="text-4xl font-extrabold sm:text-5xl">
+              <CountUp value={s.value} />
+            </div>
             <div className="mt-2 text-sm font-semibold uppercase tracking-wider text-white/85">
               {s.label}
             </div>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+/** Parents and walis: the third illustration beside one short line */
+function ForFamilies() {
+  return (
+    <section className="overflow-hidden bg-off-white py-20 sm:py-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/illustrations/parents-phone.svg"
+          alt="Smiling mother and father looking at a profile on a phone together"
+          loading="lazy"
+          className="gsap-slide-left mx-auto w-full max-w-[460px]"
+        />
+        <div className="gsap-slide-right text-center lg:text-left">
+          <h2 className="text-3xl font-extrabold text-charcoal sm:text-5xl">
+            Made for families too
+          </h2>
+          <p className="mx-auto mt-5 max-w-md text-lg leading-relaxed text-charcoal/70 lg:mx-0">
+            A parent or wali can set up a profile with you, and every profile
+            can be shared with family in one tap.
+          </p>
+          <Link
+            href="/register"
+            className="mt-6 inline-block font-bold text-coral underline-offset-4 hover:underline"
+          >
+            Create a profile together →
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const FAQS = [
+  {
+    q: "Is it free to join?",
+    a: "Yes. Creating a profile and browsing is free. You only pay when you get verified to unlock contact details.",
+  },
+  {
+    q: "Who can see my name and number?",
+    a: "Other members only see your Profile ID. Your contact details are shared only after verification.",
+  },
+  {
+    q: "Can a parent create a profile for me?",
+    a: "Yes. A parent or wali can register on your behalf, with your full knowledge and consent.",
+  },
+  {
+    q: "How do I share a profile with my family?",
+    a: "Every profile has a Share button for WhatsApp, email or a copied link.",
+  },
+  {
+    q: "Which currencies can I pay in?",
+    a: "PKR, GBP, EUR or USD.",
+  },
+];
+
+function FAQ() {
+  return (
+    <section id="faq" className="bg-white py-20 sm:py-28">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
+        <h2 className="gsap-fade-up text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl">
+          Questions, <br className="hidden lg:block" />
+          answered
+        </h2>
+        <div className="border-b border-charcoal/20">
+          {FAQS.map((f) => (
+            <details key={f.q} className="plp-faq group border-t border-charcoal/20">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg font-bold text-charcoal sm:text-xl">
+                {f.q}
+                <span
+                  aria-hidden="true"
+                  className="relative h-4 w-4 shrink-0 text-coral before:absolute before:left-0 before:top-1/2 before:h-0.5 before:w-4 before:-translate-y-1/2 before:bg-current after:absolute after:left-1/2 after:top-0 after:h-4 after:w-0.5 after:-translate-x-1/2 after:bg-current after:transition-transform group-open:after:scale-y-0"
+                />
+              </summary>
+              <p className="-mt-2 max-w-xl pb-6 text-charcoal/70">{f.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -364,8 +333,7 @@ function DownloadCTA() {
           Ready to Begin Your Journey?
         </h2>
         <p className="mt-4 text-lg text-charcoal/60">
-          Join thousands of Muslims finding their perfect match on
-          PureLifePartner
+          Join thousands of Muslims finding their match.
         </p>
         <div className="mt-8">
           <AppBadges />

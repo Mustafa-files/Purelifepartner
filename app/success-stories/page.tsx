@@ -8,7 +8,6 @@ const STORIES = [
     year: "2025",
     story:
       "We matched within two months. The verification process made both families feel safe, and the team was there at every step. May Allah bless this platform.",
-    initials: "FA",
   },
   {
     couple: "Zainab & Omar",
@@ -16,7 +15,6 @@ const STORIES = [
     year: "2025",
     story:
       "I had tried other apps but they never felt right. PureLifePartner felt respectful from day one. Alhamdulillah, we had our Nikah last spring.",
-    initials: "ZO",
   },
   {
     couple: "Maryam & Bilal",
@@ -24,7 +22,6 @@ const STORIES = [
     year: "2024",
     story:
       "Living abroad made finding someone with the same values difficult. The region and sect filters helped us find each other across continents.",
-    initials: "MB",
   },
   {
     couple: "Khadija & Yusuf",
@@ -32,7 +29,6 @@ const STORIES = [
     year: "2024",
     story:
       "Our fathers spoke first, exactly how we both wanted it. The guardian support feature made the whole journey feel honourable and transparent.",
-    initials: "KY",
   },
   {
     couple: "Aisha & Hamza",
@@ -40,7 +36,6 @@ const STORIES = [
     year: "2025",
     story:
       "From the first WhatsApp message to the Nikah ceremony took only five months. JazakAllah khair to the whole PureLifePartner team.",
-    initials: "AH",
   },
   {
     couple: "Sumaya & Ibrahim",
@@ -48,67 +43,75 @@ const STORIES = [
     year: "2024",
     story:
       "The verified profiles gave us confidence that everyone was serious. No games, no time wasting, just genuine people looking for marriage.",
-    initials: "SI",
   },
 ];
 
 export default function SuccessStories() {
   return (
-    <div className="bg-off-white py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <h1 className="text-center text-4xl font-extrabold text-charcoal">
-          Alhamdulillah They Found Each Other
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-center text-charcoal/60">
-          Real couples who began their journey to Nikah on PureLifePartner.
-          Your story could be next.
-        </p>
+    <div className="bg-off-white">
+      {/* Header with the two illustrations */}
+      <section className="py-14 sm:py-20">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
+          <div className="flex items-end justify-center gap-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/illustrations/sister-waving.svg" alt="" className="w-32 sm:w-40" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/illustrations/brother-greeting.svg" alt="" className="w-32 sm:w-40" />
+          </div>
+          <h1 className="mt-8 text-4xl font-extrabold text-charcoal sm:text-6xl">
+            Alhamdulillah, they found each other
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-lg text-charcoal/60">
+            Couples who began their journey to nikah here.
+          </p>
+        </div>
+      </section>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {/* Stories as an editorial list: who on the left, their words on the right */}
+      <section className="bg-white py-16 sm:py-24">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <ol className="border-b border-charcoal/15">
           {STORIES.map((s) => (
-            <div
+            <li
               key={s.couple}
-              className="flex flex-col rounded-2xl bg-white p-8 shadow-sm"
+              className="grid gap-4 border-t border-charcoal/15 py-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12"
             >
-              <div className="flex gap-1 text-coral">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <svg
-                    key={i}
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-5 w-5"
-                  >
-                    <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z" />
-                  </svg>
-                ))}
+              <div>
+                <p className="text-xl font-bold text-charcoal">{s.couple}</p>
+                <p className="mt-1 text-sm text-charcoal/55">
+                  {s.location} · Married {s.year}
+                </p>
               </div>
-              <p className="mt-4 flex-1 leading-relaxed text-charcoal/80">
-                &ldquo;{s.story}&rdquo;
-              </p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-coral font-bold text-white">
-                  {s.initials}
-                </div>
-                <div>
-                  <div className="font-bold text-charcoal">{s.couple}</div>
-                  <div className="text-xs text-charcoal/50">
-                    {s.location} · Married {s.year}
-                  </div>
-                </div>
-              </div>
-            </div>
+              <blockquote className="text-2xl font-bold leading-snug text-charcoal sm:text-3xl">
+                <span className="text-coral">&ldquo;</span>
+                {s.story}
+                <span className="text-coral">&rdquo;</span>
+              </blockquote>
+            </li>
           ))}
+        </ol>
         </div>
+      </section>
 
-        <div className="mt-14 text-center">
-          <h2 className="text-2xl font-bold text-charcoal">
-            Ready to write your own story?
-          </h2>
-          <Link href="/register" className="mt-6 inline-block">
-            <Button size="lg">Create Free Profile</Button>
-          </Link>
+      {/* Closing call to action with the parents illustration */}
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/illustrations/parents-phone.svg"
+            alt=""
+            className="mx-auto w-full max-w-[420px]"
+          />
+          <div className="text-center lg:text-left">
+            <h2 className="text-3xl font-extrabold text-charcoal sm:text-5xl">
+              Your story could be next
+            </h2>
+            <Link href="/register" className="mt-8 inline-block">
+              <Button size="lg">Create Free Profile</Button>
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

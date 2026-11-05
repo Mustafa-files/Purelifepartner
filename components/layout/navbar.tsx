@@ -9,12 +9,12 @@ import { UserMenu } from "@/components/layout/user-menu";
 import { AppearanceToggle, ThemeOptions, useTheme } from "@/components/ui/appearance";
 import { createClient } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
+import { scrollToSection } from "@/components/ui/smooth-scroll";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/#how-it-works", label: "How It Works" },
   { href: "/success-stories", label: "Success Stories" },
-  { href: "/#pricing", label: "Pricing" },
   { href: "/#about", label: "About" },
 ];
 
@@ -23,6 +23,18 @@ export function Navbar() {
   const [signedIn, setSignedIn] = useState(false);
   const pathname = usePathname();
   const [theme, setTheme] = useTheme();
+
+  /** On the homepage, "/" and "/#section" links glide there instead of
+   *  letting the router jump instantly. Other pages navigate as normal. */
+  function onNavClick(e: React.MouseEvent, href: string) {
+    setOpen(false);
+    if (pathname !== "/" || !(href === "/" || href.startsWith("/#"))) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    const hash = href === "/" ? null : href.slice(1);
+    window.history.pushState(null, "", href);
+    scrollToSection(hash);
+  }
 
   useEffect(() => {
     const supabase = createClient();
@@ -36,7 +48,11 @@ export function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3">
       <nav className="flex h-14 w-full max-w-6xl items-center justify-between rounded-full bg-white/85 px-4 shadow-[0_12px_40px_-18px_rgba(26,21,22,0.35)] ring-1 ring-black/5 backdrop-blur-xl sm:px-5">
-        <Link href={signedIn ? "/search" : "/"} aria-label="PureLifePartner home">
+        <Link
+          href={signedIn ? "/search" : "/"}
+          onClick={(e) => !signedIn && onNavClick(e, "/")}
+          aria-label="PureLifePartner home"
+        >
           <Logo />
         </Link>
 
@@ -48,6 +64,7 @@ export function Navbar() {
               <Link
                 key={l.label}
                 href={l.href}
+                onClick={(e) => onNavClick(e, l.href)}
                 className="rounded-full px-3.5 py-2 text-sm font-semibold text-charcoal/75 transition-colors hover:bg-coral/10 hover:text-charcoal"
               >
                 {l.label}
@@ -113,7 +130,7 @@ export function Navbar() {
             <Link
               key={l.label}
               href={l.href}
-              onClick={() => setOpen(false)}
+              onClick={(e) => onNavClick(e, l.href)}
               className="text-lg font-semibold text-charcoal hover:text-coral"
             >
               {l.label}

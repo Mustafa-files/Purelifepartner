@@ -22,7 +22,9 @@
      pop while the whole app reads warm and pink. The full-strength
      #FFC5D3 is reserved for washes, sections and the bg-soft-pink utility. */
   --color-off-white: #fff1f4;
-  --color-charcoal: #2b2325; /* dark charcoal text */
+  --color-charcoal: #000000; /* text: black in the light theme */
+  /* Headings share the body font (Quicksand) */
+  --font-display: var(--font-sans-app);
 
   /* Back-compat aliases: existing components still use the "coral"
      tokens for the primary action colour — point them at crimson. */
@@ -136,6 +138,16 @@ h3 {
 
 .dark .bg-white {
   background-color: #2b2325;
+}
+/* Images with a light and a dark version: show the one matching the theme */
+.plp-dark-only {
+  display: none;
+}
+.dark .plp-dark-only {
+  display: block;
+}
+.dark .plp-light-only {
+  display: none;
 }
 .dark .bg-white\/85 {
   background-color: rgba(43, 35, 37, 0.85);
@@ -268,4 +280,34 @@ h3 {
   .plp-echo .plp-echo-ghost {
     -webkit-text-stroke-width: 1px;
   }
+}
+
+/* ---------- Faint Islamic geometric pattern ----------
+   Eight-pointed stars on a lattice. The light version sits on the crimson
+   band, the crimson version on light surfaces. */
+.plp-pattern-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.14'%3E%3Crect x='16' y='16' width='24' height='24'/%3E%3Crect x='16' y='16' width='24' height='24' transform='rotate(45 28 28)'/%3E%3Cpath d='M0 0L11 11M56 0L45 11M0 56L11 45M56 56L45 45'/%3E%3C/g%3E%3C/svg%3E");
+}
+.plp-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cg fill='none' stroke='%23e63946' stroke-opacity='.07'%3E%3Crect x='16' y='16' width='24' height='24'/%3E%3Crect x='16' y='16' width='24' height='24' transform='rotate(45 28 28)'/%3E%3Cpath d='M0 0L11 11M56 0L45 11M0 56L11 45M56 56L45 45'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Testimonial quote fades in each time it changes */
+@keyframes plp-quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.plp-quote {
+  animation: plp-quote-in 0.35s ease-out;
+}
+
+/* FAQ: hide the default disclosure triangle in Safari */
+.plp-faq summary::-webkit-details-marker {
+  display: none;
 }

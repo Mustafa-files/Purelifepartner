@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -8,17 +8,12 @@ import { Toaster } from "@/components/ui/toast";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { CookieConsent } from "@/components/layout/cookie-consent";
 
-// Only the weights actually used; every extra weight is another font file
-// phones must download before text settles
-const displayFont = Bricolage_Grotesque({
+// Quicksand for headings and body. Only the weights actually used; every
+// extra weight is another font file phones must download.
+// Quicksand tops out at 700, so extra-bold body text renders at bold
+const sansFont = Quicksand({
   subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-display",
-});
-
-const sansFont = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans-app",
 });
 
@@ -38,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${displayFont.variable} ${sansFont.variable}`}
+      className={sansFont.variable}
       suppressHydrationWarning
     >
       <head>

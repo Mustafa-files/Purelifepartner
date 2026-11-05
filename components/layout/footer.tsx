@@ -36,7 +36,7 @@ const SCROLL_COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-100 bg-white">
+    <footer className="plp-pattern border-t border-gray-100 bg-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-6">
           <div className="col-span-2 lg:col-span-2">

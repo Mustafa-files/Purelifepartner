@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 460" role="img" aria-label="Smiling mother in a hijab and bearded father in a kufi looking at a phone together">
+  <path d="M40 460 L40 240 A200 200 0 0 1 240 40 L320 40 A200 200 0 0 1 520 240 L520 460 Z" fill="#ffc5d3"/>
+
+  <!-- Mother -->
+  <g stroke="#1a1416" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M58 460 C62 372 84 300 132 266 L258 266 C300 300 318 372 322 460 Z" fill="#1a1416"/>
+    <path d="M112 290 C100 206 116 112 196 102 C276 112 292 206 280 290 C250 306 142 306 112 290 Z" fill="#1a1416"/>
+    <ellipse cx="204" cy="180" rx="44" ry="52" fill="#fff"/>
+    <path d="M178 176 Q187 168 196 176" fill="none" stroke-width="4"/>
+    <path d="M212 176 Q221 168 230 176" fill="none" stroke-width="4"/>
+    <path d="M190 202 Q204 214 218 202" fill="none" stroke-width="4"/>
+    <circle cx="176" cy="196" r="7" fill="#ffc5d3" stroke="none"/>
+    <circle cx="232" cy="196" r="7" fill="#ffc5d3" stroke="none"/>
+    <path d="M128 250 C118 200 128 148 166 124" fill="none" stroke="#fff1f4" stroke-width="2.5" opacity="0.45"/>
+    <path d="M150 320 C144 370 140 410 138 456" fill="none" stroke="#fff1f4" stroke-width="2.5" opacity="0.35"/>
+  </g>
+
+  <!-- Father -->
+  <g transform="translate(190 14)" stroke="#1a1416" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 446 C60 330 82 272 180 254 C278 272 300 330 300 446 Z" fill="#fff"/>
+    <path d="M82 316 C90 284 120 266 162 260 L170 446 L68 446 C68 384 74 342 82 316 Z" fill="#1a1416"/>
+    <path d="M278 316 C270 284 240 266 198 260 L190 446 L292 446 C292 384 286 342 278 316 Z" fill="#1a1416"/>
+    <path d="M164 236 L164 256 C172 262 188 262 196 256 L196 236 Z" fill="#fff"/>
+    <ellipse cx="128" cy="146" rx="10" ry="15" fill="#fff"/>
+    <ellipse cx="232" cy="146" rx="10" ry="15" fill="#fff"/>
+    <ellipse cx="180" cy="140" rx="52" ry="62" fill="#fff"/>
+    <path d="M128 122 C128 66 232 66 232 122 C204 110 156 110 128 122 Z" fill="#fff"/>
+    <path d="M140 104 L220 104" fill="none" stroke-width="3" stroke-dasharray="2 9"/>
+    <path d="M150 88 L210 88" fill="none" stroke-width="3" stroke-dasharray="2 9"/>
+    <path d="M128 142 C126 210 154 250 180 254 C206 250 234 210 232 142 C224 172 206 180 180 180 C154 180 136 172 128 142 Z" fill="#1a1416"/>
+    <path d="M154 180 C162 162 176 162 180 170 C184 162 198 162 206 180 C196 176 188 176 180 180 C172 176 164 176 154 180 Z" fill="#1a1416"/>
+    <path d="M164 192 Q180 210 196 192" fill="none" stroke="#fff" stroke-width="5"/>
+    <path d="M144 196 Q150 214 162 228 M216 196 Q210 214 198 228 M180 222 L180 244" fill="none" stroke="#fff" stroke-width="3" opacity="0.7"/>
+    <path d="M150 138 Q159 130 168 138" fill="none" stroke-width="4"/>
+    <path d="M192 138 Q201 130 210 138" fill="none" stroke-width="4"/>
+    <path d="M148 120 Q160 112 172 118 M188 118 Q200 112 212 120" fill="none" stroke-width="5"/>
+    <path d="M180 140 Q176 154 184 156" fill="none" stroke-width="3"/>
+  </g>
+
+  <!-- Phone held between them -->
+  <g stroke="#1a1416" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M370 420 C356 392 332 368 306 352 L326 324 C354 340 384 368 404 400 Z" fill="#fff"/>
+    <g transform="rotate(-8 290 300)">
+      <rect x="258" y="250" width="64" height="104" rx="12" fill="#1a1416"/>
+      <rect x="266" y="262" width="48" height="80" rx="6" fill="#fff"/>
+      <circle cx="290" cy="284" r="9" fill="#ffc5d3" stroke-width="3"/>
+      <path d="M276 304 L304 304 M276 316 L298 316" stroke-width="3"/>
+      <rect x="276" y="326" width="28" height="9" rx="4.5" fill="#e63946" stroke="none"/>
+    </g>
+    <rect x="270" y="324" width="66" height="34" rx="17" fill="#fff"/>
+    <path d="M286 326 L286 340 M300 325 L300 340 M314 326 L314 340" fill="none" stroke-width="2.5"/>
+  </g>
+
+  <path d="M310 210 C310 196 294 192 290 204 C286 192 270 196 270 210 C270 224 290 234 290 242 C290 234 310 224 310 210 Z" fill="#e63946" stroke="#1a1416" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M96 96 L99 105 L108 108 L99 111 L96 120 L93 111 L84 108 L93 105 Z" fill="#e5a93c"/>
+  <path d="M470 104 L474 115 L485 119 L474 123 L470 134 L466 123 L455 119 L466 115 Z" fill="#e5a93c"/>
+</svg>
