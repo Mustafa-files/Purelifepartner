@@ -10,6 +10,7 @@ const PROTECTED_PREFIXES = [
   "/system",
   "/payment",
   "/matches",
+  "/shortlist",
   "/staff",
   "/register/personal",
   "/register/religion",
@@ -84,7 +85,9 @@ export async function middleware(request: NextRequest) {
   if (!user) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("next", path);
+    // Keep the query too, so a homepage search survives the sign in
+    url.search = "";
+    url.searchParams.set("next", path + request.nextUrl.search);
     return NextResponse.redirect(url);
   }
 
@@ -102,6 +105,7 @@ export const config = {
     "/system/:path*",
     "/payment/:path*",
     "/matches/:path*",
+    "/shortlist/:path*",
     "/staff/:path*",
     "/register/personal/:path*",
     "/register/religion/:path*",

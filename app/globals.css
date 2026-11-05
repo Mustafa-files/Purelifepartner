@@ -311,3 +311,33 @@ h3 {
 .plp-faq summary::-webkit-details-marker {
   display: none;
 }
+
+/* ---------- Dark mode: dusky rose ----------
+   The bright pink and crimson glare on dark surfaces, so at night the
+   illustrations get deep rose arches with a light rim (separate -dark.svg
+   files, swapped in here for every <img> that uses them), buttons use a
+   softer red, and accent text turns soft pink. */
+.dark img[src$="/illustrations/sister-waving.svg"] {
+  content: url("/illustrations/sister-waving-dark.svg");
+}
+.dark img[src$="/illustrations/brother-greeting.svg"] {
+  content: url("/illustrations/brother-greeting-dark.svg");
+}
+.dark img[src$="/illustrations/parents-phone.svg"] {
+  content: url("/illustrations/parents-phone-dark.svg");
+}
+.dark {
+  --color-coral: #d94a5a;
+  --color-coral-muted: #c43c4c;
+  --color-soft-pink: #4a3338;
+}
+.dark .text-coral {
+  color: #ffa3b5;
+}
+.dark .wash {
+  background-image: radial-gradient(
+    60% 45% at 50% 0%,
+    rgba(255, 163, 181, 0.07) 0%,
+    rgba(255, 163, 181, 0) 70%
+  );
+}

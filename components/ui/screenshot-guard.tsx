@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ShieldIcon } from "@/components/ui/icons";
 
 /**
  * Best-effort screenshot blocker for sensitive parts of a profile.
@@ -87,7 +88,7 @@ export function ScreenshotGuard({ children }: { children: React.ReactNode }) {
           aria-hidden="true"
           className="absolute inset-0 z-50 flex flex-col items-center justify-center rounded-2xl bg-charcoal/95 p-6 text-center text-white"
         >
-          <div className="text-4xl">🛡️</div>
+          <ShieldIcon className="h-10 w-10" />
           <p className="mt-3 text-lg font-bold">Screenshot blocked</p>
           <p className="mt-1 text-sm text-white/70">
             For privacy, photos and contact details are hidden when capture is

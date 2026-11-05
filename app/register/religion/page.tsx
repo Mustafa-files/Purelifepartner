@@ -17,6 +17,7 @@ import {
   SUB_CASTES_BY_CASTE,
 } from "@/lib/constants";
 import type { Profile } from "@/types";
+import { FileIcon } from "@/components/ui/icons";
 
 export default function RegisterReligion() {
   const [form, setForm] = useState({
@@ -249,8 +250,8 @@ export default function RegisterReligion() {
             </FieldLabel>
 
             <div className="rounded-xl border-2 border-dashed border-coral/40 bg-coral/5 p-5">
-              <h3 className="font-bold text-charcoal">
-                📄 Document Verification
+              <h3 className="flex items-center gap-2 font-bold text-charcoal">
+                <FileIcon className="h-5 w-5 text-coral" /> Document Verification
               </h3>
               <p className="mt-1 text-sm text-charcoal/70">
                 Scan or photograph your NIC, Passport, or Driving License. We

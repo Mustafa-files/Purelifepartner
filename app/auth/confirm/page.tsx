@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
+import { AlertIcon, CheckCircleIcon, ClockIcon, IconBadge } from "@/components/ui/icons";
 type Status = "verifying" | "success" | "expired" | "error";
 
 const SIGN_IN_AFTER_CONFIRM = "/login?confirmed=1&next=/register/personal";
@@ -153,7 +154,7 @@ function ConfirmInner() {
         <div className="rounded-2xl bg-white p-10 text-center shadow-sm">
           {status === "verifying" && (
             <>
-              <div className="text-5xl">⏳</div>
+              <IconBadge><ClockIcon className="h-8 w-8" /></IconBadge>
               <h1 className="mt-4 text-2xl font-bold text-charcoal">
                 Confirming your email...
               </h1>
@@ -165,7 +166,7 @@ function ConfirmInner() {
 
           {status === "success" && (
             <>
-              <div className="text-5xl">✅</div>
+              <IconBadge tone="green"><CheckCircleIcon className="h-8 w-8" /></IconBadge>
               <h1 className="mt-4 text-2xl font-bold text-charcoal">
                 Email confirmed
               </h1>
@@ -180,7 +181,7 @@ function ConfirmInner() {
 
           {status === "expired" && (
             <>
-              <div className="text-5xl">⌛</div>
+              <IconBadge><ClockIcon className="h-8 w-8" /></IconBadge>
               <h1 className="mt-4 text-2xl font-bold text-charcoal">
                 This link has expired
               </h1>
@@ -201,7 +202,7 @@ function ConfirmInner() {
 
           {status === "error" && (
             <>
-              <div className="text-5xl">😕</div>
+              <IconBadge><AlertIcon className="h-8 w-8" /></IconBadge>
               <h1 className="mt-4 text-2xl font-bold text-charcoal">
                 Authentication failed
               </h1>

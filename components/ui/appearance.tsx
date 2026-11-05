@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
+import { MoonIcon, SunIcon } from "@/components/ui/icons";
 
 export type Theme = "light" | "dark";
 
@@ -50,7 +51,8 @@ export function ThemeOptions({
               : "font-semibold text-charcoal/70"
           )}
         >
-          {mode === "light" ? "☀️ Light Theme" : "🌙 Dark Theme"}
+          {mode === "light" ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
+          {mode === "light" ? "Light Theme" : "Dark Theme"}
           {theme === mode && <span className="ml-auto">✓</span>}
         </button>
       ))}

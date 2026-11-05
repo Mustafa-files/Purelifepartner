@@ -21,6 +21,7 @@ export default function MatchesPage() {
   const [profiles, setProfiles] = useState<PublicProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasRequirements, setHasRequirements] = useState(true);
+  const [reason, setReason] = useState<string | undefined>();
 
   useEffect(() => {
     const supabase = createClient();
@@ -52,7 +53,8 @@ export default function MatchesPage() {
         .neq("id", data.user.id)
         .gte("age", r.min_age ?? 16)
         .lte("age", r.max_age ?? 60)
-        .order("status", { ascending: true }) // Verified members surface first
+        // "Verified" sorts after "To Be Verified", so descending puts it first
+        .order("status", { ascending: false })
         .order("created_at", { ascending: false })
         .limit(60);
 
@@ -83,6 +85,18 @@ export default function MatchesPage() {
       } else if (regions.length) {
         query = query.overlaps("residence_country", countriesForRegions(regions));
       }
+
+      // Every result meets all of these, so name them on each card
+      const fits = [
+        "age",
+        religions.length && "religion",
+        sects.length && "sect",
+        castes.length && "caste",
+        qualifications.length && "education",
+        professions.length && "profession",
+        (cities.length || countries.length || regions.length) && "location",
+      ].filter(Boolean) as string[];
+      setReason(`Fits your ${joinWords(fits)}`);
 
       const { data: rows } = await query;
       const matches = (rows ?? []) as PublicProfile[];
@@ -116,7 +130,8 @@ export default function MatchesPage() {
           </div>
         ) : !hasRequirements ? (
           <div className="rounded-2xl bg-white p-16 text-center shadow-sm">
-            <div className="text-5xl">📝</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/illustrations/brother-greeting.svg" alt="" className="mx-auto w-40" />
             <h2 className="mt-4 text-xl font-bold text-charcoal">
               Set your requirements first
             </h2>
@@ -130,7 +145,8 @@ export default function MatchesPage() {
           </div>
         ) : profiles.length === 0 ? (
           <div className="rounded-2xl bg-white p-16 text-center shadow-sm">
-            <div className="text-5xl">🔍</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/illustrations/parents-phone.svg" alt="" className="mx-auto w-full max-w-[260px]" />
             <h2 className="mt-4 text-xl font-bold text-charcoal">
               No matches just yet
             </h2>
@@ -154,7 +170,7 @@ export default function MatchesPage() {
             </p>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {profiles.map((p) => (
-                <ProfileCard key={p.id} profile={p} />
+                <ProfileCard key={p.id} profile={p} reason={reason} />
               ))}
             </div>
           </>
@@ -162,4 +178,10 @@ export default function MatchesPage() {
       </div>
     </div>
   );
+}
+
+/** "age", "age and sect", "age, sect and location" */
+function joinWords(words: string[]) {
+  if (words.length <= 1) return words.join("");
+  return `${words.slice(0, -1).join(", ")} and ${words[words.length - 1]}`;
 }

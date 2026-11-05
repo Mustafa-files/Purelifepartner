@@ -24,6 +24,11 @@ type HandleState = "idle" | "checking" | "available" | "taken";
 
 export default function RegisterStep1() {
   const router = useRouter();
+  // Came from the homepage search: explain why we're asking for an account
+  const [fromSearch, setFromSearch] = useState(false);
+  useEffect(() => {
+    setFromSearch(new URLSearchParams(window.location.search).get("from") === "search");
+  }, []);
   const [gender, setGender] = useState("");
   const [dobText, setDobText] = useState("");
   const [age, setAge] = useState<number | null>(null);
@@ -186,6 +191,12 @@ export default function RegisterStep1() {
               Sign in here
             </Link>
           </p>
+          {fromSearch && (
+            <p className="-mt-4 mb-8 rounded-xl bg-coral/10 p-4 text-sm font-semibold text-charcoal">
+              Create your free account to see every profile. We&apos;ll show
+              your search again as soon as you sign in.
+            </p>
+          )}
 
           <div className="space-y-5">
             <FieldLabel label="Gender" required error={errors.gender}>

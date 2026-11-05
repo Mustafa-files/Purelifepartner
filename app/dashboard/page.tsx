@@ -247,9 +247,16 @@ export default function Dashboard() {
                   className="h-24 w-24 rounded-full object-cover"
                 />
               ) : (
-                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-coral/15 text-4xl">
-                  {profile.gender === "Female" ? "🌸" : "🌙"}
-                </div>
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={
+                    profile.gender === "Female"
+                      ? "/illustrations/sister-waving.svg"
+                      : "/illustrations/brother-greeting.svg"
+                  }
+                  alt=""
+                  className="h-24 w-24 rounded-full bg-soft-pink object-cover object-top"
+                />
               )}
               <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 text-xs font-bold text-white opacity-0 transition-opacity group-hover:opacity-100">
                 {uploading === "avatar" ? "..." : "Change"}
@@ -310,41 +317,32 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Incomplete registration nudge */}
-        {incomplete && nextStep && (
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border-2 border-dashed border-coral/40 bg-coral/5 p-6">
-            <div>
-              <h2 className="font-bold text-charcoal">
-                Your profile is incomplete ({step}/{totalSteps} steps done)
-              </h2>
-              <p className="mt-1 text-sm text-charcoal/60">
-                Complete profiles get far more responses. Next:{" "}
-                {nextStep.label}
-              </p>
-            </div>
-            <Link href={nextStep.path}>
-              <Button variant="outline">Continue Registration</Button>
-            </Link>
-          </div>
-        )}
+        {/* How complete the profile is, and what to do next */}
+        <ProfileCompleteness
+          profile={profile}
+          step={step}
+          totalSteps={totalSteps}
+          nextPath={incomplete && nextStep ? nextStep.path : null}
+          onAddPhoto={() => avatarRef.current?.click()}
+        />
 
         {/* Quick actions */}
         <div className="mt-6 grid gap-6 sm:grid-cols-3">
           <ActionCard
             href="/search"
-            icon="🔍"
+            icon={<IconSearch />}
             title="Search Profiles"
             text="Find compatible matches using your preferences"
           />
           <ActionCard
             href="/register/personal"
-            icon="✏️"
+            icon={<IconEdit />}
             title="Edit Profile"
             text="Update your personal and family details"
           />
           <ActionCard
             href="/payment"
-            icon="💳"
+            icon={<IconCard />}
             title="Payments"
             text="View payment history and verification status"
           />
@@ -502,7 +500,7 @@ function ActionCard({
   text,
 }: {
   href: string;
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   text: string;
 }) {
@@ -511,7 +509,9 @@ function ActionCard({
       href={href}
       className="rounded-2xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
     >
-      <div className="text-3xl">{icon}</div>
+      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-coral/10 text-coral">
+        {icon}
+      </span>
       <h3 className="mt-3 font-bold text-charcoal">{title}</h3>
       <p className="mt-1 text-sm text-charcoal/60">{text}</p>
     </Link>
@@ -532,5 +532,152 @@ function SummaryRow({
         {value || "Not set"}
       </dd>
     </div>
+  );
+}
+
+/** Weighted checklist; the bar fills as each item is done */
+function ProfileCompleteness({
+  profile,
+  step,
+  totalSteps,
+  nextPath,
+  onAddPhoto,
+}: {
+  profile: Profile;
+  step: number;
+  totalSteps: number;
+  nextPath: string | null;
+  onAddPhoto: () => void;
+}) {
+  const stepsDone = Math.min(step, totalSteps);
+  const items: {
+    label: string;
+    weight: number;
+    earned: number;
+    href?: string;
+    onClick?: () => void;
+  }[] = [
+    {
+      label:
+        stepsDone >= totalSteps
+          ? "Registration finished"
+          : `Finish registration (${stepsDone} of ${totalSteps} steps)`,
+      weight: 40,
+      earned: Math.round((stepsDone / totalSteps) * 40),
+      href: nextPath ?? undefined,
+    },
+    { label: "Add a photo", weight: 20, earned: profile.avatar_url ? 20 : 0, onClick: onAddPhoto },
+    {
+      label: "Write about yourself",
+      weight: 15,
+      earned: profile.describe_yourself?.trim() ? 15 : 0,
+      href: "/register/religion",
+    },
+    {
+      label: "Add family details",
+      weight: 10,
+      earned: profile.family_details?.trim() ? 10 : 0,
+      href: "/register/religion",
+    },
+    {
+      label: "Add job or business details",
+      weight: 5,
+      earned: profile.job_details?.trim() ? 5 : 0,
+      href: "/register/religion",
+    },
+    {
+      label: "Get verified",
+      weight: 10,
+      earned: profile.status === "Verified" ? 10 : 0,
+      href: "/payment",
+    },
+  ];
+  const pct = items.reduce((n, i) => n + i.earned, 0);
+  if (pct >= 100) return null;
+
+  return (
+    <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+      <div className="flex items-baseline justify-between gap-4">
+        <h2 className="text-lg font-bold text-charcoal">Your profile is {pct}% complete</h2>
+        <span className="text-2xl font-bold text-coral">{pct}%</span>
+      </div>
+      <div
+        className="mt-3 h-2.5 overflow-hidden rounded-full bg-coral/10"
+        role="progressbar"
+        aria-valuenow={pct}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Profile completeness"
+      >
+        <div className="h-full rounded-full bg-coral transition-all" style={{ width: `${pct}%` }} />
+      </div>
+      <p className="mt-3 text-sm text-charcoal/60">
+        Complete profiles get far more responses.
+      </p>
+      <ul className="mt-4 divide-y divide-charcoal/10 border-y border-charcoal/10">
+        {items.map((item) => {
+          const done = item.earned >= item.weight;
+          const body = (
+            <>
+              <span
+                className={cn(
+                  "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 text-xs font-bold",
+                  done ? "border-green-600 bg-green-600 text-white" : "border-charcoal/25"
+                )}
+                aria-hidden="true"
+              >
+                {done && "✓"}
+              </span>
+              <span className={cn("flex-1", done ? "text-charcoal/50" : "font-semibold text-charcoal")}>
+                {item.label}
+              </span>
+              {!done && <span className="text-sm font-bold text-coral">+{item.weight - item.earned}%</span>}
+            </>
+          );
+          const cls = "flex w-full items-center gap-3 py-3 text-left";
+          if (done) return <li key={item.label} className={cls}>{body}</li>;
+          return (
+            <li key={item.label}>
+              {item.onClick ? (
+                <button type="button" onClick={item.onClick} className={cn(cls, "cursor-pointer hover:text-coral")}>
+                  {body}
+                </button>
+              ) : (
+                <Link href={item.href ?? "/dashboard"} className={cn(cls, "hover:text-coral")}>
+                  {body}
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+function IconSearch() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" className="h-5 w-5" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-3.5-3.5" />
+    </svg>
+  );
+}
+
+function IconEdit() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
+      <path d="M4 20h4L19 9l-4-4L4 16z" />
+      <path d="m13.5 6.5 4 4" />
+    </svg>
+  );
+}
+
+function IconCard() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3 10h18M7 15h3" />
+    </svg>
   );
 }

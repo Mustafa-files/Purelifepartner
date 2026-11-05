@@ -18,6 +18,7 @@ import {
   type ParsedRow,
 } from "@/lib/bulk-profiles";
 import { cn } from "@/lib/utils";
+import { ClipboardIcon, FileIcon, KeyIcon, UploadIcon } from "@/components/ui/icons";
 
 const BATCH_SIZE = 25;
 const STEP_LABELS = ["Template", "Upload", "Review", "Create"];
@@ -243,13 +244,13 @@ export default function BulkProfilesPage() {
         <Card className="mt-8">
           <CardTitle number={1} title="Download the template" done={currentStep > 1} />
           <div className="mt-5 grid gap-4 sm:grid-cols-3">
-            <InfoTile icon="📝" title="Required for every row">
+            <InfoTile icon={<ClipboardIcon />} title="Required for every row">
               Gender, date of birth, WhatsApp number and full name.
             </InfoTile>
-            <InfoTile icon="🔑" title="Logins made for you">
+            <InfoTile icon={<KeyIcon />} title="Logins made for you">
               Leave User ID and Password blank and we generate them.
             </InfoTile>
-            <InfoTile icon="📋" title="Complete profiles">
+            <InfoTile icon={<FileIcon />} title="Complete profiles">
               Add personal, religion and residence details, or finish them later.
             </InfoTile>
           </div>
@@ -539,10 +540,10 @@ function Stepper({ current }: { current: number }) {
   );
 }
 
-function InfoTile({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) {
+function InfoTile({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
     <div className="rounded-xl bg-off-white p-4">
-      <div className="text-2xl">{icon}</div>
+      <div className="text-coral">{icon}</div>
       <div className="mt-2 font-bold text-charcoal">{title}</div>
       <p className="mt-1 text-sm text-charcoal/60">{children}</p>
     </div>
@@ -620,7 +621,7 @@ function DropZone({
         </>
       ) : (
         <>
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-coral/10 text-2xl">📤</div>
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-coral/10 text-coral"><UploadIcon className="h-6 w-6" /></div>
           <p className="mt-3 font-bold text-charcoal">
             {fileName ? fileName : "Drop your spreadsheet here, or click to choose"}
           </p>

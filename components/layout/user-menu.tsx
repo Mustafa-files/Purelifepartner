@@ -9,15 +9,17 @@ import { ThemeOptions, useTheme } from "@/components/ui/appearance";
 import { isPlaceholderEmail } from "@/lib/bulk-profiles";
 import { cn } from "@/lib/utils";
 import type { Profile } from "@/types";
+import { BellIcon, ChatIcon, HeartIcon, IdCardIcon, LockIcon, LogOutIcon, PaletteIcon, RingsIcon, SearchIcon, SettingsIcon, ShieldIcon, UserIcon, UsersIcon } from "@/components/ui/icons";
 
 const MENU_LINKS = [
-  { icon: "🔍", label: "Browse Profiles", href: "/search" },
-  { icon: "💞", label: "My Matches", href: "/matches" },
-  { icon: "👤", label: "My Profile", href: "/dashboard" },
-  { icon: "⚙️", label: "Account Settings", href: "/settings#account" },
-  { icon: "🔒", label: "Privacy Settings", href: "/settings#privacy" },
-  { icon: "🔔", label: "Notification Preferences", href: "/settings#notifications" },
-  { icon: "💬", label: "Help & Support", href: "/help" },
+  { icon: <SearchIcon />, label: "Browse Profiles", href: "/search" },
+  { icon: <RingsIcon />, label: "My Matches", href: "/matches" },
+  { icon: <HeartIcon />, label: "My Shortlist", href: "/shortlist" },
+  { icon: <UserIcon />, label: "My Profile", href: "/dashboard" },
+  { icon: <SettingsIcon />, label: "Account Settings", href: "/settings#account" },
+  { icon: <LockIcon />, label: "Privacy Settings", href: "/settings#privacy" },
+  { icon: <BellIcon />, label: "Notification Preferences", href: "/settings#notifications" },
+  { icon: <ChatIcon />, label: "Help & Support", href: "/help" },
 ];
 
 export function UserMenu() {
@@ -181,7 +183,7 @@ export function UserMenu() {
                     onClick={close}
                     className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-charcoal transition-colors hover:bg-off-white"
                   >
-                    <span className="text-base">{item.icon}</span>
+                    <span className="text-coral">{item.icon}</span>
                     {item.label}
                   </Link>
                 ))}
@@ -194,7 +196,7 @@ export function UserMenu() {
                     onClick={close}
                     className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-coral transition-colors hover:bg-coral/10"
                   >
-                    <span className="text-base">🛡️</span>
+                    <ShieldIcon />
                     Admin Panel
                   </Link>
                 )}
@@ -204,7 +206,7 @@ export function UserMenu() {
                     onClick={close}
                     className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-coral transition-colors hover:bg-coral/10"
                   >
-                    <span className="text-base">👥</span>
+                    <UsersIcon />
                     Bulk Create Profiles
                   </Link>
                 )}
@@ -214,7 +216,7 @@ export function UserMenu() {
                     onClick={close}
                     className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-coral transition-colors hover:bg-coral/10"
                   >
-                    <span className="text-base">🔎</span>
+                    <IdCardIcon />
                     Find Profile by ID
                   </Link>
                 )}
@@ -224,7 +226,7 @@ export function UserMenu() {
                   onClick={() => setAppearanceOpen((v) => !v)}
                   className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-charcoal transition-colors hover:bg-off-white"
                 >
-                  <span className="text-base">🎨</span>
+                  <span className="text-coral"><PaletteIcon /></span>
                   Appearance
                   <span className="ml-auto text-xs text-charcoal/40">
                     {appearanceOpen ? "▴" : "▾"}
@@ -264,7 +266,7 @@ export function UserMenu() {
                     onClick={() => setConfirmingSignOut(true)}
                     className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red-500 transition-colors hover:bg-red-50"
                   >
-                    <span className="text-base">🚪</span>
+                    <LogOutIcon />
                     Sign Out
                   </button>
                 )}

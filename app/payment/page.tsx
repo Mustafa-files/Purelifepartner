@@ -79,13 +79,35 @@ export default function PaymentPage() {
     <div className="bg-off-white py-12">
       <div className="mx-auto max-w-2xl px-4">
         <div className="rounded-2xl bg-white p-6 shadow-sm sm:p-10">
-          <h1 className="text-2xl font-bold text-charcoal">
-            Verification Payment
-          </h1>
-          <p className="mt-2 text-sm text-charcoal/60">
-            One-time payment to verify your profile and unlock contact details
-            of other verified members.
+          <h1 className="text-3xl font-bold text-charcoal">Get verified</h1>
+          <p className="mt-2 text-charcoal/60">
+            A one-time payment. Three steps, and you&apos;re done.
           </p>
+
+          {/* The whole process at a glance */}
+          <ol className="mt-6 grid gap-3 sm:grid-cols-3">
+            {[
+              ["Pay the fee", "Bank transfer in PKR, GBP, EUR or USD"],
+              ["Add your reference", "So we can match your payment"],
+              ["Get verified", "Our team confirms it"],
+            ].map(([title, text], i) => (
+              <li key={title} className="rounded-xl border border-charcoal/10 p-4">
+                <span className="text-2xl font-bold text-coral">0{i + 1}</span>
+                <p className="mt-1 font-bold text-charcoal">{title}</p>
+                <p className="text-sm text-charcoal/60">{text}</p>
+              </li>
+            ))}
+          </ol>
+
+          {/* What verification unlocks */}
+          <div className="mt-4 rounded-xl bg-coral/5 p-4 text-sm text-charcoal/80">
+            <p className="font-bold text-charcoal">What you get</p>
+            <ul className="mt-2 space-y-1">
+              <li>✓ Names and numbers of other verified members</li>
+              <li>✓ A Verified badge on your profile</li>
+              <li>✓ Our agents can introduce you on WhatsApp</li>
+            </ul>
+          </div>
 
           {verified && (
             <div className="mt-6 rounded-xl bg-green-50 p-4 text-sm font-semibold text-green-700">
@@ -93,8 +115,8 @@ export default function PaymentPage() {
             </div>
           )}
 
-          <h2 className="mt-8 mb-3 text-sm font-semibold text-charcoal">
-            Select Currency
+          <h2 className="mt-10 mb-3 font-bold text-charcoal">
+            <span className="text-coral">01</span> Choose your currency and pay
           </h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {CURRENCIES.map((c) => (
@@ -139,7 +161,10 @@ export default function PaymentPage() {
             )}
           </div>
 
-          <div className="mt-6">
+          <h2 className="mt-10 mb-3 font-bold text-charcoal">
+            <span className="text-coral">02</span> Add your transfer reference
+          </h2>
+          <div>
             <FieldLabel
               label="Transaction Reference"
               hint="Enter your bank transfer reference so we can match your payment"
@@ -163,9 +188,9 @@ export default function PaymentPage() {
             {selected.amount.toLocaleString()} {selected.code}
           </Button>
           <p className="mt-3 text-center text-xs text-charcoal/50">
-            Card payments via Stripe are coming soon. After confirmation your
-            status changes from &ldquo;To Be Verified&rdquo; to
-            &ldquo;Verified&rdquo;.
+            <span className="font-bold text-coral">03</span> We confirm your
+            payment and your profile turns Verified. Card payments are coming
+            soon.
           </p>
         </div>
 

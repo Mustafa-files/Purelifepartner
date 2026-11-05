@@ -43,6 +43,9 @@ export default function RootLayout({
           href="https://iucizzrqvpsuotatmvrc.supabase.co"
           crossOrigin="anonymous"
         />
+        {/* Styled dropdown lists; kept out of the CSS build (see the file) */}
+        {/* eslint-disable-next-line @next/next/no-css-tags */}
+        <link rel="stylesheet" href="/dropdowns.css" />
         {/* Apply the saved theme before first paint to avoid a flash */}
         <script
           dangerouslySetInnerHTML={{

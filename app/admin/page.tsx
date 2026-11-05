@@ -21,6 +21,7 @@ import type {
   Profile,
   WhatsAppLog,
 } from "@/types";
+import { KeyIcon } from "@/components/ui/icons";
 
 const TABS = [
   "Users",
@@ -211,7 +212,7 @@ function UsersTab() {
           {shown.length} of {users.length} users
         </span>
         <Link href="/staff/bulk-profiles" className="ml-auto">
-          <Button size="sm">👥 Bulk Create Profiles</Button>
+          <Button size="sm">Bulk Create Profiles</Button>
         </Link>
       </div>
       {newLogin && (
@@ -343,7 +344,7 @@ function NewPasswordDialog({
       aria-modal="true"
     >
       <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-coral/10 text-2xl">🔑</div>
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-coral/10 text-coral"><KeyIcon /></div>
         <h3 className="mt-3 text-lg font-bold text-charcoal">Password reset</h3>
         <p className="mt-1 text-sm text-charcoal/60">
           Share this with the member. It is shown only once.

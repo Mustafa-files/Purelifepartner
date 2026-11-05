@@ -9,6 +9,7 @@ import {
   WHATSAPP_LINK,
   WHATSAPP_NUMBER,
 } from "@/lib/utils";
+import { HeartIcon } from "@/components/ui/icons";
 
 /** Generic footer links scroll to top of the current page rather than
  *  navigating. Specific links (Success Stories, Legal pages, Cookies)
@@ -185,7 +186,7 @@ export function Footer() {
       <div className="border-t border-gray-100">
         <div className="mx-auto max-w-7xl px-4 py-5 text-center text-sm text-charcoal/50 sm:px-6">
           © 2025 PureLifePartner. All rights reserved. | Made with{" "}
-          <span className="text-coral">❤️</span> for the Ummah
+          <HeartIcon className="inline h-4 w-4 -translate-y-px text-coral" /> for the Ummah
         </div>
       </div>
     </footer>

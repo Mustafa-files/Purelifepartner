@@ -30,9 +30,13 @@ export interface SearchFilterState {
   professions: string[];
 }
 
+/** Members must be adults; the slider covers 18 to 60 */
+export const AGE_MIN = 18;
+export const AGE_MAX = 60;
+
 export const DEFAULT_FILTERS: SearchFilterState = {
   gender: "",
-  minAge: 16,
+  minAge: 18,
   maxAge: 35,
   maritalStatus: "",
   religions: [],
@@ -51,12 +55,15 @@ export function SearchFilters({
   onApply,
   onReset,
   loading,
+  bare = false,
 }: {
   filters: SearchFilterState;
   onChange: (f: SearchFilterState) => void;
   onApply: () => void;
   onReset: () => void;
   loading?: boolean;
+  /** Without the card background, for the phone filter sheet */
+  bare?: boolean;
 }) {
   const sectOptions = Array.from(
     new Set(filters.religions.flatMap((r) => SECTS_BY_RELIGION[r] ?? []))
@@ -68,8 +75,14 @@ export function SearchFilters({
   const cityOptions = citiesForCountries(filters.countries);
 
   return (
-    <aside className="space-y-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-bold text-charcoal">Filters</h2>
+    <aside
+      className={
+        bare
+          ? "space-y-4"
+          : "space-y-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"
+      }
+    >
+      {!bare && <h2 className="text-lg font-bold text-charcoal">Filters</h2>}
 
       <FieldLabel label="Looking for">
         <Select
@@ -87,21 +100,21 @@ export function SearchFilters({
         <div className="space-y-2">
           <input
             type="range"
-            min={16}
-            max={35}
+            min={AGE_MIN}
+            max={AGE_MAX}
             value={filters.minAge}
             onChange={(e) =>
-              onChange({ ...filters, minAge: parseInt(e.target.value, 10) })
+              onChange({ ...filters, minAge: Math.min(parseInt(e.target.value, 10), filters.maxAge) })
             }
             className="w-full accent-[#D5453A]"
           />
           <input
             type="range"
-            min={16}
-            max={35}
+            min={AGE_MIN}
+            max={AGE_MAX}
             value={filters.maxAge}
             onChange={(e) =>
-              onChange({ ...filters, maxAge: parseInt(e.target.value, 10) })
+              onChange({ ...filters, maxAge: Math.max(parseInt(e.target.value, 10), filters.minAge) })
             }
             className="w-full accent-[#D5453A]"
           />

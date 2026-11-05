@@ -19,6 +19,7 @@ import {
   validatePassword,
 } from "@/lib/utils";
 import type { NotificationPrefs, Profile } from "@/types";
+import { LockIcon } from "@/components/ui/icons";
 
 function formatDobInput(iso: string): string {
   const [y, m, d] = iso.split("-");
@@ -304,7 +305,8 @@ function PrivacySection({ profile }: { profile: Profile }) {
         />
       </FieldLabel>
       <p className="rounded-xl bg-off-white p-4 text-sm text-charcoal/70">
-        🔒 Your contact details (your number and your parents&apos; numbers)
+        <LockIcon className="mr-1 inline h-4 w-4 -translate-y-px text-coral" />
+        Your contact details (your number and your parents&apos; numbers)
         are always hidden. They are only released to verified members through
         our agent-controlled process, never publicly.
       </p>
