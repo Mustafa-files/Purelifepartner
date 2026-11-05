@@ -23,6 +23,7 @@ const sansFont = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://purelifepartner.com"),
   title: "PureLifePartner | Where Pure Hearts Find Their Match",
   description:
     "A halal, respectful, and modern platform for Muslims seeking a life partner. Verified members, advanced matching, and guardian support.",

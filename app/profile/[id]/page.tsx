@@ -4,6 +4,7 @@ import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
+import { ShareProfile } from "@/components/profile/share-profile";
 import { RoleBadge } from "@/components/ui/role-badge";
 import { ScreenshotGuard } from "@/components/ui/screenshot-guard";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -151,6 +152,7 @@ export default function ProfileView({
                   {location}
                 </p>
               )}
+              <ShareProfile profile={profile} />
             </div>
           </div>
 
