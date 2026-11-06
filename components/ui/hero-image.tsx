@@ -28,7 +28,7 @@ export function HeroImage({ className }: { className?: string }) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       ref={imgRef}
-      src="/hero-illustration.png"
+      src="/hero-illustration.webp"
       alt="Verified members from around the world seeking a life partner"
       className={className}
       onError={() => setFailed(true)}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ScrollAnimations } from "@/components/ui/scroll-animations";
-import { HeroSearch } from "@/components/home/hero-search";
+import { HeroImage } from "@/components/ui/hero-image";
 import { FeatureShowcase } from "@/components/home/feature-showcase";
 import { Testimonials } from "@/components/home/testimonials";
 import { CountUp } from "@/components/home/count-up";
@@ -46,55 +46,43 @@ function AppBadges() {
 function Hero() {
   return (
     <section className="wash bg-off-white">
-      <div className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-7xl flex-col justify-center px-4 py-14 sm:px-6">
-        {/* Phones: both illustrations side by side above the headline */}
-        <div className="gsap-hero mb-6 flex items-end justify-center gap-2 lg:hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/illustrations/sister-waving.svg" alt="" className="w-28 sm:w-36" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/illustrations/brother-greeting.svg" alt="" className="w-28 sm:w-36" />
-        </div>
-
-        <div className="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)_minmax(0,1fr)]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/illustrations/sister-waving.svg"
-            alt="Smiling sister in a burqa waving"
-            className="gsap-hero hidden w-full max-w-[280px] justify-self-start lg:block"
-          />
-
-          <div className="text-center">
-            <h1 className="gsap-hero text-4xl font-extrabold leading-tight text-charcoal sm:text-6xl">
-              Where pure hearts <span className="text-coral">find their match</span>
-            </h1>
-            <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70">
-              Free to join. Names stay private. Made for nikah.
-            </p>
+      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2">
+        <div className="text-center lg:text-left">
+          <h1 className="gsap-hero text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl lg:text-6xl">
+            Where Pure Hearts <span className="text-coral">Find Their Match</span>
+          </h1>
+          {/* Mobile hero image: the side column below is desktop-only, so render
+              the same image here under the headline for small screens. */}
+          <div className="gsap-hero mt-8 lg:hidden">
+            <HeroImage className="mx-auto w-full max-w-md rounded-3xl" />
           </div>
-
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/illustrations/brother-greeting.svg"
-            alt="Smiling bearded brother with his hand on his heart"
-            className="gsap-hero hidden w-full max-w-[280px] justify-self-end lg:block"
-          />
+          <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70 lg:mx-0">
+            Verified Muslim profiles, private by default, made for nikah.
+          </p>
+          <div className="gsap-hero mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
+            <Link href="/register">
+              <Button size="lg">Create Free Profile</Button>
+            </Link>
+            <Link href="/search">
+              <Button size="lg" variant="outline">
+                Browse Profiles
+              </Button>
+            </Link>
+          </div>
+          <div className="gsap-hero mt-8 lg:[&>div]:justify-start">
+            <AppBadges />
+          </div>
         </div>
-
-        <div className="gsap-hero mt-10">
-          <HeroSearch />
+        {/* data-speed instead of an entrance tween: both writing to y would fight */}
+        <div className="hidden lg:block" data-speed="0.9">
+          <HeroImage className="mx-auto w-full max-w-xl rounded-3xl" />
         </div>
-
-        <p className="gsap-hero mt-6 text-center text-sm text-charcoal/60">
-          or{" "}
-          <Link href="/register" className="font-bold text-coral underline-offset-4 hover:underline">
-            create your free profile
-          </Link>
-        </p>
       </div>
     </section>
   );
 }
 
+/** Welcome band: the waving sister on the left, the greeting brother on the right. */
 function ParallaxBand() {
   const ghostSpeeds = [0.95, 0.9, 0.85, 0.8, 0.75, 0.7];
   return (
