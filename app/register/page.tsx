@@ -157,9 +157,7 @@ export default function RegisterStep1() {
     return (
       <div className="bg-off-white py-20">
         <div className="mx-auto max-w-lg rounded-2xl bg-white p-10 text-center shadow-sm">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/illustrations/sister-waving.svg" alt="" className="mx-auto w-40" />
-          <h1 className="mt-4 text-2xl font-bold text-charcoal">
+          <h1 className="text-2xl font-bold text-charcoal">
             Confirm your email
           </h1>
           <p className="mt-3 text-charcoal/70">
@@ -178,7 +176,7 @@ export default function RegisterStep1() {
 
   return (
     <div className="bg-off-white py-12">
-      <div className="mx-auto grid max-w-6xl items-start gap-12 px-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="mx-auto max-w-6xl px-4">
       <div className="mx-auto w-full max-w-2xl">
         <ProgressBar step={1} />
         <div className="rounded-2xl bg-white p-6 shadow-sm sm:p-10">
@@ -296,13 +294,9 @@ export default function RegisterStep1() {
             </Button>
           </div>
         </div>
-      </div>
-      {/* Desktop only: a friendly face beside the long form */}
-      <div className="sticky top-28 hidden text-center lg:block">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/illustrations/brother-greeting.svg" alt="" className="mx-auto w-full max-w-[300px]" />
-        <p className="mt-4 font-bold text-charcoal">Assalamu alaikum, welcome!</p>
-        <p className="mt-1 text-sm text-charcoal/60">Your name stays private. Members only see your Profile ID.</p>
+        <p className="mt-4 text-center text-sm text-charcoal/60">
+          Your name stays private. Members only see your Profile ID.
+        </p>
       </div>
       </div>
     </div>

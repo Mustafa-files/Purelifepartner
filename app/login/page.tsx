@@ -94,13 +94,7 @@ function LoginForm() {
 
   return (
     <div className="bg-off-white py-16 lg:py-20">
-      <div className="mx-auto grid max-w-5xl items-center gap-10 px-4 lg:grid-cols-2 lg:gap-16">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/illustrations/sister-waving.svg"
-          alt=""
-          className="mx-auto w-36 lg:order-2 lg:w-full lg:max-w-[360px]"
-        />
+      <div className="mx-auto max-w-5xl px-4">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-8 shadow-sm sm:p-10">
           <h1 className="text-2xl font-bold text-charcoal">Welcome Back</h1>
           <p className="mt-2 mb-8 text-sm text-charcoal/60">
