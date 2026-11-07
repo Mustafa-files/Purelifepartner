@@ -22,9 +22,11 @@ import type {
   WhatsAppLog,
 } from "@/types";
 import { KeyIcon } from "@/components/ui/icons";
+import { MembersByCity } from "@/components/admin/members-by-city";
 
 const TABS = [
   "Users",
+  "Members by City",
   "Agents",
   "Payments",
   "Dropdown Values",
@@ -88,6 +90,7 @@ export default function AdminDashboard() {
 
         <div className="mt-6">
           {tab === "Users" && <UsersTab />}
+          {tab === "Members by City" && <MembersByCity />}
           {tab === "Agents" && <AgentsTab />}
           {tab === "Payments" && <PaymentsTab />}
           {tab === "Dropdown Values" && <DynamicValuesTab />}
