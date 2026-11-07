@@ -85,6 +85,14 @@ export function Footer() {
                 Success Stories
               </Link>
             </li>
+            <li>
+              <Link
+                href="/muslim-marriage"
+                className="text-sm text-charcoal/60 transition-colors hover:text-coral"
+              >
+                Muslim Marriage by City
+              </Link>
+            </li>
           </FooterColumn>
 
           {SCROLL_COLUMNS.map((col) => (
