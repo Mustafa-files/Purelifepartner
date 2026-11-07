@@ -124,7 +124,7 @@ export function Footer() {
             </FooterColumn>
           ))}
 
-          {/* Legal: real pages + Cookies modal */}
+          {/* Legal: real pages (cookie info lives in the Cookie FAQ column) */}
           <FooterColumn title="Legal">
             <li>
               <Link
@@ -141,15 +141,6 @@ export function Footer() {
               >
                 Terms &amp; Conditions
               </Link>
-            </li>
-            <li>
-              <a
-                href="#"
-                data-open-cookie-faq
-                className="text-sm text-charcoal/60 transition-colors hover:text-coral"
-              >
-                Cookies
-              </a>
             </li>
           </FooterColumn>
 
