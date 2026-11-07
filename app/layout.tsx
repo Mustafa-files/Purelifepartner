@@ -16,7 +16,7 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "@/lib/seo";
-import { CONTACT_EMAIL, WHATSAPP_NUMBER } from "@/lib/utils";
+import { CONTACT_EMAIL, SOCIAL_LINKS, WHATSAPP_NUMBER } from "@/lib/utils";
 
 // Quicksand for headings and body. Only the weights actually used; every
 // extra weight is another font file phones must download.
@@ -64,6 +64,7 @@ const SITE_JSON_LD = {
       logo: `${SITE_URL}/plp-logo-circle.png`,
       description: DEFAULT_DESCRIPTION,
       areaServed: "Worldwide",
+      sameAs: Object.values(SOCIAL_LINKS).filter(Boolean),
       knowsAbout: ["Muslim marriage", "Islamic matrimony", "Nikah"],
       email: CONTACT_EMAIL,
       contactPoint: {

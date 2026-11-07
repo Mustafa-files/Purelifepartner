@@ -6,32 +6,29 @@ import { ContactUsMenu } from "@/components/layout/contact-us-menu";
 import {
   CONTACT_EMAIL,
   GMAIL_COMPOSE_LINK,
+  SOCIAL_LINKS,
   WHATSAPP_LINK,
   WHATSAPP_NUMBER,
 } from "@/lib/utils";
 import { HeartIcon } from "@/components/ui/icons";
 
-/** Generic footer links scroll to top of the current page rather than
- *  navigating. Specific links (Success Stories, Legal pages, Cookies)
- *  intentionally bypass this and use real <Link>s or the cookie modal. */
-function scrollToTop(e: React.MouseEvent) {
-  e.preventDefault();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-const SCROLL_COLUMNS = [
+/** Real routes, so visitors and search engines can follow every link. */
+const LINK_COLUMNS = [
   {
     title: "Quick Links",
     links: [
-      { label: "Create Profile" },
-      { label: "Browse Profiles" },
-      { label: "Sign In" },
-      { label: "Agent Registration" },
+      { label: "Create Profile", href: "/register" },
+      { label: "Browse Profiles", href: "/search" },
+      { label: "Sign In", href: "/login" },
+      { label: "Agent Registration", href: "/register/agent" },
     ],
   },
   {
     title: "Support",
-    links: [{ label: "Payment Help" }],
+    links: [
+      { label: "Help & FAQs", href: "/help" },
+      { label: "Payment Help", href: "/help#payments" },
+    ],
   },
 ];
 
@@ -66,12 +63,16 @@ export function Footer() {
                   className="h-full w-full rounded-full"
                 />
               </a>
-              <SocialIcon href="https://instagram.com" label="Instagram">
+              {SOCIAL_LINKS.instagram && (
+              <SocialIcon href={SOCIAL_LINKS.instagram} label="Instagram">
                 <path d="M12 2c2.7 0 3 0 4.1.1 1 0 1.6.2 2 .4.5.2.9.4 1.3.8.4.4.6.8.8 1.3.2.4.4 1 .4 2C20.7 7.7 20.7 8 20.7 12s0 4.3-.1 5.4c0 1-.2 1.6-.4 2-.2.5-.4.9-.8 1.3-.4.4-.8.6-1.3.8-.4.2-1 .4-2 .4-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-1 0-1.6-.2-2-.4a3.6 3.6 0 0 1-1.3-.8 3.6 3.6 0 0 1-.8-1.3c-.2-.4-.4-1-.4-2C3.3 16.3 3.3 16 3.3 12s0-4.3.1-5.4c0-1 .2-1.6.4-2 .2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.2 1-.4 2-.4C9 2 9.3 2 12 2zm0 4.9a5.1 5.1 0 1 0 0 10.2 5.1 5.1 0 0 0 0-10.2zm0 8.4a3.3 3.3 0 1 1 0-6.6 3.3 3.3 0 0 1 0 6.6zm6.5-8.6a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z" />
               </SocialIcon>
-              <SocialIcon href="https://facebook.com" label="Facebook">
+              )}
+              {SOCIAL_LINKS.facebook && (
+              <SocialIcon href={SOCIAL_LINKS.facebook} label="Facebook">
                 <path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z" />
               </SocialIcon>
+              )}
             </div>
           </div>
 
@@ -95,7 +96,7 @@ export function Footer() {
             </li>
           </FooterColumn>
 
-          {SCROLL_COLUMNS.map((col) => (
+          {LINK_COLUMNS.map((col) => (
             <FooterColumn key={col.title} title={col.title}>
               {col.title === "Support" && (
                 <li>
@@ -104,13 +105,12 @@ export function Footer() {
               )}
               {col.links.map((l) => (
                 <li key={l.label}>
-                  <a
-                    href="#"
-                    onClick={scrollToTop}
+                  <Link
+                    href={l.href}
                     className="text-sm text-charcoal/60 transition-colors hover:text-coral"
                   >
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </FooterColumn>
@@ -193,7 +193,7 @@ export function Footer() {
 
       <div className="border-t border-gray-100">
         <div className="mx-auto max-w-7xl px-4 py-5 text-center text-sm text-charcoal/50 sm:px-6">
-          © 2025 PureLifePartner. All rights reserved. | Made with{" "}
+          © {new Date().getFullYear()} PureLifePartner. All rights reserved. | Made with{" "}
           <HeartIcon className="inline h-4 w-4 -translate-y-px text-coral" /> for the Ummah
         </div>
       </div>

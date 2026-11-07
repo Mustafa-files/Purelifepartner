@@ -111,7 +111,10 @@ export default function HelpPage() {
           {FAQS.map((f) => (
             <details
               key={f.q}
-              className="group rounded-2xl bg-white p-5 shadow-sm"
+              // Footer "Payment Help" links here and opens this answer
+              id={f.q === "How do I get verified?" ? "payments" : undefined}
+              open={f.q === "How do I get verified?" ? true : undefined}
+              className="group scroll-mt-28 rounded-2xl bg-white p-5 shadow-sm"
             >
               <summary className="cursor-pointer list-none font-bold text-charcoal">
                 <span className="mr-2 inline-block text-coral transition-transform group-open:rotate-90">

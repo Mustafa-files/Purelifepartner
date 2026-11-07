@@ -23,6 +23,16 @@ export const CONTACT_EMAIL = "Youasktv@gmail.com";
 export const GMAIL_COMPOSE_LINK = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`;
 
 /**
+ * Official social accounts. Paste the full profile URL to show the icon in
+ * the footer and list it in the site's structured data (sameAs). Leave
+ * empty to hide that icon.
+ */
+export const SOCIAL_LINKS = {
+  instagram: "",
+  facebook: "",
+} as const;
+
+/**
  * Parses flexible date input: DD/MM/YYYY, MM/DD/YYYY, YYYY/MM/DD, with /, - or . separators.
  * When the day/month order is ambiguous it prefers DD/MM/YYYY.
  */
