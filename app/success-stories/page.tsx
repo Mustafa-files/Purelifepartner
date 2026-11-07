@@ -1,5 +1,13 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Muslim Marriage Success Stories | PureLifePartner",
+  description:
+    "Nikah stories from Muslim couples around the world who met on PureLifePartner, the halal Muslim marriage website.",
+  alternates: { canonical: "/success-stories" },
+};
 
 const STORIES = [
   {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
   CONTACT_EMAIL,
   GMAIL_COMPOSE_LINK,
@@ -7,7 +8,10 @@ import {
 } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Help & Support | PureLifePartner",
+  title: "Help & FAQs | PureLifePartner Muslim Marriage Website",
+  description:
+    "Answers about verification, privacy, photos and contact details on PureLifePartner, the halal Muslim marriage website for Muslims worldwide.",
+  alternates: { canonical: "/help" },
 };
 
 const FAQS = [
@@ -40,6 +44,17 @@ const FAQS = [
 export default function HelpPage() {
   return (
     <div className="bg-off-white py-16">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQS.map(({ q, a }) => ({
+            "@type": "Question",
+            name: q,
+            acceptedAnswer: { "@type": "Answer", text: a },
+          })),
+        }}
+      />
       <div className="mx-auto max-w-3xl px-4">
         <h1 className="text-4xl font-extrabold text-charcoal">
           Help &amp; Support

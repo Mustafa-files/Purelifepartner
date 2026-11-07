@@ -5,6 +5,11 @@ import { HeroImage } from "@/components/ui/hero-image";
 import { FeatureShowcase } from "@/components/home/feature-showcase";
 import { Testimonials } from "@/components/home/testimonials";
 import { CountUp } from "@/components/home/count-up";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function LandingPage() {
   return (
@@ -48,7 +53,12 @@ function Hero() {
     <section className="wash bg-off-white">
       <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2">
         <div className="text-center lg:text-left">
+          {/* The small line is part of the H1 so search engines read what the
+              site is ("Muslim marriage website"), not only the tagline. */}
           <h1 className="gsap-hero text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl lg:text-6xl">
+            <span className="mb-4 block text-sm font-bold uppercase tracking-widest text-coral sm:text-base">
+              The Global Muslim Marriage Website
+            </span>
             Where Pure Hearts <span className="text-coral">Find Their Match</span>
           </h1>
           {/* Mobile hero image: the side column below is desktop-only, so render
@@ -57,7 +67,8 @@ function Hero() {
             <HeroImage className="mx-auto w-full max-w-md rounded-3xl" />
           </div>
           <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70 lg:mx-0">
-            Verified Muslim profiles, private by default, made for nikah.
+            A halal matrimonial site for Muslims worldwide. Verified profiles,
+            private by default, made for nikah.
           </p>
           <div className="gsap-hero mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
             <Link href="/register">
