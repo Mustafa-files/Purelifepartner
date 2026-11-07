@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { CityMembers } from "@/components/city/city-members";
 import { CITIES, cityPageTitle, getCity, type City } from "@/lib/cities";
 import { SITE_URL } from "@/lib/seo";
+import { ARTICLES } from "@/lib/blog";
 
 // Every city is known at build time; anything else is a 404.
 export const dynamicParams = false;
@@ -207,6 +208,23 @@ export default async function CityPage({
               </summary>
               <p className="mt-3 leading-relaxed text-charcoal/70">{f.a}</p>
             </details>
+          ))}
+        </div>
+      </section>
+
+      {/* Guides: internal links that help both readers and search engines */}
+      <section className="mx-auto max-w-5xl px-4 pb-14 sm:px-6">
+        <h2 className="text-2xl font-extrabold text-charcoal">Guides before you start</h2>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          {ARTICLES.slice(0, 4).map((g) => (
+            <Link
+              key={g.slug}
+              href={`/blog/${g.slug}`}
+              className="rounded-2xl bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+            >
+              <p className="text-xs font-bold uppercase tracking-widest text-coral">{g.category}</p>
+              <p className="mt-2 font-bold text-charcoal">{g.title}</p>
+            </Link>
           ))}
         </div>
       </section>

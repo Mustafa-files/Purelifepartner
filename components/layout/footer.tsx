@@ -94,6 +94,14 @@ export function Footer() {
                 Muslim Marriage by City
               </Link>
             </li>
+            <li>
+              <Link
+                href="/blog"
+                className="text-sm text-charcoal/60 transition-colors hover:text-coral"
+              >
+                Guides
+              </Link>
+            </li>
           </FooterColumn>
 
           {LINK_COLUMNS.map((col) => (

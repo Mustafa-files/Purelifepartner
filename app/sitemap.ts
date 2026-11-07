@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { PUBLIC_PAGES, SITE_URL } from "@/lib/seo";
 import { CITIES } from "@/lib/cities";
+import { ARTICLES } from "@/lib/blog";
 
 // Built once at build time; no request-time function on Cloudflare.
 export const dynamic = "force-static";
@@ -24,5 +25,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "weekly",
     priority: 0.8,
   }));
-  return [...pages, ...cityPages];
+  const guides: MetadataRoute.Sitemap = ARTICLES.map((a) => ({
+    url: `${SITE_URL}/blog/${a.slug}`,
+    lastModified: new Date(a.updated),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+  return [...pages, ...cityPages, ...guides];
 }

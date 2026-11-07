@@ -28,6 +28,7 @@ export const PUBLIC_PAGES: { path: string; priority: number }[] = [
   { path: "/search", priority: 0.9 },
   { path: "/register", priority: 0.9 },
   { path: "/muslim-marriage", priority: 0.8 },
+  { path: "/blog", priority: 0.7 },
   { path: "/success-stories", priority: 0.7 },
   { path: "/help", priority: 0.6 },
   { path: "/login", priority: 0.4 },
