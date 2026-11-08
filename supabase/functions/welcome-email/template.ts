@@ -1,5 +1,5 @@
 // Welcome email HTML. Preview copy lives in emails/welcome-email.html; keep the two in sync.
-// {{greeting}} is replaced with "Assalamu alaikum, Name" (or without the name).
+// {{greeting}} is replaced with "Hello Name" (or without the name).
 export const WELCOME_SUBJECT = "Welcome to PureLifePartner";
 
 export const WELCOME_HTML = `

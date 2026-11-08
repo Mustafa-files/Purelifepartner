@@ -2,24 +2,29 @@
 export const SITE_URL = "https://purelifepartner.com";
 export const SITE_NAME = "PureLifePartner";
 
-// Keywords target Muslims globally, not one country or community.
+// Keywords target everyone looking for marriage: every religion and country.
+// Faith terms sit alongside each other so no one community is the headline.
 export const DEFAULT_TITLE =
-  "Halal Muslim Marriage & Matrimonial Website | PureLifePartner";
+  "Global Marriage & Matrimonial Website for All Religions | PureLifePartner";
 
 export const DEFAULT_DESCRIPTION =
-  "PureLifePartner is a halal Muslim marriage website for Muslims worldwide, across the UK, Europe, North America, the Middle East, Asia, Africa and Australia. Verified profiles, private by default, with family and wali involvement, made for nikah.";
+  "PureLifePartner is a global marriage website for people of every religion, background and country. Search any city or country to find a life partner through verified profiles, private by default, with families welcome to take part.";
 
 export const SITE_KEYWORDS = [
+  "marriage website",
+  "matrimonial site",
+  "matrimony",
+  "marriage bureau",
+  "find a life partner",
+  "find a spouse",
+  "singles for marriage",
+  "international marriage website",
+  "interfaith marriage",
+  "Christian marriage website",
+  "Hindu matrimony",
   "Muslim marriage website",
-  "Muslim matrimonial site",
-  "halal marriage",
-  "Muslim matrimony",
-  "Islamic marriage website",
-  "Muslim marriage bureau",
-  "nikah",
-  "Muslim singles for marriage",
-  "find a Muslim spouse",
-  "rishta",
+  "Sikh matrimony",
+  "Buddhist marriage",
 ];
 
 /** Public pages worth indexing, with a rough priority for the sitemap. */

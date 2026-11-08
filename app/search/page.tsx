@@ -138,6 +138,7 @@ export default function SearchPage() {
     };
     const gender = q.get("gender");
     const country = q.get("country");
+    const city = q.get("city");
     runSearch(
       {
         ...DEFAULT_FILTERS,
@@ -145,6 +146,7 @@ export default function SearchPage() {
         minAge: num("minAge", DEFAULT_FILTERS.minAge),
         maxAge: num("maxAge", DEFAULT_FILTERS.maxAge),
         countries: country ? [country] : [],
+        cities: city ? [city] : [],
       },
       "newest"
     );
@@ -167,6 +169,7 @@ export default function SearchPage() {
     });
     if (!applied.gender) q.delete("gender");
     if (applied.countries[0]) q.set("country", applied.countries[0]);
+    if (applied.cities[0]) q.set("city", applied.cities[0]);
     try {
       localStorage.setItem(PENDING_SEARCH_KEY, q.toString());
     } catch {

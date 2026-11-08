@@ -8,9 +8,9 @@ import {
 } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Help & FAQs | PureLifePartner Muslim Marriage Website",
+  title: "Help & FAQs | PureLifePartner Marriage Website",
   description:
-    "Answers about verification, privacy, photos and contact details on PureLifePartner, the halal Muslim marriage website for Muslims worldwide.",
+    "Answers about verification, privacy, photos and contact details on PureLifePartner, the global marriage website for people of every religion.",
   alternates: { canonical: "/help" },
 };
 

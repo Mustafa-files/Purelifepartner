@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { tidyPlaceName } from "@/lib/locations";
 import { useEffect, useRef, useState } from "react";
 
 interface MultiSelectProps {
@@ -9,6 +10,7 @@ interface MultiSelectProps {
   onChange: (v: string[]) => void;
   placeholder?: string;
   allLabel?: string; // e.g. "All Castes": selecting it clears specific picks
+  allowCustomPlace?: boolean; // members can add a place that is not listed
 }
 
 export function MultiSelect({
@@ -17,6 +19,7 @@ export function MultiSelect({
   onChange,
   placeholder = "Select...",
   allLabel,
+  allowCustomPlace = false,
 }: MultiSelectProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -46,6 +49,20 @@ export function MultiSelect({
     } else {
       onChange([...without, option]);
     }
+  }
+
+  // What the search box would add: a listed spelling wins over the typed one
+  const typed = allowCustomPlace ? tidyPlaceName(query) : "";
+  const known = [...options, ...value].find(
+    (o) => o.toLowerCase() === typed.toLowerCase()
+  );
+  const customPlace = typed && !known ? typed : "";
+
+  function addTyped() {
+    const place = known ?? customPlace;
+    if (!place) return;
+    if (!value.includes(place)) toggle(place);
+    setQuery("");
   }
 
   return (
@@ -86,7 +103,12 @@ export function MultiSelect({
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Type to filter..."
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return;
+                e.preventDefault();
+                if (allowCustomPlace) addTyped();
+              }}
+              placeholder={allowCustomPlace ? "Type any city..." : "Type to filter..."}
               className="w-full rounded-lg border border-gray-200 px-3 py-1.5 text-sm outline-none focus:border-coral"
             />
           </div>
@@ -97,8 +119,20 @@ export function MultiSelect({
               onClick={() => toggle(allLabel)}
             />
           )}
-          {filtered.length === 0 && (
-            <div className="px-4 py-3 text-sm text-gray-400">No options</div>
+          {customPlace && (
+            <button
+              type="button"
+              disabled={allSelected}
+              onClick={addTyped}
+              className="flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-left text-sm font-bold text-coral transition-colors hover:bg-off-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              + Add &quot;{customPlace}&quot;
+            </button>
+          )}
+          {filtered.length === 0 && !customPlace && (
+            <div className="px-4 py-3 text-sm text-gray-400">
+              {allowCustomPlace ? "Type your city to add it" : "No options"}
+            </div>
           )}
           {filtered.map((o) => (
             <OptionRow

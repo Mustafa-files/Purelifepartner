@@ -17,7 +17,7 @@ export type Article = {
   /** <title> tag; keep under about 60 characters */
   metaTitle: string;
   description: string;
-  category: "Before Nikah" | "Islamic Guidance" | "Using PureLifePartner";
+  category: "Before Marriage" | "Islamic Guidance" | "Using PureLifePartner";
   published: string;
   updated: string;
   readMinutes: number;
@@ -32,22 +32,22 @@ export type Article = {
 
 export const ARTICLES: Article[] = [
   {
-    slug: "questions-to-ask-before-nikah",
-    title: "50 Questions to Ask Before Nikah",
-    metaTitle: "50 Questions to Ask Before Nikah | PureLifePartner",
+    slug: "questions-to-ask-before-marriage",
+    title: "50 Questions to Ask Before Marriage",
+    metaTitle: "50 Questions to Ask Before Marriage | PureLifePartner",
     description:
-      "The questions Muslim couples and families should ask before nikah, covering deen, family, money, children, career, living arrangements and more.",
-    category: "Before Nikah",
+      "The questions Muslim couples and families should ask before marriage, covering deen, family, money, children, career, living arrangements and more.",
+    category: "Before Marriage",
     published: "2026-11-07",
     updated: "2026-11-07",
     readMinutes: 9,
     summary:
-      "Before nikah, ask about deen, family expectations, money, children, career, where you will live and how each of you handles conflict. The goal is not to interrogate each other but to find out early whether your values and plans fit, with your families or a wali involved where possible.",
+      "Before marriage, ask about deen, family expectations, money, children, career, where you will live and how each of you handles conflict. The goal is not to interrogate each other but to find out early whether your values and plans fit, with your families or a wali involved where possible.",
     sections: [
       {
         heading: "Why these conversations matter",
         paragraphs: [
-          "Many marriages run into trouble not because either person is bad, but because important expectations were never discussed. Who will manage the money? Will you live with your in-laws? How soon do you want children? These questions feel awkward on a first meeting, but they are far more awkward to discover after the nikah.",
+          "Many marriages run into trouble not because either person is bad, but because important expectations were never discussed. Who will manage the money? Will you live with your in-laws? How soon do you want children? These questions feel awkward on a first meeting, but they are far more awkward to discover after the marriage.",
           "Islam encourages both sides to know each other well enough to make an informed decision. Meetings should stay within halal limits: in a public place or with a mahram or family member present, and with honest, respectful conversation. You do not need to ask all fifty questions at once. Use this list as a guide across several meetings and calls.",
         ],
       },
@@ -114,7 +114,7 @@ export const ARTICLES: Article[] = [
       {
         heading: "Home, lifestyle and health",
         bullets: [
-          "Where do you want to live after nikah, and is that flexible?",
+          "Where do you want to live after marriage, and is that flexible?",
           "How should household chores be shared?",
           "What does a normal weekday and weekend look like for you?",
           "How do you like to spend free time and holidays?",
@@ -152,11 +152,11 @@ export const ARTICLES: Article[] = [
     ],
     faqs: [
       {
-        q: "How many times should we meet before nikah?",
+        q: "How many times should we meet before marriage?",
         a: "There is no fixed number. Many couples meet several times with family present, plus supervised calls, until both feel they can make an informed decision. Take the time you need, but avoid dragging it out without commitment.",
       },
       {
-        q: "Is it okay to ask about money and salary before nikah?",
+        q: "Is it okay to ask about money and salary before marriage?",
         a: "Yes. Money is one of the most common causes of conflict in marriage. Asking politely about income, debts and expectations, ideally with family involved, is sensible and respectful.",
       },
       {
@@ -171,26 +171,26 @@ export const ARTICLES: Article[] = [
     title: "The Wali's Role in Online Muslim Marriage",
     metaTitle: "The Wali's Role in Online Muslim Marriage | PureLifePartner",
     description:
-      "What a wali is, why the wali matters in nikah, and how to involve your wali when searching for a spouse on a Muslim marriage website.",
+      "What a wali is, why the wali matters in marriage, and how to involve your wali when searching for a spouse on a Muslim marriage website.",
     category: "Islamic Guidance",
     published: "2026-11-07",
     updated: "2026-11-07",
     readMinutes: 7,
     summary:
-      "A wali is a woman's guardian in marriage, usually her father, who protects her interests and takes part in her nikah. Searching online does not change his role: the safest approach is to involve your wali from the start, from reviewing profiles to the first meetings and the final decision.",
+      "A wali is a woman's guardian in marriage, usually her father, who protects her interests and takes part in her marriage. Searching online does not change his role: the safest approach is to involve your wali from the start, from reviewing profiles to the first meetings and the final decision.",
     scholarNote: true,
     sections: [
       {
         heading: "What is a wali?",
         paragraphs: [
           "In Islamic law, the wali is a woman's guardian for the purposes of marriage. He is normally her father. If her father has passed away or cannot act, the role usually passes to other close male relatives, such as her paternal grandfather, adult brother or paternal uncle, following an order of priority set out by the scholars. Where a woman has no suitable male relative, for example many reverts, an imam or Islamic authority can act as her wali.",
-          "The wali's purpose is protection, not control. He makes sure the proposed husband is suitable, that the woman's rights are respected, and that the marriage is entered into properly. He cannot force her to marry someone she does not want: her consent is required for a valid nikah.",
+          "The wali's purpose is protection, not control. He makes sure the proposed husband is suitable, that the woman's rights are respected, and that the marriage is entered into properly. He cannot force her to marry someone she does not want: her consent is required for a valid marriage.",
         ],
       },
       {
-        heading: "Why the wali matters in nikah",
+        heading: "Why the wali matters in marriage",
         paragraphs: [
-          "The Prophet Muhammad, peace be upon him, said: \"There is no marriage except with a wali.\" This hadith is reported in the collections of Abu Dawud, at-Tirmidhi and Ibn Majah. Based on it, the majority of scholars, including the Maliki, Shafi'i and Hanbali schools, hold that a woman's nikah requires her wali's involvement.",
+          "The Prophet Muhammad, peace be upon him, said: \"There is no marriage except with a wali.\" This hadith is reported in the collections of Abu Dawud, at-Tirmidhi and Ibn Majah. Based on it, the majority of scholars, including the Maliki, Shafi'i and Hanbali schools, hold that a woman's marriage requires her wali's involvement.",
           "The Hanafi school allows an adult woman to conclude her own marriage contract, but it still strongly recommends her family's involvement and gives the wali a say where the match is clearly unsuitable. Whichever view you follow, every school agrees that involving family brings blessing, protection and wisdom to the process.",
         ],
       },
@@ -234,7 +234,7 @@ export const ARTICLES: Article[] = [
     faqs: [
       {
         q: "Can a woman search for a spouse online without her wali?",
-        a: "She can browse, but most scholars advise involving the wali before serious contact and certainly before nikah. Involving him early protects her and avoids problems later.",
+        a: "She can browse, but most scholars advise involving the wali before serious contact and certainly before marriage. Involving him early protects her and avoids problems later.",
       },
       {
         q: "Who is the wali for a revert sister?",
@@ -242,10 +242,10 @@ export const ARTICLES: Article[] = [
       },
       {
         q: "Can a wali force a woman to marry?",
-        a: "No. A woman's consent is required for a valid nikah. The wali's role is to protect and advise, not to compel.",
+        a: "No. A woman's consent is required for a valid marriage. The wali's role is to protect and advise, not to compel.",
       },
     ],
-    related: ["is-online-muslim-matchmaking-halal", "questions-to-ask-before-nikah"],
+    related: ["is-online-muslim-matchmaking-halal", "questions-to-ask-before-marriage"],
   },
   {
     slug: "is-online-muslim-matchmaking-halal",
@@ -271,13 +271,13 @@ export const ARTICLES: Article[] = [
       {
         heading: "What keeps online matchmaking halal",
         bullets: [
-          "A sincere intention: you are there to find a spouse for nikah, not for entertainment or casual relationships.",
+          "A sincere intention: you are there to find a spouse for marriage, not for entertainment or casual relationships.",
           "Honesty: your profile, photos and answers truthfully represent who you are.",
           "Modesty: photos, language and conversations stay respectful and appropriate.",
           "No khalwah: meetings take place in public or with a mahram or family member present, not alone in private.",
           "Purposeful communication: conversations focus on getting to know each other for marriage.",
           "Family involvement: parents and, for a woman, her wali are part of the process.",
-          "Moving forward: once you know enough, you either proceed towards nikah or kindly end things.",
+          "Moving forward: once you know enough, you either proceed towards marriage or kindly end things.",
         ],
       },
       {
@@ -286,7 +286,7 @@ export const ARTICLES: Article[] = [
           "Long, aimless private chats with no plan or family knowledge.",
           "Secret relationships hidden from your family.",
           "Flirtatious or intimate messages, photos or video calls.",
-          "Meeting alone in private before nikah.",
+          "Meeting alone in private before marriage.",
           "Talking to several people in a misleading way, or leading someone on.",
           "Misrepresenting your age, marital status, deen or circumstances.",
         ],
@@ -297,7 +297,7 @@ export const ARTICLES: Article[] = [
       {
         heading: "Marriage platform or dating app?",
         paragraphs: [
-          "A dating app is built around swiping and chatting, and marriage is at best one possible outcome. A Muslim marriage platform is built around nikah from the start. On PureLifePartner, profiles focus on deen, family, education and what each person is looking for in a spouse. Real names and phone numbers stay private, photos can be limited to verified members, and contact details are only shared once both members are verified, which encourages serious, accountable introductions.",
+          "A dating app is built around swiping and chatting, and marriage is at best one possible outcome. A Muslim marriage platform is built around marriage from the start. On PureLifePartner, profiles focus on deen, family, education and what each person is looking for in a spouse. Real names and phone numbers stay private, photos can be limited to verified members, and contact details are only shared once both members are verified, which encourages serious, accountable introductions.",
         ],
       },
       {
@@ -313,7 +313,7 @@ export const ARTICLES: Article[] = [
         a: "Using a platform to find a spouse is generally considered permissible, as long as the intention is marriage and the interaction stays within Islamic limits: modest, honest and with family involvement.",
       },
       {
-        q: "Can I talk to someone before nikah?",
+        q: "Can I talk to someone before marriage?",
         a: "Yes, purposeful conversation to assess suitability for marriage is permitted, ideally with family aware or involved. Avoid flirtatious talk, secrecy and meeting alone in private.",
       },
       {
@@ -408,7 +408,7 @@ export const ARTICLES: Article[] = [
         a: "Yes, many profiles are written with a parent's help. Make sure it still sounds like you and that the information is accurate.",
       },
     ],
-    related: ["questions-to-ask-before-nikah", "is-online-muslim-matchmaking-halal"],
+    related: ["questions-to-ask-before-marriage", "is-online-muslim-matchmaking-halal"],
   },
 ];
 

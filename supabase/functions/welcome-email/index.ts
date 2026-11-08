@@ -70,8 +70,8 @@ Deno.serve(async (req: Request) => {
     .maybeSingle();
   const name = firstName(profile?.name_private) ?? profile?.user_id_handle;
   const greeting = name
-    ? `Assalamu alaikum, ${escapeHtml(name)}`
-    : "Assalamu alaikum";
+    ? `Hello ${escapeHtml(name)}`
+    : "Hello";
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",

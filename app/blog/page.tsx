@@ -5,7 +5,7 @@ import { ARTICLES, formatArticleDate } from "@/lib/blog";
 export const metadata: Metadata = {
   title: "Muslim Marriage Guides & Advice | PureLifePartner",
   description:
-    "Guides for Muslims looking for a spouse: questions to ask before nikah, the wali's role, whether online matchmaking is halal, and writing a great marriage profile.",
+    "Guides for Muslims looking for a spouse: questions to ask before marriage, the wali's role, whether online matchmaking is halal, and writing a great marriage profile.",
   alternates: { canonical: "/blog" },
 };
 
@@ -20,7 +20,7 @@ export default function BlogIndex() {
         </h1>
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-charcoal/75">
           Practical, faith-centred advice for Muslims and their families on
-          finding a spouse, preparing for nikah and searching online the halal
+          finding a spouse, preparing for marriage and searching online the halal
           way.
         </p>
       </section>

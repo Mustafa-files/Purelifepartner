@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Create a Free Muslim Marriage Profile | PureLifePartner",
+  title: "Create a Free Marriage Profile | PureLifePartner",
   description:
-    "Join PureLifePartner free and create your Muslim marriage profile. Private by default, verified members, family and wali friendly.",
+    "Join PureLifePartner free and create your marriage profile. Open to every religion and country, private by default, verified members, family friendly.",
   alternates: { canonical: "/register" },
 };
 

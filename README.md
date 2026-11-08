@@ -1,6 +1,6 @@
 # PureLifePartner
 
-A halal Muslim matrimonial web application built with Next.js 15 (App Router), TypeScript, Tailwind CSS 4, and Supabase.
+A global matrimonial web application for people of every religion, built with Next.js 15 (App Router), TypeScript, Tailwind CSS 4, and Supabase.
 
 ## Running the app
 

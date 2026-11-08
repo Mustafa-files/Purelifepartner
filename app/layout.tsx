@@ -65,7 +65,7 @@ const SITE_JSON_LD = {
       description: DEFAULT_DESCRIPTION,
       areaServed: "Worldwide",
       sameAs: Object.values(SOCIAL_LINKS).filter(Boolean),
-      knowsAbout: ["Muslim marriage", "Islamic matrimony", "Nikah"],
+      knowsAbout: ["Marriage", "Matrimonial services", "Finding a life partner"],
       email: CONTACT_EMAIL,
       contactPoint: {
         "@type": "ContactPoint",

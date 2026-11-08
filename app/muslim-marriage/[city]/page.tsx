@@ -174,7 +174,7 @@ export default async function CityPage({
           <div className="mt-8 grid gap-6 sm:grid-cols-3">
             {[
               {
-                t: "Made for nikah",
+                t: "Made for marriage",
                 d: "A marriage platform, not a dating app. Every member is here to find a spouse.",
               },
               {

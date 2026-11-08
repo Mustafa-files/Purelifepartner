@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Member Login | PureLifePartner",
-  description: "Sign in to your PureLifePartner Muslim marriage profile.",
+  description: "Sign in to your PureLifePartner marriage profile.",
   alternates: { canonical: "/login" },
 };
 

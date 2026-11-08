@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Browse Muslim Marriage Profiles Worldwide | PureLifePartner",
+  title: "Browse Marriage Profiles Worldwide | PureLifePartner",
   description:
-    "Search verified Muslim marriage profiles from around the world by age, country, city, sect and more. Find a halal spouse for nikah on PureLifePartner.",
+    "Search verified marriage profiles from around the world by age, religion, country, city and more. Find your life partner on PureLifePartner.",
   alternates: { canonical: "/search" },
 };
 

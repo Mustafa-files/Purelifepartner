@@ -45,8 +45,8 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-charcoal/65">
-              A halal, respectful, and modern platform for Muslims seeking a
-              life partner. Your journey to Nikah starts here.
+              A respectful, modern platform for people of every religion seeking
+              a life partner. Your journey to marriage starts here.
             </p>
             <div className="mt-5 flex gap-3">
               <a

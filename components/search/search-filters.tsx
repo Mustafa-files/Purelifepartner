@@ -11,8 +11,10 @@ import {
   REGIONS,
   RELIGIONS,
   SECTS_BY_RELIGION,
+  ALL_CITIES,
   countriesForRegions,
   citiesForCountries,
+  keepCities,
 } from "@/lib/constants";
 
 export interface SearchFilterState {
@@ -72,7 +74,9 @@ export function SearchFilters({
   const countryOptions = countriesForRegions(
     filters.regions.length ? filters.regions : REGIONS
   );
-  const cityOptions = citiesForCountries(filters.countries);
+  const cityOptions = filters.countries.length
+    ? citiesForCountries(filters.countries)
+    : ALL_CITIES;
 
   return (
     <aside
@@ -176,21 +180,22 @@ export function SearchFilters({
         <MultiSelect
           options={countryOptions}
           value={filters.countries}
-          onChange={(v) => onChange({ ...filters, countries: v, cities: [] })}
+          onChange={(v) =>
+            onChange({ ...filters, countries: v, cities: keepCities(filters.cities, v) })
+          }
           placeholder="Any country"
         />
       </FieldLabel>
 
-      {cityOptions.length > 0 && (
-        <FieldLabel label="City">
-          <MultiSelect
-            options={cityOptions}
-            value={filters.cities}
-            onChange={(v) => onChange({ ...filters, cities: v })}
-            placeholder="Any city"
-          />
-        </FieldLabel>
-      )}
+      <FieldLabel label="City">
+        <MultiSelect
+          options={cityOptions}
+          value={filters.cities}
+          onChange={(v) => onChange({ ...filters, cities: v })}
+          placeholder="Any city"
+          allowCustomPlace
+        />
+      </FieldLabel>
 
       <FieldLabel label="Qualification">
         <MultiSelect

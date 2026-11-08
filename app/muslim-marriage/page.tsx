@@ -22,7 +22,7 @@ export default function CityHub() {
           Muslim Marriage by City
         </h1>
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-charcoal/75">
-          PureLifePartner brings Muslims together for nikah all over the world.
+          PureLifePartner brings Muslims together for marriage all over the world.
           Choose your city to see members near you, learn about the local
           Muslim community, and start your search with verified, private
           profiles.

@@ -186,14 +186,16 @@ export default function RegisterReligion() {
               </FieldLabel>
             )}
 
-            <FieldLabel label="Practice Nazar, Nayaz and Khatam" required>
-              <RadioGroup
-                name="practice_nazar"
-                options={PRACTICE_OPTIONS}
-                value={form.practice_nazar}
-                onChange={(v) => setForm({ ...form, practice_nazar: v })}
-              />
-            </FieldLabel>
+            {form.religion === "Islam" && (
+              <FieldLabel label="Practice Nazar, Nayaz and Khatam" required>
+                <RadioGroup
+                  name="practice_nazar"
+                  options={PRACTICE_OPTIONS}
+                  value={form.practice_nazar}
+                  onChange={(v) => setForm({ ...form, practice_nazar: v })}
+                />
+              </FieldLabel>
+            )}
 
             <FieldLabel label="Caste" required>
               <Select

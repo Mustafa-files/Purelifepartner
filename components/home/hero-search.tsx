@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ALL_CITIES, ALL_COUNTRIES, tidyPlaceName } from "@/lib/locations";
 
 /** Where a visitor's search waits while they sign up (set by the search
  *  page's join card, read back on their first visit as a member) */
@@ -15,32 +16,37 @@ const AGES = [
   ["18-60", "any age"],
 ] as const;
 
-const COUNTRIES = [
-  ["", "anywhere"],
-  ["United Kingdom", "the UK"],
-  ["Pakistan", "Pakistan"],
-  ["United States", "the USA"],
-  ["Canada", "Canada"],
-  ["United Arab Emirates", "the UAE"],
-  ["Saudi Arabia", "Saudi Arabia"],
-  ["Germany", "Germany"],
-] as const;
+const PLACE_SUGGESTIONS = Array.from(new Set([...ALL_COUNTRIES, ...ALL_CITIES]));
+
+const COUNTRY_SHORT_NAMES: Record<string, string> = {
+  uk: "United Kingdom",
+  usa: "United States",
+  us: "United States",
+  uae: "United Arab Emirates",
+};
 
 /**
- * "I'm looking for a bride aged 25 to 30 in the UK" as one sentence of
- * dropdowns. Opens /search with those filters already applied.
+ * "I'm looking for a bride aged 25 to 30 in London" as one sentence. The
+ * place can be any country or city. Opens /search with those filters applied.
  */
 export function HeroSearch() {
   const router = useRouter();
   const [gender, setGender] = useState("Female");
   const [age, setAge] = useState("25-30");
-  const [country, setCountry] = useState("");
+  const [place, setPlace] = useState("");
 
   function go(e: React.FormEvent) {
     e.preventDefault();
     const [min, max] = age.split("-");
     const q = new URLSearchParams({ gender, minAge: min, maxAge: max });
+    const typed = place.trim().toLowerCase();
+    const country =
+      COUNTRY_SHORT_NAMES[typed] ??
+      ALL_COUNTRIES.find((c) => c.toLowerCase() === typed);
+    const city =
+      ALL_CITIES.find((c) => c.toLowerCase() === typed) ?? tidyPlaceName(place);
     if (country) q.set("country", country);
+    else if (city) q.set("city", city);
 
     router.push(`/search?${q.toString()}`);
   }
@@ -68,13 +74,19 @@ export function HeroSearch() {
       </Field>
       <Divider />
       <Field label="in">
-        <Pick value={country} onChange={setCountry} label="Country">
-          {COUNTRIES.map(([v, l]) => (
-            <option key={l} value={v}>
-              {l}
-            </option>
+        <input
+          value={place}
+          onChange={(e) => setPlace(e.target.value)}
+          list="hero-places"
+          placeholder="any city or country"
+          aria-label="City or country"
+          className="w-44 rounded-full bg-coral/10 px-3 py-1.5 font-bold text-coral outline-none placeholder:font-semibold placeholder:text-coral/70 focus-visible:ring-2 focus-visible:ring-coral"
+        />
+        <datalist id="hero-places">
+          {PLACE_SUGGESTIONS.map((p) => (
+            <option key={p} value={p} />
           ))}
-        </Pick>
+        </datalist>
       </Field>
       <button
         type="submit"

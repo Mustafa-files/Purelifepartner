@@ -81,7 +81,7 @@ const ROWS: { title: string; text: string; visual: ReactNode }[] = [
   },
   {
     title: "Find who fits",
-    text: "Filter by country, city, sect, caste, profession and age.",
+    text: "Filter by country, city, religion, profession and age.",
     visual: (
       <Pair>
         <SearchMockup className={BACK} />
@@ -95,7 +95,7 @@ const ROWS: { title: string; text: string; visual: ReactNode }[] = [
   },
 ];
 
-const EXTRAS = ["Wali support", "Pay in PKR, GBP, EUR or USD", "AI matching, coming soon"];
+const EXTRAS = ["Family support", "Pay in PKR, GBP, EUR or USD", "AI matching, coming soon"];
 
 export function FeatureShowcase() {
   return (

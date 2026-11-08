@@ -12,6 +12,7 @@ import {
   RESIDENCE_TYPES,
   STORY_TYPES,
   citiesForCountries,
+  keepCities,
 } from "@/lib/constants";
 import type { Profile } from "@/types";
 
@@ -50,6 +51,7 @@ export default function RegisterResidence() {
     if (
       form.nationality.length === 0 ||
       form.residence_country.length === 0 ||
+      form.city.length === 0 ||
       !form.residence_type
     ) {
       toast("Please fill all mandatory fields.", "error");
@@ -106,9 +108,7 @@ export default function RegisterResidence() {
                   setForm({
                     ...form,
                     residence_country: v,
-                    city: form.city.filter((c) =>
-                      citiesForCountries(v).includes(c)
-                    ),
+                    city: keepCities(form.city, v),
                   })
                 }
                 placeholder="Select country (one or more)"
@@ -118,17 +118,14 @@ export default function RegisterResidence() {
             <FieldLabel
               label="City"
               required
-              hint="Cities update based on selected countries"
+              hint="Not listed? Type your city and add it"
             >
               <MultiSelect
                 options={cityOptions}
                 value={form.city}
                 onChange={(v) => setForm({ ...form, city: v })}
-                placeholder={
-                  form.residence_country.length === 0
-                    ? "Select a country first"
-                    : "Select city (one or more)"
-                }
+                placeholder="Select or type your city"
+                allowCustomPlace
               />
             </FieldLabel>
 

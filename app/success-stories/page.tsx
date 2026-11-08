@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Muslim Marriage Success Stories | PureLifePartner",
+  title: "Marriage Success Stories | PureLifePartner",
   description:
-    "Nikah stories from Muslim couples around the world who met on PureLifePartner, the halal Muslim marriage website.",
+    "Real marriage stories from couples around the world who met on PureLifePartner, the global marriage website.",
   alternates: { canonical: "/success-stories" },
 };
 
@@ -22,7 +22,7 @@ const STORIES = [
     location: "Lahore, Pakistan",
     year: "2025",
     story:
-      "I had tried other apps but they never felt right. PureLifePartner felt respectful from day one. Alhamdulillah, we had our Nikah last spring.",
+      "I had tried other apps but they never felt right. PureLifePartner felt respectful from day one. We got married last spring.",
   },
   {
     couple: "Maryam & Bilal",
@@ -43,7 +43,7 @@ const STORIES = [
     location: "Karachi, Pakistan",
     year: "2025",
     story:
-      "From the first WhatsApp message to the Nikah ceremony took only five months. JazakAllah khair to the whole PureLifePartner team.",
+      "From the first WhatsApp message to our marriage took only five months. JazakAllah khair to the whole PureLifePartner team.",
   },
   {
     couple: "Sumaya & Ibrahim",
@@ -67,10 +67,10 @@ export default function SuccessStories() {
             <img src="/illustrations/brother-greeting.svg" alt="" className="w-32 sm:w-40" />
           </div>
           <h1 className="mt-8 text-4xl font-extrabold text-charcoal sm:text-6xl">
-            Alhamdulillah, they found each other
+            They found each other
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg text-charcoal/60">
-            Couples who began their journey to nikah here.
+            Couples who began their journey to marriage here.
           </p>
         </div>
       </section>

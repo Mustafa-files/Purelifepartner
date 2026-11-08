@@ -54,10 +54,10 @@ function Hero() {
       <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2">
         <div className="text-center lg:text-left">
           {/* The small line is part of the H1 so search engines read what the
-              site is ("Muslim marriage website"), not only the tagline. */}
+              site is ("marriage website"), not only the tagline. */}
           <h1 className="gsap-hero text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl lg:text-6xl">
             <span className="mb-4 block text-sm font-bold uppercase tracking-widest text-coral sm:text-base">
-              The Global Muslim Marriage Website
+              The Global Marriage Website
             </span>
             Where Pure Hearts <span className="text-coral">Find Their Match</span>
           </h1>
@@ -67,8 +67,8 @@ function Hero() {
             <HeroImage className="mx-auto w-full max-w-md rounded-3xl" />
           </div>
           <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70 lg:mx-0">
-            A halal matrimonial site for Muslims worldwide. Verified profiles,
-            private by default, made for nikah.
+            A matrimonial site for people of every religion and background,
+            worldwide. Verified profiles, private by default, made for marriage.
           </p>
           <div className="gsap-hero mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
             <Link href="/register">
@@ -128,7 +128,7 @@ function StaggerBand() {
 }
 
 function StatsBar() {
-  const stats = ["10,000+ profiles", "6 continents", "Verified members", "Halal and safe"];
+  const stats = ["10,000+ profiles", "6 continents", "Verified members", "Safe and respectful"];
   return (
     <section className="border-y border-gray-100 bg-off-white">
       <ul className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-4 gap-y-2 px-4 py-6 text-sm font-bold text-charcoal sm:px-6">
@@ -155,7 +155,7 @@ function HowItWorks() {
         <div className="gsap-fade-up">
           <h2 className="text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl">
             Three steps <br className="hidden lg:block" />
-            to nikah
+            to marriage
           </h2>
           <Link
             href="/register"
@@ -211,7 +211,7 @@ function BigStats() {
   );
 }
 
-/** Parents and walis: the third illustration beside one short line */
+/** Parents and guardians: the third illustration beside one short line */
 function ForFamilies() {
   return (
     <section className="overflow-hidden bg-off-white py-20 sm:py-24">
@@ -228,7 +228,7 @@ function ForFamilies() {
             Made for families too
           </h2>
           <p className="mx-auto mt-5 max-w-md text-lg leading-relaxed text-charcoal/70 lg:mx-0">
-            A parent or wali can set up a profile with you, and every profile
+            A parent or guardian can set up a profile with you, and every profile
             can be shared with family in one tap.
           </p>
           <Link
@@ -254,7 +254,7 @@ const FAQS = [
   },
   {
     q: "Can a parent create a profile for me?",
-    a: "Yes. A parent or wali can register on your behalf, with your full knowledge and consent.",
+    a: "Yes. A parent or guardian can register on your behalf, with your full knowledge and consent.",
   },
   {
     q: "How do I share a profile with my family?",
@@ -301,7 +301,7 @@ function DownloadCTA() {
           Ready to Begin Your Journey?
         </h2>
         <p className="mt-4 text-lg text-charcoal/60">
-          Join thousands of Muslims finding their match.
+          Join thousands of people finding their match.
         </p>
         <div className="mt-8">
           <AppBadges />

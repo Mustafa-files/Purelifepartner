@@ -10,7 +10,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
     title: "1. Acceptance of Terms",
     body: [
       "By creating an account on PureLifePartner, you agree to these Terms and Conditions and our Privacy Policy. If you do not agree with any part of these terms, please do not use the platform.",
-      "PureLifePartner is a matrimonial introduction service intended solely for Muslims who are genuinely seeking marriage (Nikah). It is not a dating platform and must not be used as one.",
+      "PureLifePartner is a matrimonial introduction service open to people of every religion and background who are genuinely seeking marriage. It is not a dating platform and must not be used as one.",
     ],
   },
   {
@@ -18,7 +18,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
     body: [
       "You must be between 16 and 35 years of age to register as a candidate. By registering you confirm that the date of birth you provide is accurate.",
       "You must be legally free to marry under the laws of your country of residence. If you are currently married and your circumstances permit a further marriage under applicable law, you must state your marital status truthfully on your profile.",
-      "You may register on behalf of a family member only with their full knowledge and consent, for example as a parent or guardian (Wali).",
+      "You may register on behalf of a family member only with their full knowledge and consent, for example as a parent or guardian.",
     ],
   },
   {
@@ -41,7 +41,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: "5. Conduct",
     body: [
-      "You agree to interact with other members respectfully and within the bounds of Islamic etiquette. Harassment, abusive language, indecent content, or attempts to use the platform for anything other than seeking marriage will result in immediate account termination without refund.",
+      "You agree to interact with other members respectfully and courteously. Harassment, abusive language, indecent content, or attempts to use the platform for anything other than seeking marriage will result in immediate account termination without refund.",
       "You must not share another member's contact details, photos, or personal information with any third party without their consent.",
       "Creating multiple accounts, impersonating another person, or misrepresenting your marital status, age, or identity is strictly prohibited.",
     ],

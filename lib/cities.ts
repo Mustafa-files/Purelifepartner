@@ -34,7 +34,7 @@ export const CITIES: City[] = [
     countryShort: "UK",
     aliases: ["London", "East London", "North London", "South London", "West London", "Southeast London", "Ilford", "Wembley", "Southall"],
     intro:
-      "London is home to the largest Muslim population of any city in Western Europe, yet many single Muslims here say it is hard to meet someone serious about nikah. Busy careers, long commutes and a city of millions make introductions through family harder than they used to be. PureLifePartner gives London Muslims a private, halal way to find a spouse with their family involved from the start.",
+      "London is home to the largest Muslim population of any city in Western Europe, yet many single Muslims here say it is hard to meet someone serious about marriage. Busy careers, long commutes and a city of millions make introductions through family harder than they used to be. PureLifePartner gives London Muslims a private, halal way to find a spouse with their family involved from the start.",
     community:
       "London's Muslims come from almost every background: Bangladeshi families in Tower Hamlets, Pakistani and Indian communities in Redbridge, Newham and Southall, Somali, Arab, Turkish and North African families across the city, and a growing number of reverts. Whatever your heritage, you can search for someone who shares it, or simply shares your deen.",
     areas: ["Tower Hamlets", "Newham", "Redbridge and Ilford", "Waltham Forest", "Brent and Wembley", "Ealing and Southall", "Hounslow"],
@@ -86,7 +86,7 @@ export const CITIES: City[] = [
     countryShort: "UK",
     aliases: ["Manchester", "Greater Manchester", "Oldham", "Bolton", "Rochdale", "Longsight", "Cheetham Hill"],
     intro:
-      "Greater Manchester has a large and young Muslim population spread across the city and towns like Oldham, Bolton and Rochdale. If you are looking for a practising spouse in the North West, PureLifePartner helps you meet people who are serious about nikah, without the swiping culture of dating apps.",
+      "Greater Manchester has a large and young Muslim population spread across the city and towns like Oldham, Bolton and Rochdale. If you are looking for a practising spouse in the North West, PureLifePartner helps you meet people who are serious about marriage, without the swiping culture of dating apps.",
     community:
       "Manchester's Muslims include long-established Pakistani and Bangladeshi families, a large Arab and Libyan community in South Manchester, Somali families and many international students who settled after university. The result is a mix of cultures with a shared focus on family and faith.",
     areas: ["Longsight", "Cheetham Hill", "Rusholme", "Levenshulme", "Didsbury", "Oldham", "Bolton", "Rochdale"],
@@ -166,7 +166,7 @@ export const CITIES: City[] = [
     countryShort: "USA",
     aliases: ["New York", "New York City", "NYC", "Brooklyn", "Queens", "Bronx", "Manhattan", "Staten Island", "Jersey City", "Paterson"],
     intro:
-      "New York has the largest Muslim population of any US city, but meeting someone marriage-minded in a city this busy is not easy. PureLifePartner gives Muslims across the five boroughs and New Jersey a halal alternative to dating apps, built around nikah, family and privacy.",
+      "New York has the largest Muslim population of any US city, but meeting someone marriage-minded in a city this busy is not easy. PureLifePartner gives Muslims across the five boroughs and New Jersey a halal alternative to dating apps, built around marriage, family and privacy.",
     community:
       "New York's Muslims are remarkably diverse: Arab Americans in Bay Ridge and Astoria, Pakistani families on Coney Island Avenue, Bangladeshi communities in Jackson Heights and the Bronx, West African, Bosnian and Albanian Muslims, and generations of African American Muslims. You can search for someone from your heritage or simply someone with your values.",
     areas: ["Bay Ridge, Brooklyn", "Coney Island Avenue, Brooklyn", "Astoria, Queens", "Jackson Heights, Queens", "Parkchester, Bronx", "Jersey City and Paterson, NJ"],
@@ -218,7 +218,7 @@ export const CITIES: City[] = [
     countryShort: "USA",
     aliases: ["Houston", "Sugar Land", "Katy", "Richmond", "Pearland", "Spring"],
     intro:
-      "Houston has one of the largest and fastest-growing Muslim communities in the United States, with dozens of masjids across the metro area. PureLifePartner helps Houston Muslims find a spouse for nikah through verified profiles, privacy by default and room for family involvement.",
+      "Houston has one of the largest and fastest-growing Muslim communities in the United States, with dozens of masjids across the metro area. PureLifePartner helps Houston Muslims find a spouse through verified profiles, privacy by default and room for family involvement.",
     community:
       "Houston's Muslims include large Pakistani and Indian communities, Arab families, a significant Nigerian and Somali presence and many reverts. Suburbs like Sugar Land, Katy and Richmond have become home to young families, which makes them a natural place to look for a match.",
     areas: ["Sugar Land", "Katy", "Richmond", "Pearland", "Southwest Houston", "Spring"],
@@ -270,7 +270,7 @@ export const CITIES: City[] = [
     countryShort: "USA",
     aliases: ["Los Angeles", "LA", "Anaheim", "Orange County", "Irvine", "Garden Grove", "Culver City", "Riverside"],
     intro:
-      "Southern California is home to one of the largest Muslim populations in the United States, from Los Angeles to Orange County and the Inland Empire. PureLifePartner helps Muslims across the region find a spouse for nikah, without the noise of dating apps.",
+      "Southern California is home to one of the largest Muslim populations in the United States, from Los Angeles to Orange County and the Inland Empire. PureLifePartner helps Muslims across the region find a spouse, without the noise of dating apps.",
     community:
       "Los Angeles Muslims include Arab Americans in Anaheim's Little Arabia, Iranian, South Asian and Indonesian communities, Egyptian and North African families and a long-established African American Muslim community. It is one of the most diverse Muslim communities in the world.",
     areas: ["Anaheim and Little Arabia", "Garden Grove", "Irvine", "Culver City", "Chino", "Riverside and the Inland Empire"],
@@ -324,7 +324,7 @@ export const CITIES: City[] = [
     countryShort: "Canada",
     aliases: ["Mississauga", "Brampton", "Milton", "Oakville", "Peel"],
     intro:
-      "Mississauga has one of the highest shares of Muslim residents of any Canadian city, and together with Brampton and Milton it forms a large, young Muslim community. PureLifePartner helps families in Peel Region find a spouse for nikah with verified profiles and privacy built in.",
+      "Mississauga has one of the highest shares of Muslim residents of any Canadian city, and together with Brampton and Milton it forms a large, young Muslim community. PureLifePartner helps families in Peel Region find a spouse with verified profiles and privacy built in.",
     community:
       "Mississauga's Muslims are largely Pakistani and Indian families, with large Arab, Somali, Afghan and Bangladeshi communities too. Many are second-generation Canadians who want a spouse who understands both their faith and their life in Canada.",
     areas: ["Malton", "Meadowvale", "Cooksville", "Erin Mills", "Brampton", "Milton"],
@@ -378,7 +378,7 @@ export const CITIES: City[] = [
     countryShort: "UAE",
     aliases: ["Dubai"],
     intro:
-      "Dubai is home to Muslims from more than a hundred countries, many of them professionals living far from their families. PureLifePartner helps Muslims in Dubai find a spouse for nikah, with families back home able to take part, and contact details kept private until both members are verified.",
+      "Dubai is home to Muslims from more than a hundred countries, many of them professionals living far from their families. PureLifePartner helps Muslims in Dubai find a spouse, with families back home able to take part, and contact details kept private until both members are verified.",
     community:
       "Alongside Emiratis, Dubai's Muslims include large Pakistani, Indian and Bangladeshi communities, Egyptians, Jordanians, Syrians and other Arabs, Filipino and Western reverts, and many families who have lived in the UAE for generations. It is a truly international place to find a match.",
     areas: ["Deira", "Bur Dubai", "Karama", "Al Barsha", "Jumeirah", "Al Nahda", "Mirdif", "Dubai Marina"],
@@ -456,7 +456,7 @@ export const CITIES: City[] = [
     countryShort: "Saudi Arabia",
     aliases: ["Jeddah", "Jiddah", "Makkah", "Mecca"],
     intro:
-      "Jeddah, the gateway to Makkah and Madinah, is one of the most international cities in the Muslim world. PureLifePartner helps Muslims in Jeddah and the Makkah region find a spouse for nikah through verified, private profiles and family involvement.",
+      "Jeddah, the gateway to Makkah and Madinah, is one of the most international cities in the Muslim world. PureLifePartner helps Muslims in Jeddah and the Makkah region find a spouse through verified, private profiles and family involvement.",
     community:
       "Jeddah has a long history as a meeting point for Muslims from Africa, Asia and the Arab world. Today it is home to Saudi families and large communities from Pakistan, India, Egypt, Sudan, Yemen, Indonesia and Nigeria.",
     areas: ["Al Rawdah", "Al Safa", "Al Hamra", "Al Salamah", "Al Zahra", "Obhur"],
@@ -521,7 +521,7 @@ export const CITIES: City[] = [
     faqs: [
       {
         q: "Can I find a rishta in Lahore for someone living abroad?",
-        a: "Yes. Many overseas Pakistani families look for rishtas in Lahore, and many Lahore members are open to moving abroad after nikah.",
+        a: "Yes. Many overseas Pakistani families look for rishtas in Lahore, and many Lahore members are open to moving abroad after marriage.",
       },
       {
         q: "Can I pay for verification in Pakistani rupees?",
@@ -593,7 +593,7 @@ export const CITIES: City[] = [
     countryShort: "Australia",
     aliases: ["Sydney", "Lakemba", "Auburn", "Bankstown", "Parramatta", "Liverpool"],
     intro:
-      "Sydney has the largest Muslim community in Australia, concentrated in the city's west and south-west. PureLifePartner helps Sydney Muslims find a spouse for nikah through verified profiles and family involvement, as a halal alternative to dating apps.",
+      "Sydney has the largest Muslim community in Australia, concentrated in the city's west and south-west. PureLifePartner helps Sydney Muslims find a spouse through verified profiles and family involvement, as a halal alternative to dating apps.",
     community:
       "Sydney's Muslims include large Lebanese and Turkish communities, Pakistani, Bangladeshi, Indonesian, Afghan and Iraqi families, and many Australian-born Muslims and reverts. Suburbs like Lakemba and Auburn are known for their mosques and community life.",
     areas: ["Lakemba", "Auburn", "Bankstown", "Greenacre", "Punchbowl", "Parramatta", "Liverpool"],
@@ -647,7 +647,7 @@ export const CITIES: City[] = [
     countryShort: "France",
     aliases: ["Paris", "Saint-Denis", "Seine-Saint-Denis", "Île-de-France", "Ile-de-France"],
     intro:
-      "Paris and its suburbs are home to one of the largest Muslim communities in Europe. PureLifePartner helps Muslims across Île-de-France find a spouse for nikah through private, verified profiles, with families involved if they wish.",
+      "Paris and its suburbs are home to one of the largest Muslim communities in Europe. PureLifePartner helps Muslims across Île-de-France find a spouse through private, verified profiles, with families involved if they wish.",
     community:
       "Most Muslims in Paris have roots in Algeria, Morocco and Tunisia, alongside large West African, Turkish, Comorian and South Asian communities. Many are French-born and looking for a spouse who shares both their faith and their life in France.",
     areas: ["Seine-Saint-Denis", "Saint-Denis", "Aubervilliers", "Goutte d'Or and Barbès", "Val-de-Marne", "Val-d'Oise"],
@@ -699,7 +699,7 @@ export const CITIES: City[] = [
     countryShort: "Netherlands",
     aliases: ["Amsterdam"],
     intro:
-      "Amsterdam has a large Muslim community, with roughly one in seven residents of Muslim background. PureLifePartner helps Muslims in Amsterdam and the Randstad find a spouse for nikah through verified profiles and family involvement.",
+      "Amsterdam has a large Muslim community, with roughly one in seven residents of Muslim background. PureLifePartner helps Muslims in Amsterdam and the Randstad find a spouse through verified profiles and family involvement.",
     community:
       "Amsterdam's Muslims are mainly Moroccan and Turkish, alongside Surinamese, Pakistani, Somali and Afghan communities. Many are Dutch-born and looking for a spouse who shares their faith and their life in the Netherlands.",
     areas: ["Amsterdam Nieuw-West", "Slotervaart", "Bos en Lommer", "Amsterdam Oost", "Amsterdam Noord"],
@@ -727,7 +727,7 @@ export const CITIES: City[] = [
     countryShort: "Malaysia",
     aliases: ["Kuala Lumpur", "KL", "Petaling Jaya", "Shah Alam", "Putrajaya", "Cyberjaya", "Selangor"],
     intro:
-      "Kuala Lumpur is one of the great cities of the Muslim world, and a hub for Muslim students and professionals from across Asia, the Middle East and Africa. PureLifePartner helps Muslims in KL and the Klang Valley find a spouse for nikah with verified, private profiles.",
+      "Kuala Lumpur is one of the great cities of the Muslim world, and a hub for Muslim students and professionals from across Asia, the Middle East and Africa. PureLifePartner helps Muslims in KL and the Klang Valley find a spouse with verified, private profiles.",
     community:
       "Alongside the Malay majority, Kuala Lumpur has Indian Muslim families and large international communities from Pakistan, Bangladesh, the Arab world, Iran and Africa, many of whom came to study or work and stayed.",
     areas: ["Kampung Baru", "Bangsar", "Petaling Jaya", "Shah Alam", "Putrajaya", "Cyberjaya"],

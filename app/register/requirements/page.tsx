@@ -17,6 +17,7 @@ import {
   SUB_CASTES_BY_CASTE,
   citiesForCountries,
   countriesForRegions,
+  keepCities,
 } from "@/lib/constants";
 import type { Profile } from "@/types";
 
@@ -83,13 +84,16 @@ export default function RegisterRequirements() {
     )
   ).sort((a, b) => a.localeCompare(b));
 
-  const allRegions = form.regions.includes("All Regions");
-  const countryOptions = allRegions
+  // With no region or country picked yet, every option stays available
+  const anyRegion =
+    form.regions.length === 0 || form.regions.includes("All Regions");
+  const countryOptions = anyRegion
     ? countriesForRegions(REGIONS)
     : countriesForRegions(form.regions);
 
-  const allCountries = form.countries.includes("All Countries");
-  const cityOptions = allCountries
+  const anyCountry =
+    form.countries.length === 0 || form.countries.includes("All Countries");
+  const cityOptions = anyCountry
     ? citiesForCountries(countryOptions)
     : citiesForCountries(form.countries);
 
@@ -247,31 +251,26 @@ export default function RegisterRequirements() {
               />
             </FieldLabel>
 
-            <FieldLabel label="Country" hint="Filtered by selected regions">
+            <FieldLabel label="Country">
               <MultiSelect
                 options={countryOptions}
                 value={form.countries}
-                onChange={(v) => setForm({ ...form, countries: v, cities: [] })}
-                placeholder={
-                  form.regions.length === 0
-                    ? "Select a region first"
-                    : "Select countries"
+                onChange={(v) =>
+                  setForm({ ...form, countries: v, cities: keepCities(form.cities, v) })
                 }
+                placeholder="Select countries"
                 allLabel="All Countries"
               />
             </FieldLabel>
 
-            <FieldLabel label="Cities" hint="Filtered by selected countries">
+            <FieldLabel label="Cities" hint="Not listed? Type any city and add it">
               <MultiSelect
                 options={cityOptions}
                 value={form.cities}
                 onChange={(v) => setForm({ ...form, cities: v })}
-                placeholder={
-                  form.countries.length === 0
-                    ? "Select a country first"
-                    : "Select cities"
-                }
+                placeholder="Select or type cities"
                 allLabel="All Cities"
+                allowCustomPlace
               />
             </FieldLabel>
 

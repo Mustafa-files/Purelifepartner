@@ -9,7 +9,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: "1. Who We Are",
     body: [
-      "PureLifePartner is a halal matrimonial platform for Muslims seeking a life partner. This policy explains what personal data we collect, why we collect it, and how we protect it.",
+      "PureLifePartner is a matrimonial platform for people of every religion seeking a life partner. This policy explains what personal data we collect, why we collect it, and how we protect it.",
     ],
   },
   {

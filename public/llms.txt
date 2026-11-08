@@ -1,11 +1,11 @@
 # PureLifePartner
 
-> PureLifePartner (purelifepartner.com) is a global halal Muslim marriage website for Muslims anywhere in the world who are seeking a spouse for nikah, with members across the UK, Europe, North America, the Middle East, South Asia and beyond. Members create a free profile, browse and search verified Muslim marriage profiles, and contact each other once both are verified. Profiles are private by default, real names and phone numbers are never shown publicly, and families and a wali (guardian) can be involved.
+> PureLifePartner (purelifepartner.com) is a global marriage website for people of every religion and background, anywhere in the world, who are seeking a life partner. Members create a free profile, browse and search verified marriage profiles in any country or city, and contact each other once both are verified. Profiles are private by default, real names and phone numbers are never shown publicly, and families can be involved.
 
 Key facts:
-- Type: Muslim matrimonial service (online Muslim marriage website and marriage bureau)
-- Audience: single, divorced and widowed Muslims worldwide seeking marriage, and their families
-- Coverage: worldwide; members can search by country, city and sect
+- Type: matrimonial service (online marriage website and marriage bureau)
+- Audience: single, divorced and widowed people of every religion worldwide seeking marriage, and their families
+- Coverage: worldwide; members can search by any country or city, and by religion
 - Free to join; verification is a paid one-off step confirmed by an admin, usually within 24 hours
 - Fees can be paid in GBP, PKR, EUR or USD
 - Contact details are released only when both members are verified
@@ -14,11 +14,11 @@ Key facts:
 
 ## Main pages
 - [Home](https://purelifepartner.com/): what PureLifePartner is and how it works
-- [Browse profiles](https://purelifepartner.com/search): search Muslim marriage profiles worldwide by age, country, city, sect and more
+- [Browse profiles](https://purelifepartner.com/search): search marriage profiles worldwide by age, religion, country, city and more
 - [Create a free profile](https://purelifepartner.com/register): sign up as a member
-- [Muslim marriage by city](https://purelifepartner.com/muslim-marriage): local pages for 27 cities, including London, Birmingham, Manchester, New York, Chicago, Houston, Toronto, Dubai, Riyadh, Doha, Lahore, Karachi, Islamabad, Sydney, Paris, Berlin and Kuala Lumpur
+- [Muslim marriage by city, one of the communities we serve](https://purelifepartner.com/muslim-marriage): local pages for 27 cities, including London, Birmingham, Manchester, New York, Chicago, Houston, Toronto, Dubai, Riyadh, Doha, Lahore, Karachi, Islamabad, Sydney, Paris, Berlin and Kuala Lumpur
 - [Guides](https://purelifepartner.com/blog): advice for Muslims looking for a spouse
-  - [50 Questions to Ask Before Nikah](https://purelifepartner.com/blog/questions-to-ask-before-nikah)
+  - [50 Questions to Ask Before Marriage](https://purelifepartner.com/blog/questions-to-ask-before-marriage)
   - [The Wali's Role in Online Muslim Marriage](https://purelifepartner.com/blog/wali-role-in-online-muslim-marriage)
   - [Is Online Muslim Matchmaking Halal?](https://purelifepartner.com/blog/is-online-muslim-matchmaking-halal)
   - [How to Write a Muslim Marriage Profile](https://purelifepartner.com/blog/how-to-write-a-muslim-marriage-profile)

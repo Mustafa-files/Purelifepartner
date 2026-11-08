@@ -13,7 +13,7 @@ const QUOTES = [
     name: "Muhammad S.",
   },
   {
-    quote: "It felt respectful from the start. Alhamdulillah, we had our nikah last spring.",
+    quote: "It felt respectful from the start. We got married last spring.",
     name: "Zainab & Omar",
   },
 ];
@@ -36,7 +36,7 @@ export function Testimonials() {
     <section className="bg-white py-20 sm:py-28">
       <div className="gsap-fade-up mx-auto max-w-4xl px-4 text-center sm:px-6">
         <p className="text-sm font-bold uppercase tracking-[0.2em] text-coral">
-          Alhamdulillah, they found each other
+          They found each other
         </p>
 
         <figure className="mt-8" aria-live="polite">
