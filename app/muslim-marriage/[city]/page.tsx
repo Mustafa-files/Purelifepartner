@@ -7,6 +7,7 @@ import { CityMembers } from "@/components/city/city-members";
 import { CITIES, cityPageTitle, getCity, type City } from "@/lib/cities";
 import { SITE_URL } from "@/lib/seo";
 import { ARTICLES } from "@/lib/blog";
+import { getMarriageCity } from "@/lib/marriage-cities";
 
 // Every city is known at build time; anything else is a 404.
 export const dynamicParams = false;
@@ -163,6 +164,14 @@ export default async function CityPage({
           </div>
         </div>
         <p className="mt-6 max-w-3xl text-charcoal/75">{c.localNote}</p>
+        {c.country === "United States" && getMarriageCity(c.slug) && (
+          <p className="mt-4 text-sm text-charcoal/70">
+            Open to partners of any faith?{" "}
+            <Link href={`/marriage/${c.slug}`} className="font-bold text-coral hover:underline">
+              See marriage in {c.name} for every religion
+            </Link>
+          </p>
+        )}
       </section>
 
       {/* Why us */}

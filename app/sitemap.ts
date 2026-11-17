@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { PUBLIC_PAGES, SITE_URL } from "@/lib/seo";
 import { CITIES } from "@/lib/cities";
 import { ARTICLES } from "@/lib/blog";
+import { MARRIAGE_CITIES } from "@/lib/marriage-cities";
 
 // Built once at build time; no request-time function on Cloudflare.
 export const dynamic = "force-static";
@@ -31,5 +32,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly",
     priority: 0.7,
   }));
-  return [...pages, ...cityPages, ...guides];
+  // All-religion US city pages and their hub
+  const usPages: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/marriage`, lastModified, changeFrequency: "weekly", priority: 0.9 },
+    ...MARRIAGE_CITIES.map((c) => ({
+      url: `${SITE_URL}/marriage/${c.slug}`,
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    })),
+  ];
+  return [...pages, ...usPages, ...cityPages, ...guides];
 }

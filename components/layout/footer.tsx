@@ -88,6 +88,14 @@ export function Footer() {
             </li>
             <li>
               <Link
+                href="/marriage"
+                className="text-sm text-charcoal/60 transition-colors hover:text-coral"
+              >
+                Marriage by City (USA)
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/muslim-marriage"
                 className="text-sm text-charcoal/60 transition-colors hover:text-coral"
               >

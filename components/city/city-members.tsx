@@ -18,10 +18,13 @@ export function CityMembers({
   cityName,
   aliases,
   country,
+  restrictToCountry = false,
 }: {
   cityName: string;
   aliases: string[];
   country: string;
+  /** Only count members who live in `country` (for city names that exist in several countries) */
+  restrictToCountry?: boolean;
 }) {
   const [profiles, setProfiles] = useState<PublicProfile[] | null>(null);
   const [total, setTotal] = useState(0);
@@ -31,14 +34,14 @@ export function CityMembers({
     let cancelled = false;
     (async () => {
       const supabase = createClient();
+      let query = supabase
+        .from("public_profiles")
+        .select("*", { count: "exact" })
+        .overlaps("city", aliases);
+      if (restrictToCountry) query = query.overlaps("residence_country", [country]);
       const [{ data: auth }, { data, count }] = await Promise.all([
         supabase.auth.getSession(),
-        supabase
-          .from("public_profiles")
-          .select("*", { count: "exact" })
-          .overlaps("city", aliases)
-          .order("created_at", { ascending: false })
-          .limit(SHOW),
+        query.order("created_at", { ascending: false }).limit(SHOW),
       ]);
       if (cancelled) return;
       setMember(!!auth.session);
@@ -48,7 +51,7 @@ export function CityMembers({
     return () => {
       cancelled = true;
     };
-  }, [aliases]);
+  }, [aliases, country, restrictToCountry]);
 
   const browseHref = `/search?country=${encodeURIComponent(country)}`;
 
