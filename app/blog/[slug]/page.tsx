@@ -160,16 +160,26 @@ export default async function ArticlePage({
 
         <div className="mt-12 rounded-2xl bg-white px-6 py-10 text-center shadow-sm">
           <h2 className="text-2xl font-bold text-charcoal">Ready to start your search?</h2>
-          <p className="mx-auto mt-2 max-w-md text-charcoal/60">
-            Join PureLifePartner free. Verified Muslim profiles, private by
-            default, with family and wali involvement.
-          </p>
+          {a.audience === "all" ? (
+            <p className="mx-auto mt-2 max-w-md text-charcoal/60">
+              Join PureLifePartner free. Verified profiles for every religion
+              and country, private by default, with families welcome.
+            </p>
+          ) : (
+            <p className="mx-auto mt-2 max-w-md text-charcoal/60">
+              Join PureLifePartner free. Verified Muslim profiles, private by
+              default, with family and wali involvement.
+            </p>
+          )}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
             <Link href="/register">
               <Button size="lg">Create Free Profile</Button>
             </Link>
-            <Link href="/muslim-marriage" className="font-bold text-coral underline-offset-4 hover:underline">
-              Find members in your city
+            <Link
+              href={a.audience === "all" ? "/search" : "/muslim-marriage"}
+              className="font-bold text-coral underline-offset-4 hover:underline"
+            >
+              {a.audience === "all" ? "Search members near you" : "Find members in your city"}
             </Link>
           </div>
         </div>

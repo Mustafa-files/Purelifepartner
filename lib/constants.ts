@@ -7,6 +7,7 @@ export const MARITAL_STATUSES = [
   "Divorcee",
   "Married",
   "Never Married",
+  "Widowed",
 ];
 
 export const QUALIFICATIONS = [
