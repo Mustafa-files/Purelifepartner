@@ -30,22 +30,6 @@ export default function LandingPage() {
   );
 }
 
-function AppBadges() {
-  return (
-    <div className="flex flex-wrap items-center justify-center gap-3">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/play-badge.png"
-        alt="Get it on Google Play"
-        className="h-12 w-auto cursor-pointer transition-transform hover:scale-105"
-      />
-      <span className="text-sm font-semibold text-charcoal/70">
-        iOS Version Coming Soon
-      </span>
-    </div>
-  );
-}
-
 /** Minimal hero: the two illustrations either side of the headline, and a
  *  one-sentence search so visitors see real profiles in one click */
 function Hero() {
@@ -79,9 +63,6 @@ function Hero() {
                 Browse Profiles
               </Button>
             </Link>
-          </div>
-          <div className="gsap-hero mt-8 lg:[&>div]:justify-start">
-            <AppBadges />
           </div>
         </div>
         {/* data-speed instead of an entrance tween: both writing to y would fight */}
@@ -128,7 +109,7 @@ function StaggerBand() {
 }
 
 function StatsBar() {
-  const stats = ["10,000+ profiles", "6 continents", "Verified members", "Safe and respectful"];
+  const stats = ["10,000+ profiles", "Verified members", "Safe and respectful"];
   return (
     <section className="border-y border-gray-100 bg-off-white">
       <ul className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-4 gap-y-2 px-4 py-6 text-sm font-bold text-charcoal sm:px-6">
@@ -189,13 +170,12 @@ function HowItWorks() {
 function BigStats() {
   const stats = [
     { value: "10,000+", label: "Members" },
-    { value: "6", label: "Continents" },
     { value: "500+", label: "Successful Matches" },
     { value: "4", label: "Currencies Supported" },
   ];
   return (
     <section className="plp-pattern-light bg-coral py-16">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 text-center text-white sm:px-6 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 text-center text-white sm:grid-cols-3 sm:px-6">
         {stats.map((s) => (
           <div key={s.label} className="gsap-zoom">
             <div className="text-4xl font-extrabold sm:text-5xl">
@@ -303,9 +283,6 @@ function DownloadCTA() {
         <p className="mt-4 text-lg text-charcoal/60">
           Join thousands of people finding their match.
         </p>
-        <div className="mt-8">
-          <AppBadges />
-        </div>
         <div className="mt-8">
           <Link href="/register">
             <Button size="lg">Create Free Account</Button>

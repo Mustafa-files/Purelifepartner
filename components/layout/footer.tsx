@@ -192,9 +192,7 @@ export function Footer() {
                 {CONTACT_EMAIL}
               </a>
             </li>
-            <li className="text-sm text-charcoal/60">Available worldwide</li>
-            <li className="text-sm text-charcoal/60">6 continents served</li>
-          </FooterColumn>
+            <li className="text-sm text-charcoal/60">Available worldwide</li>          </FooterColumn>
         </div>
       </div>
 
