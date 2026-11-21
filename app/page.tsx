@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ScrollAnimations } from "@/components/ui/scroll-animations";
-import { HeroImage } from "@/components/ui/hero-image";
 import { FeatureShowcase } from "@/components/home/feature-showcase";
 import { Testimonials } from "@/components/home/testimonials";
 import { CountUp } from "@/components/home/count-up";
@@ -30,13 +29,13 @@ export default function LandingPage() {
   );
 }
 
-/** Minimal hero: the two illustrations either side of the headline, and a
+/** Minimal hero: a centred headline, and a
  *  one-sentence search so visitors see real profiles in one click */
 function Hero() {
   return (
     <section className="wash bg-off-white">
-      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2">
-        <div className="text-center lg:text-left">
+      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-4xl items-center px-4 py-16 sm:px-6">
+        <div className="w-full text-center">
           {/* The small line is part of the H1 so search engines read what the
               site is ("marriage website"), not only the tagline. */}
           <h1 className="gsap-hero text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl lg:text-6xl">
@@ -45,16 +44,11 @@ function Hero() {
             </span>
             Where Pure Hearts <span className="text-coral">Find Their Match</span>
           </h1>
-          {/* Mobile hero image: the side column below is desktop-only, so render
-              the same image here under the headline for small screens. */}
-          <div className="gsap-hero mt-8 lg:hidden">
-            <HeroImage className="mx-auto w-full max-w-md rounded-3xl" />
-          </div>
-          <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70 lg:mx-0">
+          <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70">
             A matrimonial site for people of every religion and background,
             worldwide. Verified profiles, private by default, made for marriage.
           </p>
-          <div className="gsap-hero mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
+          <div className="gsap-hero mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link href="/register">
               <Button size="lg">Create Free Profile</Button>
             </Link>
@@ -64,10 +58,6 @@ function Hero() {
               </Button>
             </Link>
           </div>
-        </div>
-        {/* data-speed instead of an entrance tween: both writing to y would fight */}
-        <div className="hidden lg:block" data-speed="0.9">
-          <HeroImage className="mx-auto w-full max-w-xl rounded-3xl" />
         </div>
       </div>
     </section>
@@ -191,23 +181,16 @@ function BigStats() {
   );
 }
 
-/** Parents and guardians: the third illustration beside one short line */
+/** Parents and guardians: one short line and a call to action */
 function ForFamilies() {
   return (
     <section className="overflow-hidden bg-off-white py-20 sm:py-24">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/illustrations/parents-phone.svg"
-          alt="Smiling mother and father looking at a profile on a phone together"
-          loading="lazy"
-          className="gsap-slide-left mx-auto w-full max-w-[460px]"
-        />
-        <div className="gsap-slide-right text-center lg:text-left">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="gsap-fade-up text-center">
           <h2 className="text-3xl font-extrabold text-charcoal sm:text-5xl">
             Made for families too
           </h2>
-          <p className="mx-auto mt-5 max-w-md text-lg leading-relaxed text-charcoal/70 lg:mx-0">
+          <p className="mx-auto mt-5 max-w-md text-lg leading-relaxed text-charcoal/70">
             A parent or guardian can set up a profile with you, and every profile
             can be shared with family in one tap.
           </p>

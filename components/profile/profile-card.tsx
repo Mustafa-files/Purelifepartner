@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ShortlistButton } from "@/components/profile/shortlist";
 import { formatHeight, profileCode } from "@/lib/utils";
+import { NoPhoto } from "@/components/profile/no-photo";
 import type { PublicProfile } from "@/types";
 
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
@@ -60,16 +61,7 @@ export function ProfileCard({
             }
           />
         ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={
-              profile.gender === "Female"
-                ? "/illustrations/sister-waving.svg"
-                : "/illustrations/brother-greeting.svg"
-            }
-            alt=""
-            className="aspect-[4/3] w-full bg-off-white object-contain object-bottom pt-4"
-          />
+          <NoPhoto className="aspect-[4/3] w-full" />
         )}
         {profile.status === "Verified" && (
           <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-[#ffffff]/95 px-2.5 py-1 text-[11px] font-bold text-green-700 shadow-sm">

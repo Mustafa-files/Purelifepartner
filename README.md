@@ -39,11 +39,11 @@ Note: OpenNext builds are most reliable on Linux (Cloudflare CI or WSL).
 | Route | Purpose |
 |---|---|
 | `/` | Landing page (hero, how it works, features, testimonials, stats, CTA) |
-| `/register` | Step 1: login details (gender, DOB with 16-35 validation, email, WhatsApp, unique User ID, password) |
+| `/register` | Step 1: login details (gender, DOB with 18-35 validation, email, WhatsApp, unique User ID, password) |
 | `/register/personal` | Step 2: name (office only), marital status, height ft/in and cm auto-convert, education, profession |
 | `/register/religion` | Step 3: religion, sect, caste, sub caste, describe yourself, document verification upload, consolidated Family Details box |
 | `/register/residence` | Step 4: nationality, country, dynamic cities, residence type, size, story |
-| `/register/requirements` | Step 5 (final): partner preferences (age sliders 16-35, region, country, city cascades, All-X options). On save, redirects to `/matches` |
+| `/register/requirements` | Step 5 (final): partner preferences (age sliders 18-35, region, country, city cascades, All-X options). On save, redirects to `/matches` |
 | `/register/agent` | Agent application with bank details |
 | `/auth/confirm` | Email confirmation handler with clean expired/already-used messages and resend |
 | `/login` | Email and password sign in (blocked until email confirmed) plus password reset |

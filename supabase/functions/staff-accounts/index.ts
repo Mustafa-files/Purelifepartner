@@ -228,7 +228,7 @@ function validateAccount(raw: any) {
     return "Date of birth is not a valid date.";
   }
   const age = ageOn(date);
-  if (age < 16 || age > 35) return "Age must be between 16 and 35.";
+  if (age < 18 || age > 35) return "Age must be between 18 and 35.";
 
   const whatsapp_no = str(raw.whatsapp_no);
   if (whatsapp_no.replace(/\D/g, "").length < 8) return "WhatsApp number is too short.";

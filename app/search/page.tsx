@@ -328,9 +328,7 @@ export default function SearchPage() {
               </div>
             ) : profiles.length === 0 ? (
               <div className="rounded-2xl bg-white px-6 py-12 text-center shadow-sm sm:p-16">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/illustrations/parents-phone.svg" alt="" className="mx-auto w-full max-w-[280px]" />
-                <h2 className="mt-4 text-xl font-bold text-charcoal">No profiles found</h2>
+                <h2 className="text-xl font-bold text-charcoal">No profiles found</h2>
                 <p className="mt-2 text-charcoal/60">
                   Try removing a filter, or check back soon as new members join every day.
                 </p>

@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
 import { REGISTRATION_STEPS } from "@/lib/constants";
 import { cn, formatDate, formatHeight, profileCode } from "@/lib/utils";
+import { NoPhoto } from "@/components/profile/no-photo";
 import type { Profile } from "@/types";
 
 export default function Dashboard() {
@@ -247,16 +248,7 @@ export default function Dashboard() {
                   className="h-24 w-24 rounded-full object-cover"
                 />
               ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={
-                    profile.gender === "Female"
-                      ? "/illustrations/sister-waving.svg"
-                      : "/illustrations/brother-greeting.svg"
-                  }
-                  alt=""
-                  className="h-24 w-24 rounded-full bg-soft-pink object-cover object-top"
-                />
+                <NoPhoto className="h-24 w-24 rounded-full" />
               )}
               <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 text-xs font-bold text-white opacity-0 transition-opacity group-hover:opacity-100">
                 {uploading === "avatar" ? "..." : "Change"}

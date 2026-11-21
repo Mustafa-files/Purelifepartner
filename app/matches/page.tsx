@@ -51,7 +51,7 @@ export default function MatchesPage() {
         .from("public_profiles")
         .select("*")
         .neq("id", data.user.id)
-        .gte("age", r.min_age ?? 16)
+        .gte("age", r.min_age ?? 18)
         .lte("age", r.max_age ?? 60)
         // "Verified" sorts after "To Be Verified", so descending puts it first
         .order("status", { ascending: false })
@@ -130,9 +130,7 @@ export default function MatchesPage() {
           </div>
         ) : !hasRequirements ? (
           <div className="rounded-2xl bg-white p-16 text-center shadow-sm">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/illustrations/brother-greeting.svg" alt="" className="mx-auto w-40" />
-            <h2 className="mt-4 text-xl font-bold text-charcoal">
+            <h2 className="text-xl font-bold text-charcoal">
               Set your requirements first
             </h2>
             <p className="mt-2 text-charcoal/60">
@@ -145,9 +143,7 @@ export default function MatchesPage() {
           </div>
         ) : profiles.length === 0 ? (
           <div className="rounded-2xl bg-white p-16 text-center shadow-sm">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/illustrations/parents-phone.svg" alt="" className="mx-auto w-full max-w-[260px]" />
-            <h2 className="mt-4 text-xl font-bold text-charcoal">
+            <h2 className="text-xl font-bold text-charcoal">
               No matches just yet
             </h2>
             <p className="mt-2 text-charcoal/60">

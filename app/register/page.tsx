@@ -59,7 +59,7 @@ export default function RegisterStep1() {
     }
     const a = calcAge(date);
     setAge(a);
-    setDobError(a < 16 || a > 35 ? AGE_ERROR : null);
+    setDobError(a < 18 || a > 35 ? AGE_ERROR : null);
   }, [dobText]);
 
   // Real-time username availability via Supabase RPC
@@ -94,7 +94,7 @@ export default function RegisterStep1() {
     if (!date) e.dob = "Enter a valid date of birth.";
     else {
       const a = calcAge(date);
-      if (a < 16 || a > 35) e.dob = AGE_ERROR;
+      if (a < 18 || a > 35) e.dob = AGE_ERROR;
     }
     if (!validateEmail(email)) e.email = "Enter a valid email address.";
     if (whatsapp.replace(/[^\d]/g, "").length < 8)

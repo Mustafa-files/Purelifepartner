@@ -313,19 +313,8 @@ h3 {
 }
 
 /* ---------- Dark mode: dusky rose ----------
-   The bright pink and crimson glare on dark surfaces, so at night the
-   illustrations get deep rose arches with a light rim (separate -dark.svg
-   files, swapped in here for every <img> that uses them), buttons use a
-   softer red, and accent text turns soft pink. */
-.dark img[src$="/illustrations/sister-waving.svg"] {
-  content: url("/illustrations/sister-waving-dark.svg");
-}
-.dark img[src$="/illustrations/brother-greeting.svg"] {
-  content: url("/illustrations/brother-greeting-dark.svg");
-}
-.dark img[src$="/illustrations/parents-phone.svg"] {
-  content: url("/illustrations/parents-phone-dark.svg");
-}
+   The bright pink and crimson glare on dark surfaces, so at night buttons
+   use a softer red and accent text turns soft pink. */
 .dark {
   --color-coral: #d94a5a;
   --color-coral-muted: #c43c4c;

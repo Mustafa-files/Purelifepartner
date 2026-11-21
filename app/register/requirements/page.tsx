@@ -23,7 +23,7 @@ import type { Profile } from "@/types";
 
 export default function RegisterRequirements() {
   const [form, setForm] = useState({
-    min_age: 16,
+    min_age: 18,
     max_age: 35,
     height_range: "",
     religions: [] as string[],
@@ -52,7 +52,7 @@ export default function RegisterRequirements() {
         .maybeSingle();
       if (req) {
         setForm({
-          min_age: req.min_age ?? 16,
+          min_age: req.min_age ?? 18,
           max_age: req.max_age ?? 35,
           height_range: req.height_range ?? "",
           religions: req.religions ?? [],
@@ -153,7 +153,7 @@ export default function RegisterRequirements() {
               <FieldLabel label={`Minimum Age: ${form.min_age}`} required>
                 <input
                   type="range"
-                  min={16}
+                  min={18}
                   max={35}
                   value={form.min_age}
                   onChange={(e) =>
@@ -165,7 +165,7 @@ export default function RegisterRequirements() {
               <FieldLabel label={`Maximum Age: ${form.max_age}`} required>
                 <input
                   type="range"
-                  min={16}
+                  min={18}
                   max={35}
                   value={form.max_age}
                   onChange={(e) =>

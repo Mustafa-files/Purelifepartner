@@ -158,7 +158,7 @@ function AccountSection({ profile }: { profile: Profile }) {
       return;
     }
     const age = calcAge(date);
-    if (age < 16 || age > 35) {
+    if (age < 18 || age > 35) {
       setDobError(AGE_ERROR);
       return;
     }

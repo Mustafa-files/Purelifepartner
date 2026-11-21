@@ -57,16 +57,9 @@ const STORIES = [
 export default function SuccessStories() {
   return (
     <div className="bg-off-white">
-      {/* Header with the two illustrations */}
       <section className="py-14 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
-          <div className="flex items-end justify-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/illustrations/sister-waving.svg" alt="" className="w-32 sm:w-40" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/illustrations/brother-greeting.svg" alt="" className="w-32 sm:w-40" />
-          </div>
-          <h1 className="mt-8 text-4xl font-extrabold text-charcoal sm:text-6xl">
+          <h1 className="text-4xl font-extrabold text-charcoal sm:text-6xl">
             They found each other
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg text-charcoal/60">
@@ -101,16 +94,10 @@ export default function SuccessStories() {
         </div>
       </section>
 
-      {/* Closing call to action with the parents illustration */}
+      {/* Closing call to action */}
       <section className="py-16 sm:py-24">
-        <div className="mx-auto grid max-w-5xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/illustrations/parents-phone.svg"
-            alt=""
-            className="mx-auto w-full max-w-[420px]"
-          />
-          <div className="text-center lg:text-left">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+          <div className="text-center">
             <h2 className="text-3xl font-extrabold text-charcoal sm:text-5xl">
               Your story could be next
             </h2>

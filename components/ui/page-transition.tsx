@@ -10,8 +10,7 @@ const RISE_MS = 450;
 const MAX_WAIT_MS = 8000;
 
 /**
- * Arch reveal between pages: a pink arch (the shape behind the site's
- * illustrations) rises to fill the screen while the next page loads, then
+ * Arch reveal between pages: a pink arch rises to fill the screen while the next page loads, then
  * carries on up and away to show it.
  *
  * It listens for clicks on same-site links that change the page. Links

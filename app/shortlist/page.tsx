@@ -62,9 +62,7 @@ export default function ShortlistPage() {
           </div>
         ) : shown.length === 0 ? (
           <div className="rounded-2xl bg-white px-6 py-12 text-center shadow-sm sm:p-16">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/illustrations/parents-phone.svg" alt="" className="mx-auto w-full max-w-[280px]" />
-            <h2 className="mt-4 text-xl font-bold text-charcoal">Save profiles you like</h2>
+            <h2 className="text-xl font-bold text-charcoal">Save profiles you like</h2>
             <p className="mt-2 text-charcoal/60">
               Tap the heart on any profile to keep it here.
             </p>

@@ -48,7 +48,7 @@ const ALL_SUB_CASTES = uniq(Object.values(SUB_CASTES_BY_CASTE).flat());
 
 export const COLUMNS: Column[] = [
   { key: "gender", header: "Gender", group: "Account", required: true, hint: "Male or Female", options: { list: [...GENDERS], strict: true } },
-  { key: "dob", header: "Date of Birth", group: "Account", required: true, hint: "DD/MM/YYYY. Age must be 16 to 35" },
+  { key: "dob", header: "Date of Birth", group: "Account", required: true, hint: "DD/MM/YYYY. Age must be 18 to 35" },
   { key: "whatsapp_no", header: "WhatsApp Number", group: "Account", required: true, hint: "With country code, e.g. +92 300 1234567" },
   { key: "name_private", header: "Full Name", group: "Account", required: true, hint: "Private, only staff can see it" },
   { key: "user_id_handle", header: "User ID", group: "Account", hint: "Leave blank to generate. Letters, numbers, underscore" },
@@ -155,7 +155,7 @@ export function validateRows(
             errors.push("Date of Birth is not a valid date. Use DD/MM/YYYY.");
           } else {
             const age = calcAge(date);
-            if (age < 16 || age > 35) errors.push(`Age is ${age}; must be 16 to 35.`);
+            if (age < 18 || age > 35) errors.push(`Age is ${age}; must be 18 to 35.`);
             data.dob = toISODate(date);
             data.age = age;
           }

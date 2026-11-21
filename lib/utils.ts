@@ -153,4 +153,4 @@ export function validateEmail(email: string): boolean {
 }
 
 export const AGE_ERROR =
-  "Sorry, you must be between 16 and 35 years old to register.";
+  "Sorry, you must be between 18 and 35 years old to register.";

@@ -16,7 +16,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: "2. Eligibility",
     body: [
-      "You must be between 16 and 35 years of age to register as a candidate. By registering you confirm that the date of birth you provide is accurate.",
+      "You must be between 18 and 35 years of age to register as a candidate. By registering you confirm that the date of birth you provide is accurate.",
       "You must be legally free to marry under the laws of your country of residence. If you are currently married and your circumstances permit a further marriage under applicable law, you must state your marital status truthfully on your profile.",
       "You may register on behalf of a family member only with their full knowledge and consent, for example as a parent or guardian.",
     ],

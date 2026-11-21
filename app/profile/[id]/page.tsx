@@ -10,6 +10,7 @@ import { ScreenshotGuard } from "@/components/ui/screenshot-guard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
 import { formatHeight, profileCode } from "@/lib/utils";
+import { NoPhoto } from "@/components/profile/no-photo";
 import type { ContactDetails, PublicProfile } from "@/types";
 
 export default function ProfileView({
@@ -88,9 +89,7 @@ export default function ProfileView({
   if (!profile) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/illustrations/sister-waving.svg" alt="" className="mx-auto w-40" />
-        <h1 className="mt-4 text-2xl font-bold text-charcoal">
+        <h1 className="text-2xl font-bold text-charcoal">
           Profile not found
         </h1>
         <p className="mt-2 text-charcoal/60">
@@ -156,17 +155,7 @@ export default function ProfileView({
                   className="h-32 w-32 shrink-0 rounded-full object-cover ring-4 ring-soft-pink"
                 />
               ) : (
-                // No photo: the site illustration that matches the member
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={
-                    profile.gender === "Female"
-                      ? "/illustrations/sister-waving.svg"
-                      : "/illustrations/brother-greeting.svg"
-                  }
-                  alt=""
-                  className="h-32 w-32 shrink-0 rounded-full bg-soft-pink object-cover object-top ring-4 ring-soft-pink"
-                />
+                <NoPhoto className="h-32 w-32 shrink-0 rounded-full ring-4 ring-soft-pink" />
               )}
               <div className="min-w-0 flex-1">
                 <h1 className="text-3xl font-bold tracking-tight text-charcoal sm:text-4xl">
