@@ -49,8 +49,8 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3">
       <nav className="flex h-14 w-full max-w-6xl items-center justify-between rounded-full bg-white/85 px-4 shadow-[0_12px_40px_-18px_rgba(26,21,22,0.35)] ring-1 ring-black/5 backdrop-blur-xl sm:px-5">
         <Link
-          href={signedIn ? "/search" : "/"}
-          onClick={(e) => !signedIn && onNavClick(e, "/")}
+          href="/"
+          onClick={(e) => onNavClick(e, "/")}
           aria-label="PureLifePartner home"
         >
           <Logo />
