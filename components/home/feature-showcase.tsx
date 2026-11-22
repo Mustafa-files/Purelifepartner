@@ -99,7 +99,7 @@ const EXTRAS = ["Family support", "Pay in PKR, GBP, EUR or USD", "AI matching, c
 
 export function FeatureShowcase() {
   return (
-    <section id="about" className="overflow-hidden bg-white py-20">
+    <section id="features" className="overflow-hidden bg-white py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="gsap-fade-up text-center text-3xl font-bold text-charcoal sm:text-4xl">
           Built for a serious search

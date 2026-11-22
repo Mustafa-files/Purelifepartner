@@ -38,10 +38,10 @@ function Hero() {
       <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2">
         <div className="text-center lg:text-left">
           {/* The small line is part of the H1 so search engines read what the
-              site is ("marriage website"), not only the tagline. */}
+              site is ("matrimonial site"), not only the tagline. */}
           <h1 className="gsap-hero text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl lg:text-6xl">
             <span className="mb-4 block text-sm font-bold uppercase tracking-widest text-coral sm:text-base">
-              The Global Marriage Website
+              The Trusted Worldwide Matrimonial Site
             </span>
             Where Pure Hearts <span className="text-coral">Find Their Match</span>
           </h1>

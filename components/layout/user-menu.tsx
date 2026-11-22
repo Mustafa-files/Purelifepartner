@@ -104,17 +104,17 @@ export function UserMenu() {
         onClick={() => (open ? close() : setOpen(true))}
         aria-label="Open account menu"
         aria-expanded={open}
-        className="block cursor-pointer rounded-full ring-2 ring-transparent transition-shadow hover:ring-coral"
+        className="block cursor-pointer rounded-full border-2 border-coral/70 p-0.5 shadow-sm transition-colors hover:border-coral"
       >
         {profile?.avatar_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={profile.avatar_url}
             alt="Your profile"
-            className="h-9 w-9 rounded-full object-cover"
+            className="h-8 w-8 rounded-full object-cover"
           />
         ) : (
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-coral text-sm font-bold text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-coral text-sm font-bold text-white">
             {initial}
           </span>
         )}
@@ -152,12 +152,14 @@ export function UserMenu() {
               {/* User header */}
               <div className="flex items-center gap-3 border-b border-gray-100 px-2 pb-4">
                 {profile?.avatar_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={profile.avatar_url}
-                    alt=""
-                    className="h-12 w-12 rounded-full object-cover"
-                  />
+                  <span className="shrink-0 rounded-full border-2 border-coral/70 p-0.5">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={profile.avatar_url}
+                      alt=""
+                      className="h-12 w-12 rounded-full object-cover"
+                    />
+                  </span>
                 ) : (
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-coral text-lg font-bold text-white">
                     {initial}

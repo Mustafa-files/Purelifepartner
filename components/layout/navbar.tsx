@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/#how-it-works", label: "How It Works" },
   { href: "/success-stories", label: "Success Stories" },
-  { href: "/#about", label: "About" },
+  { href: "/#features", label: "Features" },
 ];
 
 export function Navbar() {

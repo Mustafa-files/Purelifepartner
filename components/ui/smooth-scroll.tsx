@@ -10,7 +10,7 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 const NAV_OFFSET = 96;
 
 /**
- * Glide to a section on the current page ("#about"), or to the top when
+ * Glide to a section on the current page ("#features"), or to the top when
  * hash is null. Uses the desktop smoother when it exists, native smooth
  * scrolling otherwise.
  */
