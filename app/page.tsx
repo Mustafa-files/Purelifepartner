@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HeroImage } from "@/components/ui/hero-image";
 import { Button } from "@/components/ui/button";
 import { ScrollAnimations } from "@/components/ui/scroll-animations";
 import { FeatureShowcase } from "@/components/home/feature-showcase";
@@ -29,13 +30,13 @@ export default function LandingPage() {
   );
 }
 
-/** Minimal hero: a centred headline, and a
+/** Minimal hero: the headline beside the hero picture, and a
  *  one-sentence search so visitors see real profiles in one click */
 function Hero() {
   return (
     <section className="wash bg-off-white">
-      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-4xl items-center px-4 py-16 sm:px-6">
-        <div className="w-full text-center">
+      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2">
+        <div className="text-center lg:text-left">
           {/* The small line is part of the H1 so search engines read what the
               site is ("marriage website"), not only the tagline. */}
           <h1 className="gsap-hero text-4xl font-extrabold leading-tight text-charcoal sm:text-5xl lg:text-6xl">
@@ -44,11 +45,16 @@ function Hero() {
             </span>
             Where Pure Hearts <span className="text-coral">Find Their Match</span>
           </h1>
-          <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70">
+          {/* Mobile hero picture: the side column below is desktop-only, so render
+              the same picture here under the headline for small screens. */}
+          <div className="gsap-hero mt-8 lg:hidden">
+            <HeroImage className="mx-auto w-full max-w-md rounded-3xl" />
+          </div>
+          <p className="gsap-hero mx-auto mt-5 max-w-xl text-lg text-charcoal/70 lg:mx-0">
             A matrimonial site for people of every religion and background,
             worldwide. Verified profiles, private by default, made for marriage.
           </p>
-          <div className="gsap-hero mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="gsap-hero mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
             <Link href="/register">
               <Button size="lg">Create Free Profile</Button>
             </Link>
@@ -58,6 +64,10 @@ function Hero() {
               </Button>
             </Link>
           </div>
+        </div>
+        {/* data-speed instead of an entrance tween: both writing to y would fight */}
+        <div className="hidden lg:block" data-speed="0.9">
+          <HeroImage className="mx-auto w-full max-w-xl rounded-3xl" />
         </div>
       </div>
     </section>
