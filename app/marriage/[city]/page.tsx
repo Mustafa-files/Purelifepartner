@@ -66,9 +66,14 @@ export default async function MarriageCityPage({
     .map(getMarriageCity)
     .filter((n): n is MarriageCity => !!n);
   // General guides first; faith-specific ones are linked from their own section
-  const guides = ARTICLES.filter(
+  // A guide written about this city comes first, then general guides
+  const general = ARTICLES.filter(
     (a) => a.category !== "Islamic Guidance" && !a.slug.includes("muslim")
-  ).slice(0, 4);
+  );
+  const guides = [
+    ...general.filter((a) => a.city === c.slug),
+    ...general.filter((a) => !a.city),
+  ].slice(0, 4);
 
   return (
     <div className="bg-off-white">

@@ -20,6 +20,8 @@ export type Article = {
   category: "Before Marriage" | "Islamic Guidance" | "Using PureLifePartner" | "Finding a Partner";
   /** General guides for every religion get the all-faiths call to action */
   audience?: "muslim" | "all";
+  /** Slug of the /marriage/[city] page this guide is about, if it is local */
+  city?: string;
   published: string;
   updated: string;
   readMinutes: number;
@@ -794,6 +796,96 @@ export const ARTICLES: Article[] = [
       },
     ],
     related: ["how-to-find-a-life-partner", "questions-to-ask-before-marriage"],
+  },
+  {
+    slug: "getting-married-in-chicago",
+    title: "Getting Married in Chicago in 2026: Marriage License, Costs and Finding the Right Partner",
+    metaTitle: "Getting Married in Chicago 2026: License & Guide | PureLifePartner",
+    description:
+      "How to get a Cook County marriage license in 2026, what it costs, what's new in Chicago, and how to find a life partner of any faith in Chicago.",
+    category: "Before Marriage",
+    audience: "all",
+    city: "chicago",
+    published: "2026-11-23",
+    updated: "2026-11-23",
+    readMinutes: 7,
+    summary:
+      "Getting married in Chicago starts with a Cook County marriage license. It costs $60, both partners must apply together in person at a Cook County Clerk office (you can start the form online), and it is valid for 60 days, for ceremonies in Chicago or suburban Cook County only. The license takes effect the day after it is issued.",
+    sections: [
+      {
+        heading: "Chicago marriage news in 2026",
+        paragraphs: [
+          "Chicago started 2026 with a reminder of how many couples are ready to marry. Every year the Cook County Clerk's Office runs a lottery for the county's first marriage license of the new year, and for 2026 it received nearly 1,000 entries, up from around 200 the year before. The winning couple was married at the Clerk's Office on January 2, 2026, after a drawing held on December 22.",
+          "The jump in entries reflects something many Chicagoans already feel: plenty of people here want marriage, not just dating. Below is everything you need to know about getting married in Chicago, from the Cook County marriage license to finding the right partner in the first place.",
+        ],
+      },
+      {
+        heading: "How to get a Cook County marriage license",
+        bullets: [
+          "Check you are eligible: both partners must be 18 or older (16 and 17 year olds need parental consent), must not be closely related by blood, and must not already be married.",
+          "Start the application online if you like: the Cook County Clerk lets you fill in the marriage license application online before your visit. The online form is kept on file for 15 days, so visit the Clerk's office within that time.",
+          "Visit a Cook County Clerk office together: both partners must appear in person to complete and sign the application. The license is issued while you wait.",
+          "Bring valid ID for each partner: a driver's license, state ID, U.S. passport or military ID with proof of age. If you do not have one of these, the Clerk accepts certain combinations of documents, such as a certified birth certificate with another document.",
+          "Pay the fee and collect your license, then plan your ceremony within the next 60 days.",
+        ],
+      },
+      {
+        heading: "Chicago marriage license cost and how long it is valid",
+        bullets: [
+          "Cost: a Cook County marriage license costs $60.",
+          "Payment: cash, debit or credit card. Card payments carry a small convenience fee.",
+          "When it starts: the license takes effect the day after it is issued, so you cannot marry on the same day you collect it.",
+          "How long it lasts: it is valid for 60 days from the date it is issued. A ceremony after that date is not valid.",
+          "Where it can be used: only for ceremonies in Chicago or suburban Cook County. If your venue is in DuPage, Lake, Will or another county, get your license from that county instead.",
+          "After the ceremony: your officiant must return the signed license to the Clerk within 10 days. You can then order certified copies of your marriage certificate.",
+        ],
+        after: [
+          "Fees and procedures can change, so check the Cook County Clerk's website for the latest details before you visit.",
+        ],
+      },
+      {
+        heading: "Religious and civil wedding ceremonies in Chicago",
+        paragraphs: [
+          "Chicago is one of the most religiously diverse cities in America, so most couples can marry in their own tradition. The city and its suburbs have Catholic parishes such as Holy Name Cathedral, historic Protestant churches like Fourth Presbyterian Church on Michigan Avenue, synagogues, Greek Orthodox churches, mosques such as the Mosque Foundation in Bridgeview, Hindu temples including the Hindu Temple of Greater Chicago in Lemont, Sikh gurdwaras, and the Bahá'í House of Worship in Wilmette.",
+          "If you would rather have a simple civil ceremony, a judge can marry you at Marriage Court in Chicago City Hall, 119 W. Randolph Street, for a small fee. Many couples choose a civil ceremony first and a religious or cultural celebration later with family. Whatever you choose, make sure your officiant is legally able to perform marriages in Illinois and that your ceremony takes place in Cook County if you have a Cook County license.",
+        ],
+      },
+      {
+        heading: "Before the license: finding the right partner in Chicago",
+        paragraphs: [
+          "For many Chicagoans, the hardest step is not the paperwork but meeting someone serious about marriage. Long workdays, a spread-out city and endless dating apps make it easy to go months without meeting anyone who shares your values and plans.",
+          "A marriage website gives you a more direct route. On PureLifePartner, members of every religion and background share their faith, family, education and what they want in a spouse, so you can focus on people who are looking for the same thing. Profiles are private by default, families are welcome to take part, and contact details are only shared once both members are verified.",
+        ],
+        bullets: [
+          "Search by religion and community if your faith or culture matters to you.",
+          "Look across Chicagoland, from Evanston and Skokie to Naperville and Schaumburg, or widen your search to the Midwest.",
+          "Involve your family early, especially if they will play a part in the wedding.",
+          "Talk about the big topics before you set a date: faith, children, money and where you will live.",
+        ],
+        after: [
+          "See members near you on our Marriage in Chicago page, and read our 50 Questions to Ask Before Marriage before you apply for your license.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How much is a marriage license in Cook County?",
+        a: "A Cook County marriage license costs $60. You can pay by cash, debit or credit card, and card payments carry a small convenience fee.",
+      },
+      {
+        q: "How long is a Chicago marriage license valid?",
+        a: "It is valid for 60 days from the date it is issued and takes effect the day after issuance. It can only be used for a ceremony in Chicago or suburban Cook County.",
+      },
+      {
+        q: "Can you apply for a marriage license online in Cook County?",
+        a: "You can start the application online, but both partners must still visit a Cook County Clerk office together to complete it, sign it and receive the license. The online form is kept on file for 15 days.",
+      },
+      {
+        q: "Can we get married the same day we get our license in Chicago?",
+        a: "No. A Cook County marriage license takes effect the day after it is issued, so plan your ceremony for at least the next day.",
+      },
+    ],
+    related: ["questions-to-ask-before-marriage", "how-to-find-a-life-partner"],
   },
 ];
 

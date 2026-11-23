@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ARTICLES, formatArticleDate, getArticle, type Article } from "@/lib/blog";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
+import { getMarriageCity } from "@/lib/marriage-cities";
 
 export const dynamicParams = false;
 
@@ -44,6 +45,7 @@ export default async function ArticlePage({
   const a = getArticle((await params).slug);
   if (!a) notFound();
   const related = a.related.map(getArticle).filter((r): r is Article => !!r);
+  const cityPage = a.city ? getMarriageCity(a.city) : undefined;
   const url = `${SITE_URL}/blog/${a.slug}`;
 
   return (
@@ -175,12 +177,21 @@ export default async function ArticlePage({
             <Link href="/register">
               <Button size="lg">Create Free Profile</Button>
             </Link>
-            <Link
-              href={a.audience === "all" ? "/search" : "/muslim-marriage"}
-              className="font-bold text-coral underline-offset-4 hover:underline"
-            >
-              {a.audience === "all" ? "Search members near you" : "Find members in your city"}
-            </Link>
+            {cityPage ? (
+              <Link
+                href={`/marriage/${cityPage.slug}`}
+                className="font-bold text-coral underline-offset-4 hover:underline"
+              >
+                See members in {cityPage.name}
+              </Link>
+            ) : (
+              <Link
+                href={a.audience === "all" ? "/search" : "/muslim-marriage"}
+                className="font-bold text-coral underline-offset-4 hover:underline"
+              >
+                {a.audience === "all" ? "Search members near you" : "Find members in your city"}
+              </Link>
+            )}
           </div>
         </div>
 
