@@ -887,6 +887,97 @@ export const ARTICLES: Article[] = [
     ],
     related: ["questions-to-ask-before-marriage", "how-to-find-a-life-partner"],
   },
+  {
+    slug: "getting-married-in-new-york-city",
+    title: "Getting Married in New York City in 2026: NYC Marriage License, Costs and Finding the Right Partner",
+    metaTitle: "Getting Married in NYC 2026: Marriage License Guide | PureLifePartner",
+    description:
+      "How to get an NYC marriage license in 2026 through Project Cupid, what it costs, the 24 hour wait, City Hall weddings, and how to find a life partner of any faith in New York.",
+    category: "Before Marriage",
+    audience: "all",
+    city: "new-york",
+    published: "2026-11-28",
+    updated: "2026-11-28",
+    readMinutes: 7,
+    summary:
+      "To get married in New York City you need a New York State marriage license from the NYC City Clerk. It costs $35, both partners must attend an appointment together (in person or by video through Project Cupid), and you must wait at least 24 hours before the ceremony. The license is valid for 60 days and can be used anywhere in New York State.",
+    sections: [
+      {
+        heading: "NYC marriage news in 2026",
+        paragraphs: [
+          "The NYC Marriage Bureau at 141 Worth Street in Manhattan is one of the busiest wedding venues in America, and in 2026 it still runs by appointment only. There are no walk-ins at any of the five borough offices, so couples book both their marriage license and their City Hall ceremony online through Project Cupid. Popular slots, especially Fridays and dates with special meaning, can go within minutes of being released.",
+          "There is some good news for families: couples with a scheduled City Hall ceremony can now bring up to four guests, and the option of a virtual marriage license appointment remains in place. This summer the Manhattan bureau's well known golden doors, a favorite backdrop for wedding photos, were boarded up during building work, and the city has shared plans for a new entrance. Below is everything you need to know about getting married in New York City, from the license to finding the right partner in the first place.",
+        ],
+      },
+      {
+        heading: "How to get an NYC marriage license",
+        bullets: [
+          "Check you are eligible: both partners must be 18 or older (New York does not allow anyone under 18 to marry), must not be closely related, and must not already be married. Any divorce or annulment must be final before you apply.",
+          "Fill in the online application on the City Clerk's website and keep your confirmation number.",
+          "Book an appointment on Project Cupid at nyc.gov/cupid. You can choose an in-person appointment at a City Clerk office in Manhattan, Brooklyn, Queens, the Bronx or Staten Island, or a virtual appointment by video.",
+          "Attend together: both partners must appear at the same appointment, in person or on the video call.",
+          "Bring valid, unexpired photo ID for each partner, such as a driver's license, a passport from any country, an IDNYC card or a U.S. military ID. Expired documents are not accepted.",
+          "Pay the fee and receive your license, then plan your ceremony for at least 24 hours later and within 60 days.",
+        ],
+      },
+      {
+        heading: "NYC marriage license cost, the 24 hour wait and how long it is valid",
+        bullets: [
+          "Cost: an NYC marriage license costs $35.",
+          "Payment: credit card (Visa, Mastercard, Discover or American Express), debit card (Visa or Mastercard) or a money order payable to the City Clerk.",
+          "Waiting period: the ceremony must take place at least 24 hours after the license is issued. A judge can waive the wait in some cases, and there is no fee for the waiver.",
+          "How long it lasts: the license is valid for 60 days. For active military personnel it is valid for 180 days.",
+          "Where it can be used: anywhere in New York State, not only in the five boroughs. If you are marrying in New Jersey or Connecticut, you need a license from that state instead.",
+          "After the ceremony: your officiant must return the signed license to the City Clerk within 5 business days. Your Certificate of Marriage Registration usually arrives by mail in about 20 days.",
+        ],
+        after: [
+          "Fees and procedures can change, so check the NYC City Clerk's website or call 311 for the latest details before your appointment.",
+        ],
+      },
+      {
+        heading: "City Hall weddings and religious ceremonies in New York",
+        paragraphs: [
+          "A City Hall wedding is the classic New York choice. A City Clerk officiant can marry you at any borough office for $25, and you leave with your marriage certificate the same day. You must book the ceremony in advance on Project Cupid, bring at least one witness aged 18 or over with photo ID, and keep your group to no more than six people in total, including the two of you and your witness. Many couples marry at City Hall first and hold a religious or cultural celebration with family later.",
+          "If faith is at the heart of your wedding, New York has a place of worship for almost every tradition. The city is home to St. Patrick's Cathedral, Temple Emanu-El, the Islamic Cultural Center of New York, the Hindu Temple Society of North America in Flushing, the Sikh Cultural Society in Richmond Hill, and Greek and Russian Orthodox cathedrals. Whatever you choose, make sure your officiant is legally able to perform marriages in New York and that your ceremony falls within your license's 60 day window.",
+        ],
+      },
+      {
+        heading: "Before the license: finding the right partner in New York",
+        paragraphs: [
+          "New York has more singles than almost anywhere in the country, yet many New Yorkers say it is one of the hardest places to meet someone who is serious about marriage. Long hours, long commutes and endless dating apps make it easy to spend years meeting people who are not ready to commit.",
+          "A marriage website gives you a more direct route. On PureLifePartner, members of every religion and background share their faith, family, education and what they want in a spouse, so you can focus on people who want the same thing. Profiles are private by default, families are welcome to take part, and contact details are only shared once both members are verified.",
+        ],
+        bullets: [
+          "Search by religion and community if your faith or culture matters to you.",
+          "Look across all five boroughs, Long Island and Jersey City, or widen your search to the whole Northeast.",
+          "Involve your family early, especially if they will play a part in the wedding.",
+          "Talk about the big topics before you book your license: faith, children, money and where you will live.",
+        ],
+        after: [
+          "See members near you on our Marriage in New York page, and read our 50 Questions to Ask Before Marriage before your Project Cupid appointment.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How much is a marriage license in NYC?",
+        a: "An NYC marriage license costs $35. You can pay by credit card, debit card or a money order payable to the City Clerk. A City Hall ceremony costs a further $25.",
+      },
+      {
+        q: "Can you get a NYC marriage license online?",
+        a: "Yes, partly. You fill in the application online and can attend a virtual appointment by video through Project Cupid at nyc.gov/cupid. Both partners must attend the same appointment, in person or by video.",
+      },
+      {
+        q: "How long do you have to wait to get married after getting a marriage license in New York?",
+        a: "At least 24 hours. A New York marriage license cannot be used until 24 hours after it is issued, unless a judge waives the waiting period.",
+      },
+      {
+        q: "How long is a New York marriage license valid?",
+        a: "It is valid for 60 days from the date it is issued, or 180 days for active military personnel. It can be used for a ceremony anywhere in New York State.",
+      },
+    ],
+    related: ["questions-to-ask-before-marriage", "how-to-find-a-life-partner", "getting-married-in-chicago"],
+  },
 ];
 
 export function getArticle(slug: string) {
