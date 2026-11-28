@@ -1,8 +1,9 @@
 // Supabase Edge Function: admin-alert
 //
 // Emails the site owners (via Resend) when someone creates an account or
-// requests a member's contact details. Called by the `send_admin_alert`
-// triggers on public.profiles and public.contact_requests through pg_net.
+// requests a member's contact details, and emails a member their requested
+// contact details once staff approve the request. Called by the
+// `send_admin_alert` and `send_request_approved_email` triggers through pg_net.
 //
 // Safe to expose without JWT verification: it only takes a row id, reads the
 // row itself, ignores rows older than 15 minutes, and records every alert in
@@ -25,7 +26,10 @@ const MAX_AGE_MS = 15 * 60 * 1000;
 // bulk import does not send hundreds of emails.
 const PLACEHOLDER_DOMAIN = "@members.purelifepartner.com";
 
-type Kind = "new_account" | "contact_request";
+type Kind = "new_account" | "contact_request" | "request_approved";
+const KINDS: Kind[] = ["new_account", "contact_request", "request_approved"];
+// Member-facing emails come from the same sender as the welcome email.
+const MEMBER_FROM = "PureLifePartner <welcome@purelifepartner.com>";
 
 Deno.serve(async (req: Request) => {
   if (req.method !== "POST") return json({ error: "POST only" }, 405);
@@ -39,7 +43,7 @@ Deno.serve(async (req: Request) => {
   } catch {
     /* fall through */
   }
-  if ((kind !== "new_account" && kind !== "contact_request") || !id) {
+  if (!kind || !KINDS.includes(kind) || !id) {
     return json({ error: "kind and id are required" }, 400);
   }
 
@@ -59,9 +63,11 @@ Deno.serve(async (req: Request) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
 
-  const built = kind === "new_account"
+  const built: any = kind === "new_account"
     ? await buildNewAccount(admin, id)
-    : await buildContactRequest(admin, id);
+    : kind === "contact_request"
+    ? await buildContactRequest(admin, id)
+    : await buildRequestApproved(admin, id);
   if ("skipped" in built) return json(built);
 
   // Claim the alert. The unique key on (kind, ref_id) makes it one-time.
@@ -77,8 +83,8 @@ Deno.serve(async (req: Request) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from,
-      to: recipients,
+      from: built.to ? (Deno.env.get("RESEND_FROM") ?? MEMBER_FROM) : from,
+      to: built.to ?? recipients,
       subject: built.subject,
       html: built.html,
     }),
@@ -159,6 +165,50 @@ async function buildContactRequest(admin: any, id: string) {
   };
 }
 
+async function buildRequestApproved(admin: any, id: string) {
+  const { data: r } = await admin
+    .from("contact_requests")
+    .select("searcher_id, target_id, status, approved_at")
+    .eq("id", id)
+    .maybeSingle();
+  if (!r) return { skipped: "request not found" };
+  if (r.status !== "approved") return { skipped: "not approved" };
+  if (!isFresh(r.approved_at)) return { skipped: "too old" };
+
+  const { data: people } = await admin
+    .from("profiles")
+    .select("id, user_id_handle, name_private, email, candidate_contact, father_contact, mother_contact, whatsapp_no")
+    .in("id", [r.searcher_id, r.target_id]);
+  const by = (pid: string) => (people ?? []).find((x: any) => x.id === pid) ?? {};
+  const s: any = by(r.searcher_id);
+  const t: any = by(r.target_id);
+  const email = (s.email ?? "").toLowerCase();
+  if (!email || email.endsWith(PLACEHOLDER_DOMAIN)) {
+    return { skipped: "requester has no deliverable email" };
+  }
+
+  const first = s.name_private?.trim().split(/\s+/)[0] || s.user_id_handle;
+  return {
+    to: [email],
+    subject: `Your contact request for ${t.user_id_handle || "a member"} is approved`,
+    html: card(
+      first ? `Hello ${first}, your request is approved` : "Your request is approved",
+      [
+        ["Member", t.user_id_handle],
+        ["Name", t.name_private],
+        ["Candidate", t.candidate_contact],
+        ["Father", t.father_contact],
+        ["Mother", t.mother_contact],
+        ["WhatsApp", t.whatsapp_no],
+      ],
+      `${SITE}/profile/${r.target_id}`,
+      "View the profile",
+      "Thank you for your payment. Here are the contact details you requested. Please keep them private and use them respectfully.",
+      "You can also see these details any time on the member's profile when you are signed in.",
+    ),
+  };
+}
+
 function isFresh(iso?: string | null) {
   return !!iso && Date.now() - new Date(iso).getTime() < MAX_AGE_MS;
 }
@@ -175,7 +225,14 @@ function when(iso?: string | null) {
   }) + " (UK time)";
 }
 
-function card(title: string, rows: [string, unknown][], link: string, linkText: string) {
+function card(
+  title: string,
+  rows: [string, unknown][],
+  link: string,
+  linkText: string,
+  intro?: string,
+  footer = "Automatic alert from PureLifePartner.",
+) {
   const body = rows
     .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "")
     .map(([k, v]) =>
@@ -185,9 +242,10 @@ function card(title: string, rows: [string, unknown][], link: string, linkText: 
     .join("");
   return `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;max-width:560px">
 <h2 style="font-size:18px;color:#1f1f1f;margin:0 0 12px">${escapeHtml(title)}</h2>
+${intro ? `<p style="margin:0 0 14px;color:#1f1f1f">${escapeHtml(intro)}</p>` : ""}
 <table style="border-collapse:collapse">${body}</table>
 <p style="margin:20px 0 0"><a href="${link}" style="color:#e2614b;font-weight:bold">${escapeHtml(linkText)}</a></p>
-<p style="margin:24px 0 0;color:#9a9a9a;font-size:12px">Automatic alert from PureLifePartner.</p>
+<p style="margin:24px 0 0;color:#9a9a9a;font-size:12px">${escapeHtml(footer)}</p>
 </div>`;
 }
 

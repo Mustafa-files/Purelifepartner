@@ -54,8 +54,10 @@ export default function ProfileView({
 
     if (error) {
       if (error.message.includes("SEARCHER_NOT_VERIFIED")) {
+        // Log the request so staff can approve it once the payment arrives.
+        await supabase.rpc("request_contact", { target: id });
         toast(
-          "Complete payment verification to unlock contact details.",
+          "Request sent. Complete your payment and we will email you the contact details once it is approved.",
           "info"
         );
         router.push("/payment");

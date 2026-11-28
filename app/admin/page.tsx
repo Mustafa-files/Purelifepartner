@@ -15,6 +15,7 @@ import { cn, formatDateTime, matchesProfileCode, profileCode } from "@/lib/utils
 import type {
   AgentProfile,
   BankAccount,
+  ContactRequest,
   DynamicValue,
   OfficeNote,
   Payment,
@@ -28,6 +29,7 @@ const TABS = [
   "Users",
   "Members by City",
   "Agents",
+  "Contact Requests",
   "Payments",
   "Dropdown Values",
   "WhatsApp Log",
@@ -92,6 +94,7 @@ export default function AdminDashboard() {
           {tab === "Users" && <UsersTab />}
           {tab === "Members by City" && <MembersByCity />}
           {tab === "Agents" && <AgentsTab />}
+          {tab === "Contact Requests" && <ContactRequestsTab />}
           {tab === "Payments" && <PaymentsTab />}
           {tab === "Dropdown Values" && <DynamicValuesTab />}
           {tab === "WhatsApp Log" && <WhatsAppTab />}
@@ -550,6 +553,169 @@ function PaymentsTab() {
                     <Button size="sm" onClick={() => confirmPayment(p)}>
                       Confirm
                     </Button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </Panel>
+  );
+}
+
+/* ---------------- Contact Requests ---------------- */
+
+function ContactRequestsTab() {
+  type Row = ContactRequest & {
+    searcher?: Profile;
+    target?: Profile;
+    payment?: Payment;
+  };
+  const [rows, setRows] = useState<Row[]>([]);
+  const [filter, setFilter] = useState<ContactRequest["status"]>("pending");
+  const [busy, setBusy] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const supabase = createClient();
+
+  const load = useCallback(async () => {
+    const [reqRes, profilesRes, paysRes] = await Promise.all([
+      supabase.from("contact_requests").select("*").order("created_at", { ascending: false }),
+      supabase.from("profiles").select("*"),
+      supabase.from("payments").select("*").order("created_at", { ascending: false }),
+    ]);
+    const profiles = (profilesRes.data ?? []) as Profile[];
+    const pays = (paysRes.data ?? []) as Payment[];
+    setRows(
+      ((reqRes.data ?? []) as ContactRequest[]).map((r) => ({
+        ...r,
+        searcher: profiles.find((p) => p.id === r.searcher_id),
+        target: profiles.find((p) => p.id === r.target_id),
+        // Latest payment from the requester (list is newest first)
+        payment: pays.find((p) => p.profile_id === r.searcher_id),
+      }))
+    );
+    setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  async function decide(r: Row, approve: boolean) {
+    if (
+      approve &&
+      r.payment?.status !== "Confirmed" &&
+      !confirm("This member has no confirmed payment yet. Approve anyway?")
+    ) {
+      return;
+    }
+    setBusy(r.id);
+    const { error } = await supabase.rpc("decide_contact_request", {
+      req: r.id,
+      approve,
+    });
+    setBusy(null);
+    if (error) return toast(error.message, "error");
+    const email = r.searcher?.email;
+    toast(
+      approve
+        ? email && !isPlaceholderEmail(email)
+          ? `Approved. The contact details have been emailed to ${email}.`
+          : "Approved. This member has no email address, so share the details with them directly."
+        : "Request rejected."
+    );
+    load();
+  }
+
+  if (loading) return <Panel><Skeleton className="h-48 w-full" /></Panel>;
+
+  const counts = {
+    pending: rows.filter((r) => r.status === "pending").length,
+    approved: rows.filter((r) => r.status === "approved").length,
+    rejected: rows.filter((r) => r.status === "rejected").length,
+  };
+  const shown = rows.filter((r) => r.status === filter);
+
+  return (
+    <Panel>
+      <p className="mb-4 text-sm text-charcoal/60">
+        Members asking for another member&rsquo;s contact details. Approving
+        emails the requester the details and unlocks them on the profile page.
+      </p>
+      <div className="mb-4 flex flex-wrap gap-2">
+        {(["pending", "approved", "rejected"] as const).map((s) => (
+          <button
+            key={s}
+            onClick={() => setFilter(s)}
+            className={cn(
+              "cursor-pointer rounded-full px-3 py-1 text-xs font-bold capitalize",
+              filter === s ? "bg-charcoal text-white" : "bg-off-white text-charcoal hover:bg-coral/10"
+            )}
+          >
+            {s} ({counts[s]})
+          </button>
+        ))}
+      </div>
+      {shown.length === 0 ? (
+        <p className="text-sm text-charcoal/50">No {filter} requests.</p>
+      ) : (
+        <table className="w-full min-w-[760px] text-left text-sm">
+          <thead>
+            <tr className="border-b border-gray-100 text-xs uppercase tracking-wide text-charcoal/50">
+              <th className="py-2 pr-3">Requested by</th>
+              <th className="py-2 pr-3">Payment</th>
+              <th className="py-2 pr-3">Wants to contact</th>
+              <th className="py-2 pr-3">Requested</th>
+              <th className="py-2">{filter === "pending" ? "Action" : "Decided"}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {shown.map((r) => (
+              <tr key={r.id} className="border-b border-gray-50 align-top">
+                <td className="py-2.5 pr-3">
+                  <div className="font-bold">{r.searcher?.user_id_handle ?? r.searcher_id.slice(0, 8)}</div>
+                  <div className="text-xs text-charcoal/50">
+                    {r.searcher?.email && !isPlaceholderEmail(r.searcher.email) ? r.searcher.email : "No email"}
+                    {r.searcher?.whatsapp_no ? ` · ${r.searcher.whatsapp_no}` : ""}
+                  </div>
+                </td>
+                <td className="py-2.5 pr-3">
+                  <span
+                    className={cn(
+                      "rounded-full px-2.5 py-0.5 text-xs font-bold",
+                      r.payment?.status === "Confirmed"
+                        ? "bg-green-100 text-green-700"
+                        : r.payment
+                          ? "bg-amber-100 text-amber-700"
+                          : "bg-gray-100 text-charcoal/60"
+                    )}
+                  >
+                    {r.payment ? `${r.payment.status}: ${r.payment.amount.toLocaleString()} ${r.payment.currency}` : "No payment"}
+                  </span>
+                </td>
+                <td className="py-2.5 pr-3">
+                  <Link href={`/profile/${r.target_id}`} className="font-bold text-coral hover:underline">
+                    {r.target?.user_id_handle ?? r.target_id.slice(0, 8)}
+                  </Link>
+                  <div className="text-xs text-charcoal/50">{r.target?.status ?? ""}</div>
+                </td>
+                <td className="py-2.5 pr-3">{formatDateTime(r.created_at)}</td>
+                <td className="py-2.5">
+                  {r.status === "pending" ? (
+                    <div className="flex gap-2">
+                      <Button size="sm" loading={busy === r.id} onClick={() => decide(r, true)}>
+                        Approve
+                      </Button>
+                      <Button size="sm" variant="outline" disabled={busy === r.id} onClick={() => decide(r, false)}>
+                        Reject
+                      </Button>
+                    </div>
+                  ) : (
+                    <span className="text-xs text-charcoal/60">
+                      {r.approved_at ? formatDateTime(r.approved_at) : r.status === "approved" ? "Auto (both verified)" : "Rejected"}
+                    </span>
                   )}
                 </td>
               </tr>
